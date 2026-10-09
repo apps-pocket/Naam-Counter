@@ -41,6 +41,7 @@ button.s{flex:1;padding:11px 6px;border-radius:12px;border:1px solid var(--line)
 button.s.danger{color:#c0392b}
 button.s.armed{background:#c0392b;color:#fff;border-color:#c0392b}
 button.s.run{background:var(--accent);color:#fff;border-color:var(--accent)}
+input[type=range]{accent-color:var(--accent)}
 input{width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:16px;margin-top:6px}
 label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
@@ -84,6 +85,11 @@ h2{font-size:15px;margin:0 0 6px}
   <div class="done" id="dn"></div>
   <button class="tap" id="tap" data-i="tap"></button>
   <div class="btns"><button class="s" id="au"></button></div>
+  <label data-i="gap" style="text-align:center"></label>
+  <div class="btns" style="align-items:center"><button class="s" id="gm" style="flex:0 0 52px">−</button><input id="gap" type="number" inputmode="decimal" step="0.1" min="0.2" max="60" style="margin-top:0;text-align:center"><button class="s" id="gpl" style="flex:0 0 52px">+</button></div>
+  <input type="range" id="gr" min="0.2" max="10" step="0.1" style="margin:10px 0 0;padding:0;border:0;background:transparent">
+  <div class="row"><span>0.2s</span><span>10s</span></div>
+  <div class="chips" id="gch" style="justify-content:center"></div>
   <div class="hint" id="ah" style="text-align:center"></div>
   <div class="btns">
     <button class="s" id="undo" data-i="undo"></button>
@@ -138,8 +144,8 @@ var NAMES=[{en:"Radha",hi:"राधा"},{en:"OM Namah Shivaya",hi:"ॐ नम 
 var TH=[["auto","#d9791a","auto"],["saffron","#d9791a","saffron"],["night","#271c10","night"],["krishna","#2f6fd6","krishna"],["lotus","#d6336c","lotus"],["tulsi","#2e9b57","tulsi"]];
 var S={sessions:[],active:null,vib:true,snd:true,wake:false,lang:"hi",theme:"auto"},pick=100000,AC=null,BUS=null,WL=null,auto=null;
 var T={
-en:{title:"🕉️ Naam Counter",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",sessions:"My sessions",newsess:"New session",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst:"📲 Add to Home screen",iand:"1. Open this page in Chrome (not inside another app).<br>2. Tap the ⋮ menu (top right).<br>3. Tap “Add to Home screen” or “Install app”.<br>4. Tap Add. It opens from your home screen like an app.",iios:"1. Open this page in Safari.<br>2. Tap the Share button (square with arrow).<br>3. Tap “Add to Home Screen”, then Add.",copy:"Copy page link",copied:"Link copied ✓",own:"+ Your own",auto:"▶ Auto Jap",stopauto:"⏸ Stop Auto",autohint:"Auto mode: 3 counts every 2 seconds. Screen stays on.",theme:"Theme",th_auto:"Auto",th_saffron:"Saffron",th_night:"Night",th_krishna:"Krishna Blue",th_lotus:"Lotus",th_tulsi:"Tulsi",novib:"Vibration isn't supported on this device/browser (e.g. iPhone). Turn on Sound for tap feedback.",blocked:"Your browser blocked vibration. Open this page in Chrome (not inside another app) and check your phone's vibration settings."},
-hi:{title:"🕉️ नाम काउंटर",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",sessions:"मेरे सत्र",newsess:"नया सत्र",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst:"📲 होम स्क्रीन पर जोड़ें",iand:"1. इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं)।<br>2. ऊपर दाएँ ⋮ मेनू दबाएँ।<br>3. “Add to Home screen” या “Install app” दबाएँ।<br>4. Add दबाएँ। अब यह होम स्क्रीन से ऐप की तरह खुलेगा।",iios:"1. इस पेज को Safari में खोलें।<br>2. Share बटन (तीर वाला चौकोर) दबाएँ।<br>3. “Add to Home Screen” चुनें, फिर Add दबाएँ।",copy:"पेज का लिंक कॉपी करें",copied:"लिंक कॉपी हुआ ✓",own:"+ अपना नाम",auto:"▶ ऑटो जाप",stopauto:"⏸ ऑटो रोकें",autohint:"ऑटो मोड: हर 2 सेकंड में 3 गिनती। स्क्रीन चालू रहेगी।",theme:"थीम",th_auto:"ऑटो",th_saffron:"केसरिया",th_night:"रात",th_krishna:"कृष्ण नीला",th_lotus:"कमल",th_tulsi:"तुलसी",novib:"इस फ़ोन/ब्राउज़र में कंपन समर्थित नहीं है (जैसे iPhone)। टैप फ़ीडबैक के लिए आवाज़ चालू करें।",blocked:"ब्राउज़र ने कंपन रोक दिया। इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं) और फ़ोन की कंपन सेटिंग जाँचें।"}
+en:{title:"🕉️ Naam Counter",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",sessions:"My sessions",newsess:"New session",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst:"📲 Add to Home screen",iand:"1. Open this page in Chrome (not inside another app).<br>2. Tap the ⋮ menu (top right).<br>3. Tap “Add to Home screen” or “Install app”.<br>4. Tap Add. It opens from your home screen like an app.",iios:"1. Open this page in Safari.<br>2. Tap the Share button (square with arrow).<br>3. Tap “Add to Home Screen”, then Add.",copy:"Copy page link",copied:"Link copied ✓",own:"+ Your own",auto:"▶ Auto Jap",stopauto:"⏸ Stop Auto",gap:"Auto jap: time gap per naam (seconds)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",theme:"Theme",th_auto:"Auto",th_saffron:"Saffron",th_night:"Night",th_krishna:"Krishna Blue",th_lotus:"Lotus",th_tulsi:"Tulsi",novib:"Vibration isn't supported on this device/browser (e.g. iPhone). Turn on Sound for tap feedback.",blocked:"Your browser blocked vibration. Open this page in Chrome (not inside another app) and check your phone's vibration settings."},
+hi:{title:"🕉️ नाम काउंटर",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",sessions:"मेरे सत्र",newsess:"नया सत्र",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst:"📲 होम स्क्रीन पर जोड़ें",iand:"1. इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं)।<br>2. ऊपर दाएँ ⋮ मेनू दबाएँ।<br>3. “Add to Home screen” या “Install app” दबाएँ।<br>4. Add दबाएँ। अब यह होम स्क्रीन से ऐप की तरह खुलेगा।",iios:"1. इस पेज को Safari में खोलें।<br>2. Share बटन (तीर वाला चौकोर) दबाएँ।<br>3. “Add to Home Screen” चुनें, फिर Add दबाएँ।",copy:"पेज का लिंक कॉपी करें",copied:"लिंक कॉपी हुआ ✓",own:"+ अपना नाम",auto:"▶ ऑटो जाप",stopauto:"⏸ ऑटो रोकें",gap:"ऑटो जाप: हर नाम के बीच समय (सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",theme:"थीम",th_auto:"ऑटो",th_saffron:"केसरिया",th_night:"रात",th_krishna:"कृष्ण नीला",th_lotus:"कमल",th_tulsi:"तुलसी",novib:"इस फ़ोन/ब्राउज़र में कंपन समर्थित नहीं है (जैसे iPhone)। टैप फ़ीडबैक के लिए आवाज़ चालू करें।",blocked:"ब्राउज़र ने कंपन रोक दिया। इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं) और फ़ोन की कंपन सेटिंग जाँचें।"}
 };
 function t(k){return (T[S.lang]||T.hi)[k]}
 function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.sessions){S=d;if(S.vib===undefined)S.vib=true;if(S.snd===undefined)S.snd=true;if(!S.lang)S.lang="hi";if(!S.theme)S.theme="auto"}}}catch(e){}}
@@ -160,7 +166,7 @@ function prog(s){
  if(s.target){var p=Math.min(100,s.count/s.target*100);$("pg").style.width=p+"%";$("pc").textContent=p.toFixed(p<10?2:1)+"%";$("tg").textContent=t("target")+" "+fmt(s.target);$("dn").textContent=s.count>=s.target?t("done"):""}
  else{$("pg").style.width="0";$("pc").textContent=t("notarget");$("tg").innerHTML="&nbsp;";$("dn").textContent=""}
 }
-function autoUI(){$("au").textContent=t(auto?"stopauto":"auto");$("au").className="s"+(auto?" run":"");$("ah").textContent=auto?t("autohint"):""}
+function autoUI(){$("au").textContent=t(auto?"stopauto":"auto");$("au").className="s"+(auto?" run":"");$("ah").textContent=auto?t("autohint").replace("{g}",gapOf(cur())):""}
 function texts(){
  document.documentElement.lang=S.lang;
  document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=t(e.getAttribute("data-i"))});
@@ -178,7 +184,7 @@ function render(){
   (x.id===s.id?'':'<button class="go" data-o="'+x.id+'">'+t("open")+'</button>')+'<button class="x" data-d="'+x.id+'">🗑</button></div>'});
  $("list").innerHTML=h;
  var bs=$("list").querySelectorAll(".sess b");S.sessions.forEach(function(x,i){bs[i].textContent=x.name});
- chips();nchips();thchips();$("tv").className="chip"+(S.vib?" on":"");$("ts").className="chip"+(S.snd?" on":"");$("tw").className="chip"+(S.wake?" on":"");
+ chips();nchips();thchips();gchips();$("gap").value=gapOf(s);$("gr").value=gapOf(s);$("tv").className="chip"+(S.vib?" on":"");$("ts").className="chip"+(S.snd?" on":"");$("tw").className="chip"+(S.wake?" on":"");
  $("vh").textContent=(S.vib&&!navigator.vibrate)?t("novib"):"";
 }
 /* ---- sounds ---- */
@@ -187,7 +193,14 @@ function ctx(){AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(
 function blip(f,d,v,type){var a=ctx(),t0=a.currentTime,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;o.connect(g);g.connect(BUS);
  g.gain.setValueAtTime(v,t0);g.gain.exponentialRampToValueAtTime(.001,t0+d);o.start(t0);o.stop(t0+d+.02)}
 function tick(){blip(1100,.09,.7,"triangle")}
-function click(){blip(520,.05,.6,"square")}
+function click(){var a=ctx(),t0=a.currentTime,o=a.createOscillator(),g=a.createGain();
+ o.type="sine";o.frequency.setValueAtTime(620,t0);o.frequency.exponentialRampToValueAtTime(190,t0+.08);
+ o.connect(g);g.connect(BUS);g.gain.setValueAtTime(.001,t0);g.gain.linearRampToValueAtTime(1.1,t0+.006);g.gain.exponentialRampToValueAtTime(.001,t0+.11);
+ o.start(t0);o.stop(t0+.13)}
+var KA=null,KT=null;
+function stopKeep(){clearTimeout(KT);try{if(KA)KA.stop()}catch(e){}KA=null}
+function keep(ms){if(!S.snd)return;try{var a=ctx();if(!KA){var o=a.createOscillator(),g=a.createGain();o.frequency.value=30;g.gain.value=.002;o.connect(g);g.connect(BUS);o.start();KA=o}
+ clearTimeout(KT);if(ms)KT=setTimeout(stopKeep,ms)}catch(e){}}
 function gong(){var a=ctx(),t0=a.currentTime;
  [[98,1],[196,.7],[294,.45],[392,.3],[588,.18]].forEach(function(p,i){var o=a.createOscillator(),g=a.createGain();o.type="sine";o.frequency.value=p[0]*(i?1.003:1);o.connect(g);g.connect(BUS);
   g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(p[1]*1.4,t0+.012);g.gain.exponentialRampToValueAtTime(.001,t0+3);o.start(t0);o.stop(t0+3.1)})}
@@ -199,15 +212,25 @@ function whoosh(){var a=ctx(),t0=a.currentTime,n=Math.floor(a.sampleRate*.8),b=a
 function woosh(){if(S.snd){try{whoosh()}catch(e){}}}
 function feel(big){
  if(S.vib&&navigator.vibrate){try{var ok=navigator.vibrate(big?[400]:30);if(ok===false)$("vh").textContent=t("blocked")}catch(e){}}
- if(S.snd){try{big?gong():tick()}catch(e){}}
+ if(S.snd){try{keep(auto?0:8000);big?gong():tick()}catch(e){}}
 }
 /* ---- counting ---- */
 function doCount(){var s=cur();if(!s)return;s.count++;save();feel(s.count%108===0);prog(s);
  var sp=$("list").querySelector(".sess.active .t span");if(sp)sp.textContent=fmt(s.count)+(s.target?' / '+fmt(s.target):'');
  if(auto&&s.target&&s.count>=s.target)stopAuto()}
 function wake(){var need=S.wake||auto;if(need&&navigator.wakeLock){if(!WL)navigator.wakeLock.request("screen").then(function(l){WL=l;l.addEventListener("release",function(){WL=null})}).catch(function(){})}else if(WL){try{WL.release()}catch(e){}WL=null}}
-function startAuto(){if(auto)return;auto=setInterval(doCount,667);autoUI();wake()}
-function stopAuto(){if(!auto)return;clearInterval(auto);auto=null;autoUI();wake()}
+function gapOf(s){return s&&s.gap?s.gap:0.67}
+var GP=[0.5,1,2,3,5];
+function gchips(){var g=gapOf(cur()),h="";GP.forEach(function(x){h+='<button class="chip'+(x===g?' on':'')+'" data-g="'+x+'">'+x+'s</button>'});$("gch").innerHTML=h}
+function setGap(v){var s=cur();if(!s)return;v=Math.round(Number(v)*100)/100;if(!(v>=0.2))v=0.2;if(v>60)v=60;s.gap=v;save();$("gap").value=v;$("gr").value=v;
+ if(auto){clearInterval(auto);auto=setInterval(doCount,v*1000)}autoUI();gchips()}
+$("gr").addEventListener("input",function(){setGap(this.value)});
+$("gap").onchange=function(){setGap(this.value)};
+$("gm").onclick=function(){setGap(gapOf(cur())-0.1)};
+$("gpl").onclick=function(){setGap(gapOf(cur())+0.1)};
+$("gch").addEventListener("click",function(e){var g=e.target.getAttribute("data-g");if(g)setGap(g)});
+function startAuto(){if(auto)return;auto=setInterval(doCount,gapOf(cur())*1000);keep(0);autoUI();wake()}
+function stopAuto(){if(!auto)return;clearInterval(auto);auto=null;if(S.snd)keep(8000);else stopKeep();autoUI();wake()}
 /* ---- events ---- */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(b&&b.id!=="tap"&&S.snd){try{click()}catch(x){}}},true);
 $("tap").addEventListener("click",doCount);
