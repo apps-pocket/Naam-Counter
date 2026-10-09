@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#d9791a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Naam Counter">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>नाम काउंटर · Naam Counter</title>
+<style>
+:root{--bg:#fff8ee;--card:#fff;--ink:#3b2a14;--mute:#8a7557;--accent:#d9791a;--accent2:#f4b04a;--line:#ecd9bd;--ok:#2e8b57;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--bg:#1b140b;--card:#271c10;--ink:#f6e7cf;--mute:#b39a73;--accent:#f0932b;--accent2:#ffc46b;--line:#403019;--ok:#58c58a}}
+:root[data-theme="night"]{--bg:#1b140b;--card:#271c10;--ink:#f6e7cf;--mute:#b39a73;--accent:#f0932b;--accent2:#ffc46b;--line:#403019;--ok:#58c58a}
+:root[data-theme="krishna"]{--bg:#eef4ff;--card:#fff;--ink:#12233f;--mute:#5f7390;--accent:#2f6fd6;--accent2:#7fb0ff;--line:#cfdcf2;--ok:#2e8b57}
+:root[data-theme="lotus"]{--bg:#fff0f5;--card:#fff;--ink:#3d1a2b;--mute:#8a5a70;--accent:#d6336c;--accent2:#ff8fb3;--line:#f4cddc;--ok:#2e8b57}
+:root[data-theme="tulsi"]{--bg:#eefaf0;--card:#fff;--ink:#12301c;--mute:#5a7f66;--accent:#2e9b57;--accent2:#7fd69a;--line:#cde9d5;--ok:#1f7a45}
+:root[data-theme="saffron"]{--bg:#fff8ee;--card:#fff;--ink:#3b2a14;--mute:#8a7557;--accent:#d9791a;--accent2:#f4b04a;--line:#ecd9bd;--ok:#2e8b57}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;min-height:100vh}
+main{max-width:480px;margin:0 auto;padding:16px}
+.top{display:flex;align-items:center;justify-content:space-between;margin:4px 0 12px}
+h1{font-size:18px;margin:0}
+.lg{padding:7px 12px;border-radius:20px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.name{font-size:24px;font-weight:700;text-align:center;color:var(--accent);word-break:break-word}
+.sub{font-size:13px;color:var(--mute);text-align:center;margin-top:2px}
+.count{font-size:48px;font-weight:800;text-align:center;margin:10px 0 4px;font-variant-numeric:tabular-nums;word-break:break-all}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden;margin:10px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.row{display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}
+.tap{display:block;margin:10px auto 4px;width:min(70vw,250px);height:min(70vw,250px);border-radius:50%;border:0;color:#fff;font-size:22px;font-weight:700;background:radial-gradient(circle at 35% 30%,var(--accent2),var(--accent));box-shadow:0 10px 28px rgba(0,0,0,.22);touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:transform .06s}
+.tap:active{transform:scale(.95)}
+.btns{display:flex;gap:8px;margin-top:12px}
+button.s{flex:1;padding:11px 6px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:14px}
+button.s.danger{color:#c0392b}
+button.s.armed{background:#c0392b;color:#fff;border-color:#c0392b}
+button.s.run{background:var(--accent);color:#fff;border-color:var(--accent)}
+input{width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:16px;margin-top:6px}
+label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{padding:7px 11px;border-radius:20px;border:1px solid var(--line);font-size:13px;background:transparent;color:var(--ink)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle;border:1px solid rgba(0,0,0,.2)}
+.sess{display:flex;align-items:center;gap:8px;padding:11px 0;border-top:1px solid var(--line)}
+.sess:first-child{border-top:0}
+.sess .t{flex:1;min-width:0}
+.sess .t b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sess .t span{font-size:12px;color:var(--mute)}
+.sess.active b{color:var(--accent)}
+.go{padding:9px 13px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-size:13px}
+.x{padding:8px 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--mute);font-size:14px}
+.x.armed{background:#c0392b;color:#fff}
+.done{color:var(--ok);font-weight:700;text-align:center;font-size:14px;min-height:20px;margin-top:4px}
+h2{font-size:15px;margin:0 0 6px}
+.hint{font-size:12px;color:var(--mute);margin-top:6px}
+.edit{display:none;margin-top:12px;border-top:1px solid var(--line);padding-top:6px}
+.edit.on{display:block}
+.tg{display:flex;gap:8px;margin-top:10px}
+.tg .chip{flex:1;text-align:center;padding:10px 4px}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><h1 data-i="title"></h1><button class="lg" id="lg"></button></div>
+
+<div class="card" id="ic" style="display:none">
+  <button class="go" id="inst" style="width:100%;padding:12px;font-size:15px"></button>
+  <div class="hint" id="ih" style="display:none;line-height:1.6"></div>
+  <div class="btns" id="ib" style="display:none"><button class="s" id="cp"></button></div>
+</div>
+
+<div class="card">
+  <div class="name" id="nm"></div>
+  <div class="sub" id="sb"></div>
+  <div class="count" id="ct">0</div>
+  <div class="bar"><i id="pg"></i></div>
+  <div class="row"><span id="pc">0%</span><span id="tg">&nbsp;</span></div>
+  <div class="done" id="dn"></div>
+  <button class="tap" id="tap" data-i="tap"></button>
+  <div class="btns"><button class="s" id="au"></button></div>
+  <div class="hint" id="ah" style="text-align:center"></div>
+  <div class="btns">
+    <button class="s" id="undo" data-i="undo"></button>
+    <button class="s" id="rn" data-i="edit"></button>
+    <button class="s danger" id="rs"></button>
+  </div>
+  <div class="edit" id="ed">
+    <label data-i="name"></label>
+    <input id="en" maxlength="60">
+    <label data-i="tlabel"></label>
+    <input id="et" type="number" inputmode="numeric" min="1" data-ph="tph">
+    <label data-i="setc"></label>
+    <input id="ec" type="number" inputmode="numeric" min="0" data-ph="cph">
+    <div class="btns"><button class="s" id="ecancel" data-i="cancel"></button><button class="go" id="esave" style="flex:1" data-i="save"></button></div>
+  </div>
+  <div class="tg">
+    <button class="chip" id="tv" data-i="vib"></button>
+    <button class="chip" id="ts" data-i="snd"></button>
+    <button class="chip" id="tw" data-i="wake"></button>
+  </div>
+  <div class="hint" id="vh"></div>
+</div>
+
+<div class="card">
+  <h2 data-i="sessions"></h2>
+  <div id="list"></div>
+</div>
+
+<div class="card">
+  <h2 data-i="newsess"></h2>
+  <label data-i="quick"></label>
+  <div class="chips" id="nchips"></div>
+  <label data-i="nname"></label>
+  <input id="nn" maxlength="60" data-ph="nph">
+  <label data-i="ntarget"></label>
+  <div class="chips" id="chips"></div>
+  <input id="nt" type="number" inputmode="numeric" min="1" data-ph="cust">
+  <button class="go" id="add" style="width:100%;margin-top:12px;padding:12px;font-size:15px" data-i="start"></button>
+  <div class="hint" data-i="hint"></div>
+</div>
+
+<div class="card">
+  <h2 data-i="theme"></h2>
+  <div class="chips" id="thc"></div>
+</div>
+</main>
+
+<script>
+(function(){
+var KEY="naam-counter-v1",PRE=[108,1000,100000,1000000,10000000];
+var NAMES=[{en:"Radha",hi:"राधा"},{en:"OM Namah Shivaya",hi:"ॐ नम शिवाय"},{en:"Sita Ram",hi:"सीता राम"},{en:"Ram",hi:"राम"}];
+var TH=[["auto","#d9791a","auto"],["saffron","#d9791a","saffron"],["night","#271c10","night"],["krishna","#2f6fd6","krishna"],["lotus","#d6336c","lotus"],["tulsi","#2e9b57","tulsi"]];
+var S={sessions:[],active:null,vib:true,snd:true,wake:false,lang:"hi",theme:"auto"},pick=100000,AC=null,BUS=null,WL=null,auto=null;
+var T={
+en:{title:"🕉️ Naam Counter",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",sessions:"My sessions",newsess:"New session",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst:"📲 Add to Home screen",iand:"1. Open this page in Chrome (not inside another app).<br>2. Tap the ⋮ menu (top right).<br>3. Tap “Add to Home screen” or “Install app”.<br>4. Tap Add. It opens from your home screen like an app.",iios:"1. Open this page in Safari.<br>2. Tap the Share button (square with arrow).<br>3. Tap “Add to Home Screen”, then Add.",copy:"Copy page link",copied:"Link copied ✓",own:"+ Your own",auto:"▶ Auto Jap",stopauto:"⏸ Stop Auto",autohint:"Auto mode: 3 counts every 2 seconds. Screen stays on.",theme:"Theme",th_auto:"Auto",th_saffron:"Saffron",th_night:"Night",th_krishna:"Krishna Blue",th_lotus:"Lotus",th_tulsi:"Tulsi",novib:"Vibration isn't supported on this device/browser (e.g. iPhone). Turn on Sound for tap feedback.",blocked:"Your browser blocked vibration. Open this page in Chrome (not inside another app) and check your phone's vibration settings."},
+hi:{title:"🕉️ नाम काउंटर",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",sessions:"मेरे सत्र",newsess:"नया सत्र",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst:"📲 होम स्क्रीन पर जोड़ें",iand:"1. इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं)।<br>2. ऊपर दाएँ ⋮ मेनू दबाएँ।<br>3. “Add to Home screen” या “Install app” दबाएँ।<br>4. Add दबाएँ। अब यह होम स्क्रीन से ऐप की तरह खुलेगा।",iios:"1. इस पेज को Safari में खोलें।<br>2. Share बटन (तीर वाला चौकोर) दबाएँ।<br>3. “Add to Home Screen” चुनें, फिर Add दबाएँ।",copy:"पेज का लिंक कॉपी करें",copied:"लिंक कॉपी हुआ ✓",own:"+ अपना नाम",auto:"▶ ऑटो जाप",stopauto:"⏸ ऑटो रोकें",autohint:"ऑटो मोड: हर 2 सेकंड में 3 गिनती। स्क्रीन चालू रहेगी।",theme:"थीम",th_auto:"ऑटो",th_saffron:"केसरिया",th_night:"रात",th_krishna:"कृष्ण नीला",th_lotus:"कमल",th_tulsi:"तुलसी",novib:"इस फ़ोन/ब्राउज़र में कंपन समर्थित नहीं है (जैसे iPhone)। टैप फ़ीडबैक के लिए आवाज़ चालू करें।",blocked:"ब्राउज़र ने कंपन रोक दिया। इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं) और फ़ोन की कंपन सेटिंग जाँचें।"}
+};
+function t(k){return (T[S.lang]||T.hi)[k]}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.sessions){S=d;if(S.vib===undefined)S.vib=true;if(S.snd===undefined)S.snd=true;if(!S.lang)S.lang="hi";if(!S.theme)S.theme="auto"}}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function fmt(n){return Number(n).toLocaleString("en-IN")}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function cur(){for(var i=0;i<S.sessions.length;i++)if(S.sessions[i].id===S.active)return S.sessions[i];return null}
+function tgt(v){v=Math.floor(Number(v));return v>0?Math.min(v,1e12):0}
+function newSess(name,target){stopAuto();var s={id:uid(),name:name||t("defname"),count:0,target:tgt(target)};S.sessions.unshift(s);S.active=s.id;save();render()}
+function chips(){var h="";PRE.forEach(function(p){h+='<button class="chip'+(p===pick?' on':'')+'" data-p="'+p+'">'+fmt(p)+'</button>'});$("chips").innerHTML=h}
+function nchips(){var h="";NAMES.forEach(function(n,i){h+='<button class="chip" data-n="'+i+'">'+n.hi+' · '+n.en+'</button>'});h+='<button class="chip" data-n="own">'+t("own")+'</button>';$("nchips").innerHTML=h}
+function thchips(){var h="";TH.forEach(function(x){h+='<button class="chip'+(S.theme===x[0]?' on':'')+'" data-th="'+x[0]+'"><span class="dot" style="background:'+x[1]+'"></span>'+t("th_"+x[2])+'</button>'});$("thc").innerHTML=h}
+function theme(){var r=document.documentElement;if(S.theme&&S.theme!=="auto")r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme")}
+function sub(s){return t("mala")+": "+fmt(Math.floor(s.count/108))+" · "+t("beads")+": "+(s.count%108)}
+function prog(s){
+ $("ct").textContent=fmt(s.count);$("sb").textContent=sub(s);
+ if(s.target){var p=Math.min(100,s.count/s.target*100);$("pg").style.width=p+"%";$("pc").textContent=p.toFixed(p<10?2:1)+"%";$("tg").textContent=t("target")+" "+fmt(s.target);$("dn").textContent=s.count>=s.target?t("done"):""}
+ else{$("pg").style.width="0";$("pc").textContent=t("notarget");$("tg").innerHTML="&nbsp;";$("dn").textContent=""}
+}
+function autoUI(){$("au").textContent=t(auto?"stopauto":"auto");$("au").className="s"+(auto?" run":"");$("ah").textContent=auto?t("autohint"):""}
+function texts(){
+ document.documentElement.lang=S.lang;
+ document.querySelectorAll("[data-i]").forEach(function(e){e.textContent=t(e.getAttribute("data-i"))});
+ document.querySelectorAll("[data-ph]").forEach(function(e){e.placeholder=t(e.getAttribute("data-ph"))});
+ $("lg").textContent=t("lang");
+ if(!$("rs").classList.contains("armed"))$("rs").textContent=t("reset");
+ autoUI();if(typeof instUI==="function")instUI();
+}
+function render(){
+ var s=cur();
+ if(!s){if(S.sessions.length){S.active=S.sessions[0].id;s=cur()}else{newSess(t("defname"),100000);return}}
+ theme();texts();$("nm").textContent=s.name;prog(s);
+ var h="";S.sessions.forEach(function(x){
+  h+='<div class="sess'+(x.id===s.id?' active':'')+'"><div class="t"><b></b><span>'+fmt(x.count)+(x.target?' / '+fmt(x.target):'')+'</span></div>'+
+  (x.id===s.id?'':'<button class="go" data-o="'+x.id+'">'+t("open")+'</button>')+'<button class="x" data-d="'+x.id+'">🗑</button></div>'});
+ $("list").innerHTML=h;
+ var bs=$("list").querySelectorAll(".sess b");S.sessions.forEach(function(x,i){bs[i].textContent=x.name});
+ chips();nchips();thchips();$("tv").className="chip"+(S.vib?" on":"");$("ts").className="chip"+(S.snd?" on":"");$("tw").className="chip"+(S.wake?" on":"");
+ $("vh").textContent=(S.vib&&!navigator.vibrate)?t("novib"):"";
+}
+/* ---- sounds ---- */
+function ctx(){AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();
+ if(!BUS){BUS=AC.createDynamicsCompressor();BUS.threshold.value=-8;BUS.ratio.value=8;BUS.connect(AC.destination)}return AC}
+function blip(f,d,v,type){var a=ctx(),t0=a.currentTime,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;o.connect(g);g.connect(BUS);
+ g.gain.setValueAtTime(v,t0);g.gain.exponentialRampToValueAtTime(.001,t0+d);o.start(t0);o.stop(t0+d+.02)}
+function tick(){blip(1100,.09,.7,"triangle")}
+function click(){blip(520,.05,.6,"square")}
+function gong(){var a=ctx(),t0=a.currentTime;
+ [[98,1],[196,.7],[294,.45],[392,.3],[588,.18]].forEach(function(p,i){var o=a.createOscillator(),g=a.createGain();o.type="sine";o.frequency.value=p[0]*(i?1.003:1);o.connect(g);g.connect(BUS);
+  g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(p[1]*1.4,t0+.012);g.gain.exponentialRampToValueAtTime(.001,t0+3);o.start(t0);o.stop(t0+3.1)})}
+function whoosh(){var a=ctx(),t0=a.currentTime,n=Math.floor(a.sampleRate*.8),b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);
+ for(var i=0;i<n;i++)d[i]=Math.random()*2-1;
+ var s=a.createBufferSource();s.buffer=b;var f=a.createBiquadFilter();f.type="bandpass";f.Q.value=1.4;f.frequency.setValueAtTime(250,t0);f.frequency.exponentialRampToValueAtTime(4500,t0+.55);
+ var g=a.createGain();g.gain.setValueAtTime(.001,t0);g.gain.exponentialRampToValueAtTime(1.6,t0+.22);g.gain.exponentialRampToValueAtTime(.001,t0+.7);
+ s.connect(f);f.connect(g);g.connect(BUS);s.start(t0);s.stop(t0+.8)}
+function woosh(){if(S.snd){try{whoosh()}catch(e){}}}
+function feel(big){
+ if(S.vib&&navigator.vibrate){try{var ok=navigator.vibrate(big?[400]:30);if(ok===false)$("vh").textContent=t("blocked")}catch(e){}}
+ if(S.snd){try{big?gong():tick()}catch(e){}}
+}
+/* ---- counting ---- */
+function doCount(){var s=cur();if(!s)return;s.count++;save();feel(s.count%108===0);prog(s);
+ var sp=$("list").querySelector(".sess.active .t span");if(sp)sp.textContent=fmt(s.count)+(s.target?' / '+fmt(s.target):'');
+ if(auto&&s.target&&s.count>=s.target)stopAuto()}
+function wake(){var need=S.wake||auto;if(need&&navigator.wakeLock){if(!WL)navigator.wakeLock.request("screen").then(function(l){WL=l;l.addEventListener("release",function(){WL=null})}).catch(function(){})}else if(WL){try{WL.release()}catch(e){}WL=null}}
+function startAuto(){if(auto)return;auto=setInterval(doCount,667);autoUI();wake()}
+function stopAuto(){if(!auto)return;clearInterval(auto);auto=null;autoUI();wake()}
+/* ---- events ---- */
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(b&&b.id!=="tap"&&S.snd){try{click()}catch(x){}}},true);
+$("tap").addEventListener("click",doCount);
+$("au").onclick=function(){auto?stopAuto():startAuto()};
+document.addEventListener("keydown",function(e){if(e.code==="Space"&&document.activeElement.tagName!=="INPUT"){e.preventDefault();$("tap").click()}});
+$("undo").onclick=function(){var s=cur();if(s&&s.count>0){s.count--;save();render()}};
+var rt=null;
+$("rs").onclick=function(){var s=cur();if(!s)return;var b=$("rs");
+ if(b.classList.contains("armed")){clearTimeout(rt);b.classList.remove("armed");b.textContent=t("reset");s.count=0;save();render();woosh();if(S.vib&&navigator.vibrate){try{navigator.vibrate(60)}catch(e){}}}
+ else{b.classList.add("armed");b.textContent=t("rconf");rt=setTimeout(function(){b.classList.remove("armed");b.textContent=t("reset")},3000)}};
+$("rn").onclick=function(){var s=cur();if(!s)return;var e=$("ed");if(e.classList.contains("on")){e.classList.remove("on");return}
+ $("en").value=s.name;$("et").value=s.target||"";$("ec").value="";e.classList.add("on")};
+$("ecancel").onclick=function(){$("ed").classList.remove("on")};
+$("esave").onclick=function(){var s=cur();if(!s)return;var n=$("en").value.trim();if(n)s.name=n.slice(0,60);
+ s.target=tgt($("et").value);var c=$("ec").value;if(c!==""){var cv=Math.floor(Number(c));if(cv>=0)s.count=Math.min(cv,1e12)}
+ save();$("ed").classList.remove("on");render()};
+$("lg").onclick=function(){S.lang=S.lang==="hi"?"en":"hi";save();render()};
+$("tv").onclick=function(){S.vib=!S.vib;save();render();if(S.vib)feel(false)};
+$("ts").onclick=function(){S.snd=!S.snd;save();render();if(S.snd)feel(false)};
+$("tw").onclick=function(){S.wake=!S.wake;save();render();wake()};
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")wake()});
+$("chips").addEventListener("click",function(e){var p=e.target.getAttribute("data-p");if(p){pick=+p;$("nt").value="";chips()}});
+$("nt").addEventListener("input",function(){pick=0;chips()});
+$("nchips").addEventListener("click",function(e){var n=e.target.getAttribute("data-n");if(n===null)return;
+ if(n==="own"){$("nn").value="";$("nn").focus()}else{$("nn").value=NAMES[+n][S.lang]}});
+$("thc").addEventListener("click",function(e){var x=e.target.closest("[data-th]");if(x){S.theme=x.getAttribute("data-th");save();theme();thchips()}});
+$("add").onclick=function(){var n=$("nn").value.trim();if(!n){$("nn").focus();return}
+ var c=$("nt").value;newSess(n,c?tgt(c):pick);$("nn").value="";$("nt").value="";pick=100000;window.scrollTo(0,0)};
+$("list").addEventListener("click",function(e){var el=e.target,o=el.getAttribute("data-o"),d=el.getAttribute("data-d");
+ if(o){stopAuto();S.active=o;save();render();window.scrollTo(0,0)}
+ if(d){if(el.classList.contains("armed")){stopAuto();woosh();S.sessions=S.sessions.filter(function(x){return x.id!==d});if(S.active===d)S.active=S.sessions[0]?S.sessions[0].id:null;save();render()}
+  else{el.classList.add("armed");el.textContent=t("conf");setTimeout(function(){el.classList.remove("armed");el.textContent="🗑"},3000)}}});
+
+/* ---- install ---- */
+var DP=null,ihOpen=false;
+function instUI(){$("inst").textContent=t("inst");$("cp").textContent=t("copy");
+ if(ihOpen){$("ih").innerHTML=/iphone|ipad|ipod/i.test(navigator.userAgent)?t("iios"):t("iand")}}
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();DP=e});
+window.addEventListener("appinstalled",function(){$("ic").style.display="none"});
+if(!(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)&&!navigator.standalone)$("ic").style.display="block";
+$("inst").onclick=function(){
+ if(DP){DP.prompt();DP.userChoice.then(function(){DP=null}).catch(function(){});return}
+ ihOpen=!ihOpen;$("ih").style.display=ihOpen?"block":"none";$("ib").style.display=ihOpen?"flex":"none";instUI()};
+$("cp").onclick=function(){var u=location.href;var done=function(){$("cp").textContent=t("copied");setTimeout(instUI,1800)};
+ try{navigator.clipboard.writeText(u).then(done,function(){})}catch(e){}};
+load();render();instUI();wake();
+})();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
