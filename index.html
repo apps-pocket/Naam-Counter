@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -109,11 +109,51 @@ label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
 .tap.bd .sv{inset:5%;width:90%;height:90%}
 #undo{border-color:var(--accent);color:var(--accent);font-weight:600;background:rgba(127,127,127,.08)}
 @supports (background:color-mix(in srgb,red,blue)){#undo{background:color-mix(in srgb,var(--accent) 14%,transparent)}}
+
+/* v4 */
+.inh{display:block;width:100%;padding:12px;border-radius:14px;border:0;color:#fff;font-size:15px;font-weight:700;margin:0 0 12px;background:linear-gradient(100deg,var(--accent),var(--accent2),var(--accent));background-size:220% 100%;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:shm 2.2s linear infinite}
+.tmd{flex:1;text-align:center;font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;padding:6px;border-radius:12px;border:1px solid var(--line);background:var(--bg)}
+.tmd.on{color:var(--accent);border-color:var(--accent);animation:glw 1.4s ease-in-out infinite}
+@keyframes glw{0%,100%{box-shadow:0 0 4px 0 var(--accent)}50%{box-shadow:0 0 18px 5px var(--accent2)}}
+button:disabled{opacity:.4}
+.mbtn.off{opacity:.55}
+.tap.bd #tl{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:7px 18px;border-radius:999px;box-shadow:0 3px 10px rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.35)}
+@media (prefers-reduced-motion:reduce){.inh,.tmd.on,button.s.run{animation:none}}
+
+/* v5 */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes spin{to{--ang:360deg}}
+button.s.run{border:3px solid transparent;padding:9px 6px;color:#fff;background:linear-gradient(var(--accent),var(--accent)) padding-box,conic-gradient(from var(--ang),var(--accent) 0deg,var(--accent) 190deg,var(--accent2) 265deg,#fff 330deg,var(--accent) 360deg) border-box;animation:spin 2s linear infinite}
+.tap.flat{border-radius:50%}
+.tap.s-flow{border-radius:26px}
+#rs{border-color:#c0392b;background:rgba(192,57,43,.1);font-weight:600}
+#rs.armed{background:#c0392b;color:#fff}
+@media (prefers-reduced-motion:reduce){.tap.bd #tl,button.s.run{animation:none}}
+/* v6 */
+.tap.bd #tl{border:2px solid transparent;padding:5px 16px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2)) padding-box,conic-gradient(from var(--ang),var(--accent) 0deg,var(--accent) 180deg,var(--accent2) 260deg,#fff 330deg,var(--accent) 360deg) border-box;animation:spin 2.2s linear infinite}
+/* v7 */
+.sl{position:relative;height:36px;margin:10px 4px 0;pointer-events:none}
+.sl::before{content:"";position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:var(--line)}
+.sl .sf{position:absolute;left:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.sl .st{position:absolute;top:0;width:32px;height:32px;margin-top:2px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:0 2px 8px rgba(0,0,0,.3);pointer-events:auto;touch-action:none;cursor:grab}
+.sl .st.drag{cursor:grabbing;box-shadow:0 0 0 7px rgba(127,127,127,.22),0 2px 8px rgba(0,0,0,.3)}
+.sl .st:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+.ap{display:none;margin-top:10px;padding:12px;border-radius:14px;border:1px solid var(--accent);background:var(--bg)}
+.ap.on{display:block}
+.tmrow{display:none;align-items:stretch;gap:8px;margin-top:12px}
+.tmrow .tmd{flex:1;margin:0}
+.tmd.off{opacity:.5}
+button.s.tmb{flex:0 0 62px;padding:6px 0;border:2px solid var(--accent);color:var(--accent);background:transparent;font-weight:700}
+button.s.tmb.fill{background:var(--accent);color:#fff}
+button.s.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+#bsp{border-color:#c0392b}
+.tap.s-jyoti,.tap.s-flow,.tap.s-bub{align-items:flex-end;padding-bottom:22px}
 </style>
 </head>
 <body>
 <main>
-<div class="top"><button class="mbtn" id="mb" aria-label="Menu">☰</button><h1 data-i="title"></h1><span style="width:44px"></span></div>
+<div class="top"><button class="mbtn" id="mb" aria-label="Menu">☰</button><h1 data-i="title"></h1><button class="mbtn" id="snb" data-ns aria-label="Sound"></button></div>
+<button class="inh" id="inh"><span data-i="inst2"></span></button>
 
 <div class="card">
   <div class="name" id="nm"></div>
@@ -123,8 +163,12 @@ label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
   <div class="row"><span id="pc">0%</span><span id="tg">&nbsp;</span></div>
   <div class="done" id="dn"></div>
   <button class="tap" id="tap"><svg id="tsv" class="sv" viewBox="0 0 260 270"></svg><span id="tl"></span></button>
+  <div class="tmrow" id="tmrow"><div class="tmd" id="tmd"></div><button class="s tmb" id="tmon"></button><button class="s tmb" id="tmoff"></button></div>
   <div class="btns"><button class="s" id="au"></button></div>
-  <div id="sp_main" style="margin-top:4px"></div>
+  <div class="ap" id="apn">
+    <div id="sp_main"></div>
+    <div class="btns"><button class="s" id="bst"></button><button class="s" id="bpa"></button><button class="s danger" id="bsp"></button></div>
+  </div>
   <div class="hint" id="ah" style="text-align:center"></div>
   <div class="btns">
     <button class="s" id="undo" data-i="undo"></button>
@@ -141,6 +185,7 @@ label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
     <div class="btns"><button class="s" id="ecancel" data-i="cancel"></button><button class="go" id="esave" style="flex:1" data-i="save"></button></div>
   </div>
 </div>
+
 </main>
 
 <div class="ov" id="ov"></div>
@@ -149,6 +194,16 @@ label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
   <nav id="menu">
     <div class="mi"><button class="mh"><span data-i="m_speed"></span><i>›</i></button>
       <div class="mc"><div id="sp_menu"></div></div></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_tm"></span><i>›</i></button>
+      <div class="mc">
+        <div class="hint" data-i="tm_hint" style="margin:0 0 10px"></div>
+        <label data-i="tm_custom" style="margin-top:0"></label>
+        <div class="btns" style="margin-top:6px"><input id="tmi" type="number" inputmode="numeric" min="1" max="600" data-ph="tm_ph" style="margin-top:0"><button class="go" id="tms" style="flex:0 0 90px" data-i="tm_set"></button></div>
+        <label data-i="tm_presets"></label>
+        <div class="chips" id="tmc"></div>
+        <div class="done" id="tmh"></div>
+      </div></div>
 
     <div class="mi"><button class="mh"><span data-i="m_new"></span><i>›</i></button>
       <div class="mc">
@@ -229,15 +284,15 @@ label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
 <script>
 (function(){
 var KEY="naam-counter-v1",PRE=[108,1000,100000,1000000,10000000],GP=[0.5,1,2,3,5];
-var NAMES=[{en:"Radha",hi:"राधा"},{en:"OM Namah Shivaya",hi:"ॐ नम शिवाय"},{en:"Sita Ram",hi:"सीता राम"},{en:"Ram",hi:"राम"}];
+var NAMES=[{en:"Radha",hi:"राधा"},{en:"OM Namah Shivaya",hi:"ॐ नम शिवाय",alt:["ॐ नमः शिवाय"]},{en:"Sita Ram",hi:"सीता राम"},{en:"Ram",hi:"राम"}];
 var TH=[["auto","#d9791a"],["saffron","#d9791a"],["night","#271c10"],["krishna","#2f6fd6"],["lotus","#d6336c"],["tulsi","#2e9b57"],["rudraksha","#b5361b"],["ganga","#1a8fa8"]];
 var STY=["classic","mala","rud","jyoti","flow","bub"];
 var SN={c:[["Beep","बीप"],["Wood tok","लकड़ी टक"],["Bell ting","घंटी टिंग"],["Water drop","पानी की बूँद"],["Soft click","हल्की क्लिक"]],
  b:[["Keyboard tap","कीबोर्ड टैप"],["Pop","पॉप"],["Soft thump","हल्की थप"],["Chime","चाइम"],["Bubble","बबल"]],
  m:[["Gong","घंटा"],["Temple bell","मंदिर की घंटी"],["Shankh","शंख"],["Singing bowl","सिंगिंग बाउल"],["Drum","ढोल"]]};
-var S={sessions:[],active:null,vib:true,snd:true,wake:false,lang:"hi",theme:"auto",style:"classic",snds:{c:0,b:0,m:0}},pick=100000,AC=null,BUS=null,WL=null,auto=null,DP=null,ihOpen=false,lastLit=-1,ST=[],pickOwn=false;
+var S={sessions:[],active:null,vib:true,snd:true,wake:false,lang:"en",theme:"rudraksha",style:"classic",snds:{c:1,b:3,m:3},timer:0,tmOn:true},pick=100000,AC=null,BUS=null,WL=null,auto=null,DP=null,ihOpen=false,lastLit=-1,ST=[],pickOwn=false,TM=null,tmRem=0,tmEnd=0,TMP=[0,5,10,15,30,60],apOpen=false,paused=false,pauseAt=0,drag=null,lastTick=0,lastV=0;
 var T={
-en:{title:"🕉️ Naam Counter",menu:"Menu",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",own:"+ Your own",auto:"▶ Auto Jap",stopauto:"⏸ Stop Auto",gap:"Auto jap: time gap per naam (seconds)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",
+en:{title:"🕉️ Naam Counter",menu:"Menu",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst2:"📲 Install app",tm_title:"Chant timer (optional)",tm_custom:"Set your own time (minutes)",tm_ph:"e.g. 45",tm_set:"Set",m_tm:"⏱ Chant timer",tm_presets:"Quick presets",tm_setmsg:"✓ Timer set to {m} min. It starts with Auto Jap.",tm_offmsg:"Timer is off.",tm_hint:"The timer starts when you start Auto Jap. While it runs, the 108 sound is off, and your chosen 108 sound plays when the time is up.",tm_off:"Off",tm_min:"min",tm_1h:"1 hour",tdone:"⏰ Time complete! 🙏",nosnd:"🔇 No sound",own:"+ Your own",auto:"🔁 Auto Jap",bst:"▶ Start",bpa:"⏸ Pause",bsp:"■ Stop",paused:"⏸ Paused",tm_on:"On",stopauto:"⏸ Stop Auto",gap:"Auto jap: time gap per naam (seconds)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",
 m_speed:"⏱️ Counter speed",m_new:"➕ New session",m_old:"📿 Old counts / sessions",m_bk:"📤 Backup code",m_lang:"🌐 Language",m_sv:"🔔 Sound & vibration",m_th:"🎨 Theme",m_snd:"🎵 Change sounds",m_rs:"📥 Restore data",m_in:"📲 Add to Home screen",m_ex:"🚪 Exit app",
 th_colors:"Colors",th_style:"Counter style",c_auto:"Auto",c_saffron:"Saffron",c_night:"Night",c_krishna:"Krishna Blue",c_lotus:"Lotus",c_tulsi:"Tulsi",c_rudraksha:"Rudraksha",c_ganga:"Ganga",
 s_classic:"Classic",s_mala:"Mala Beads",s_rud:"Rudraksha",s_jyoti:"Jyoti (Diya)",s_flow:"Flow Grid",s_bub:"Bubbles",
@@ -246,7 +301,7 @@ bkh:"Backup makes a code with all your sessions and counts. Save it in WhatsApp 
 inst:"📲 Install / Add to Home screen",iand:"1. Open this page in Chrome (not inside another app).<br>2. Tap the ⋮ menu (top right).<br>3. Tap “Add to Home screen” or “Install app”.<br>4. Tap Add.",iios:"1. Open this page in Safari.<br>2. Tap the Share button (square with arrow).<br>3. Tap “Add to Home Screen”, then Add.",copy:"Copy page link",copied:"Link copied ✓",
 exq:"Close the app?",exy:"Exit app",exn:"Stay",byet:"🙏 Thank you!",byes:"You can now close the app with your phone's Home or Back button.",byeb:"Back to app",
 novib:"Vibration isn't supported on this device/browser (e.g. iPhone). Turn on Sound for tap feedback.",blocked:"Your browser blocked vibration. Open this page in Chrome (not inside another app) and check your phone's vibration settings."},
-hi:{title:"🕉️ नाम काउंटर",menu:"मेनू",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",own:"+ अपना नाम",auto:"▶ ऑटो जाप",stopauto:"⏸ ऑटो रोकें",gap:"ऑटो जाप: हर नाम के बीच समय (सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",
+hi:{title:"🕉️ नाम काउंटर",menu:"मेनू",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst2:"📲 ऐप इंस्टॉल करें",tm_title:"जाप टाइमर (वैकल्पिक)",tm_custom:"अपना समय सेट करें (मिनट)",tm_ph:"जैसे 45",tm_set:"सेट",m_tm:"⏱ जाप टाइमर",tm_presets:"जल्दी चुनें",tm_setmsg:"✓ टाइमर {m} मिनट सेट हुआ। यह ऑटो जाप के साथ शुरू होगा।",tm_offmsg:"टाइमर बंद है।",tm_hint:"टाइमर ऑटो जाप शुरू करने पर चालू होता है। चलते समय 108 की आवाज़ बंद रहती है, और समय पूरा होने पर आपकी चुनी हुई 108 वाली आवाज़ बजती है।",tm_off:"बंद",tm_min:"मिनट",tm_1h:"1 घंटा",tdone:"⏰ समय पूरा हुआ! 🙏",nosnd:"🔇 बिना आवाज़",own:"+ अपना नाम",auto:"🔁 ऑटो जाप",bst:"▶ शुरू",bpa:"⏸ पॉज़",bsp:"■ बंद",paused:"⏸ पॉज़ है",tm_on:"चालू",stopauto:"⏸ ऑटो रोकें",gap:"ऑटो जाप: हर नाम के बीच समय (सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",
 m_speed:"⏱️ गिनती की गति",m_new:"➕ नया सत्र",m_old:"📿 पुरानी गिनती / सत्र",m_bk:"📤 बैकअप कोड",m_lang:"🌐 भाषा",m_sv:"🔔 आवाज़ और कंपन",m_th:"🎨 थीम",m_snd:"🎵 आवाज़ें बदलें",m_rs:"📥 डेटा रीस्टोर",m_in:"📲 होम स्क्रीन पर जोड़ें",m_ex:"🚪 ऐप बंद करें",
 th_colors:"रंग",th_style:"काउंटर स्टाइल",c_auto:"ऑटो",c_saffron:"केसरिया",c_night:"रात",c_krishna:"कृष्ण नीला",c_lotus:"कमल",c_tulsi:"तुलसी",c_rudraksha:"रुद्राक्ष",c_ganga:"गंगा",
 s_classic:"क्लासिक",s_mala:"माला मनके",s_rud:"रुद्राक्ष",s_jyoti:"ज्योति (दीपक)",s_flow:"फ्लो ग्रिड",s_bub:"बबल्स",
@@ -259,14 +314,16 @@ novib:"इस फ़ोन/ब्राउज़र में कंपन स�
 function t(k){return (T[S.lang]||T.hi)[k]}
 function $(i){return document.getElementById(i)}
 function all(q){return document.querySelectorAll(q)}
-function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.sessions){S=d;if(S.vib===undefined)S.vib=true;if(S.snd===undefined)S.snd=true;if(!S.lang)S.lang="hi";if(!S.theme)S.theme="auto";if(STY.indexOf(S.style)<0)S.style="classic";
- if(!S.snds)S.snds={};["c","b","m"].forEach(function(k){var v=+S.snds[k];S.snds[k]=(v>=0&&v<5)?v:0})}}}catch(e){}}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.sessions){S=d;if(S.vib===undefined)S.vib=true;if(S.snd===undefined)S.snd=true;if(!S.lang)S.lang="en";if(!S.m5){S.lang="en";S.m5=1}if(!S.theme)S.theme="rudraksha";if(!S.m6){S.theme="rudraksha";S.style="classic";S.m6=1}if(STY.indexOf(S.style)<0)S.style="classic";
+ if(!S.snds)S.snds={};["c","b","m"].forEach(function(k){var v=+S.snds[k];S.snds[k]=((v>=0&&v<5)||v===-1)?v:({c:1,b:3,m:3})[k]});if(!S.m7){S.snds={c:1,b:3,m:3};S.m7=1}if(S.tmOn===undefined)S.tmOn=true;var tm0=Math.floor(Number(S.timer));S.timer=(tm0>=0&&tm0<=600)?tm0:0}}}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function fmt(n){return Number(n).toLocaleString("en-IN")}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function cur(){for(var i=0;i<S.sessions.length;i++)if(S.sessions[i].id===S.active)return S.sessions[i];return null}
 function tgt(v){v=Math.floor(Number(v));return v>0?Math.min(v,1e12):0}
-function gapOf(s){return s&&s.gap?s.gap:0.67}
+function norm(x){return String(x).trim().toLowerCase()}
+function dispName(nm){var k=norm(nm);for(var i=0;i<NAMES.length;i++){var n=NAMES[i];if(k===norm(n.en)||k===norm(n.hi)||(n.alt||[]).some(function(a){return k===norm(a)}))return n[S.lang==="en"?"en":"hi"]}return nm}
+function gapOf(s){return s&&s.gap?s.gap:1}
 function newSess(name,target){stopAuto();var s={id:uid(),name:name||t("defname"),count:0,target:tgt(target)};S.sessions.unshift(s);S.active=s.id;save();render()}
 /* ---- builders ---- */
 function chips(){var h="";PRE.forEach(function(p){h+='<button class="chip'+(p===pick?' on':'')+'" data-p="'+p+'">'+fmt(p)+'</button>'});$("chips").innerHTML=h}
@@ -275,11 +332,13 @@ function nchips(){var v=$("nn").value,h="",m=false;NAMES.forEach(function(n,i){v
 function thchips(){var h="";TH.forEach(function(x){h+='<button class="chip'+(S.theme===x[0]?' on':'')+'" data-th="'+x[0]+'"><span class="dot" style="background:'+x[1]+'"></span>'+t("c_"+x[0])+'</button>'});$("thc").innerHTML=h;
  h="";STY.forEach(function(x){h+='<button class="chip'+(S.style===x?' on':'')+'" data-st="'+x+'">'+t("s_"+x)+'</button>'});$("stc").innerHTML=h}
 function sndchips(){var h="";[["c","sg_c"],["b","sg_b"],["m","sg_m"]].forEach(function(g,gi){h+='<label'+(gi?'':' style="margin-top:0"')+'>'+t(g[1])+'</label><div class="chips">';
- SN[g[0]].forEach(function(n,i){h+='<button class="chip'+(S.snds[g[0]]===i?' on':'')+'" data-ns data-sn="'+g[0]+':'+i+'">'+(i+1)+'. '+n[S.lang==="en"?0:1]+'</button>'});h+='</div>'});$("sndc").innerHTML=h}
+ SN[g[0]].forEach(function(n,i){h+='<button class="chip'+(S.snds[g[0]]===i?' on':'')+'" data-ns data-sn="'+g[0]+':'+i+'">'+(i+1)+'. '+n[S.lang==="en"?0:1]+'</button>'});h+='<button class="chip'+(S.snds[g[0]]===-1?' on':'')+'" data-ns data-sn="'+g[0]+':-1">'+t("nosnd")+'</button>';h+='</div>'});$("sndc").innerHTML=h}
 function theme(){var r=document.documentElement;if(S.theme&&S.theme!=="auto")r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme")}
-function speedHTML(){return '<label class="gl spl" style="text-align:center"></label><div class="btns" style="align-items:center;margin-top:6px"><button class="s gm" style="flex:0 0 52px">−</button><input class="gap" type="number" inputmode="decimal" step="0.1" min="0.2" max="60" style="margin-top:0;text-align:center"><button class="s gpl" style="flex:0 0 52px">+</button></div><input type="range" class="gr" min="0.2" max="10" step="0.1" style="margin:10px 0 0;padding:0;border:0;background:transparent"><div class="row"><span>0.2s</span><span>10s</span></div><div class="chips gch" style="justify-content:center"></div>'}
+function speedHTML(){return '<label class="gl spl" style="text-align:center"></label><div class="btns" style="align-items:center;margin-top:6px"><button class="s gm" style="flex:0 0 52px">−</button><input class="gap" type="number" inputmode="decimal" step="0.1" min="0.2" max="60" style="margin-top:0;text-align:center"><button class="s gpl" style="flex:0 0 52px">+</button></div><div class="sl"><div class="sf"></div><div class="st" tabindex="0" role="slider" aria-valuemin="0.2" aria-valuemax="10"></div></div><div class="row"><span>0.2s</span><span>10s</span></div><div class="chips gch" style="justify-content:center"></div>'}
 function gchips(){var g=gapOf(cur()),h="";GP.forEach(function(x){h+='<button class="chip'+(x===g?' on':'')+'" data-g="'+x+'">'+x+'s</button>'});all(".gch").forEach(function(e){e.innerHTML=h})}
-function gsync(){var g=gapOf(cur());all(".gap").forEach(function(e){e.value=g});all(".gr").forEach(function(e){e.value=g})}
+function gsync(){var g=gapOf(cur()),p=Math.max(0,Math.min(1,(g-0.2)/9.8));all(".gap").forEach(function(e){e.value=g});
+ all(".sl").forEach(function(sl){var th=sl.querySelector(".st");th.style.left="calc((100% - 32px) * "+p+")";sl.querySelector(".sf").style.width="calc((100% - 32px) * "+p+" + 16px)";th.setAttribute("aria-valuenow",g)})}
+function ratchet(){var n=Date.now();if(n-lastTick<30)return;lastTick=n;if(!S.snd)return;try{nz(.007,3000,1.2,1.5);osc("triangle",1000,520,.025,.3)}catch(e){}}
 function setGap(v){var s=cur();if(!s)return;v=Math.round(Number(v)*100)/100;if(!(v>=0.2))v=0.2;if(v>60)v=60;s.gap=v;save();gsync();
  if(auto){clearInterval(auto);auto=setInterval(doCount,v*1000)}autoUI();gchips()}
 /* ---- counter style ---- */
@@ -288,9 +347,9 @@ function drawStyle(){var sv=$("tsv"),st=S.style,h="",i,a,x,y;lastLit=-1;ST=[];
  if(st==="classic"){sv.setAttribute("class","sv");sv.innerHTML="";return}
  sv.setAttribute("class","sv "+st);
  if(st==="mala"||st==="rud"){for(i=0;i<108;i++){a=(90+(i+1)*360/109)*Math.PI/180;x=130+108*Math.cos(a);y=118+108*Math.sin(a);h+='<circle class="b" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(st==="rud"?3.4:3.2)+'"/>'}
-  h+='<circle class="gb" cx="130" cy="226" r="7"/><path class="ts" d="M130 233 L121 257 L139 257 Z"/>'} else if(st==="flow"){for(i=0;i<108;i++){h+='<rect class="b" x="'+(18+(i%9)*26)+'" y="'+(9+Math.floor(i/9)*21)+'" width="20" height="15" rx="4"/>'}}
- else if(st==="bub"){for(i=0;i<108;i++){var r=11.3*Math.sqrt(i+.5);a=i*2.39996;h+='<circle class="b" cx="'+(130+r*Math.cos(a)).toFixed(1)+'" cy="'+(130+r*Math.sin(a)).toFixed(1)+'" r="'+(3.2+i*.045).toFixed(1)+'"/>'}}
- else if(st==="jyoti"){h='<defs><radialGradient id="gl"><stop offset="0" stop-color="#ffd36b" stop-opacity=".85"/><stop offset="1" stop-color="#ffd36b" stop-opacity="0"/></radialGradient><linearGradient id="fg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff7a18"/><stop offset="1" stop-color="#ffe066"/></linearGradient></defs><circle cx="130" cy="125" r="115" fill="url(#gl)"/><g id="fl"><g class="fk"><path d="M130 45 C100 95 98 140 130 178 C162 140 160 95 130 45 Z" fill="url(#fg)"/></g></g><path d="M62 182 Q130 252 198 182 Z" fill="#a4561b"/><rect x="58" y="178" width="144" height="8" rx="4" fill="#c47a2c"/>'}
+  h+='<circle class="gb" cx="130" cy="226" r="7"/><path class="ts" d="M130 233 L121 257 L139 257 Z"/>'} else if(st==="flow"){for(i=0;i<108;i++){h+='<rect class="b" x="'+(18+(i%12)*19)+'" y="'+(24+Math.floor(i/12)*19)+'" width="15" height="15" rx="4"/>'}}
+ else if(st==="bub"){for(i=0;i<108;i++){var r=8.2*Math.sqrt(i+.5);a=i*2.39996;h+='<circle class="b" cx="'+(130+r*Math.cos(a)).toFixed(1)+'" cy="'+(96+r*Math.sin(a)).toFixed(1)+'" r="'+(2.4+i*.028).toFixed(1)+'"/>'}}
+ else if(st==="jyoti"){h='<defs><radialGradient id="gl"><stop offset="0" stop-color="#ffd36b" stop-opacity=".85"/><stop offset="1" stop-color="#ffd36b" stop-opacity="0"/></radialGradient><linearGradient id="fg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff7a18"/><stop offset="1" stop-color="#ffe066"/></linearGradient></defs><g transform="translate(130 14) scale(.8) translate(-130 -14)"><circle cx="130" cy="125" r="115" fill="url(#gl)"/><g id="fl"><g class="fk"><path d="M130 45 C100 95 98 140 130 178 C162 140 160 95 130 45 Z" fill="url(#fg)"/></g></g><path d="M62 182 Q130 252 198 182 Z" fill="#a4561b"/><rect x="58" y="178" width="144" height="8" rx="4" fill="#c47a2c"/></g>'}
  sv.innerHTML=h;ST=sv.querySelectorAll(".b")}
 function paint(c){var st=S.style;if(st==="classic")return;var n=c%108,lit=(c>0&&n===0)?108:n;
  if(st==="jyoti"){var f=$("fl");if(f)f.setAttribute("transform","translate(130 178) scale("+(.55+.45*lit/108).toFixed(3)+") translate(-130 -178)");return}
@@ -302,7 +361,9 @@ function prog(s){
  if(s.target){var p=Math.min(100,s.count/s.target*100);$("pg").style.width=p+"%";$("pc").textContent=p.toFixed(p<10?2:1)+"%";$("tg").textContent=t("target")+" "+fmt(s.target);$("dn").textContent=s.count>=s.target?t("done"):""}
  else{$("pg").style.width="0";$("pc").textContent=t("notarget");$("tg").innerHTML="&nbsp;";$("dn").textContent=""}
 }
-function autoUI(){$("au").textContent=t(auto?"stopauto":"auto");$("au").className="s"+(auto?" run":"");$("ah").textContent=auto?t("autohint").replace("{g}",gapOf(cur())):""}
+function autoUI(){$("au").textContent=t("auto")+(apOpen?" ▴":" ▾");$("au").className="s"+(auto?" run":"");$("apn").classList.toggle("on",apOpen);
+ $("bst").textContent=t("bst");$("bpa").textContent=t("bpa");$("bsp").textContent=t("bsp");$("bst").className="s"+(auto?" sel":"");$("bpa").className="s"+(paused?" sel":"");
+ $("ah").textContent=auto?t("autohint").replace("{g}",gapOf(cur())):(paused?t("paused"):"")}
 function instUI(){$("instb").textContent=t("inst");$("cp").textContent=t("copy");if(ihOpen){$("ih").innerHTML=/iphone|ipad|ipod/i.test(navigator.userAgent)?t("iios"):t("iand")}}
 function texts(){
  document.documentElement.lang=S.lang;
@@ -311,19 +372,19 @@ function texts(){
  all(".spl").forEach(function(e){e.textContent=t("gap")});
  $("tl").textContent=t("tap");$("lgv").textContent=t("lang");
  if(!$("rs").classList.contains("armed"))$("rs").textContent=t("reset");
- autoUI();instUI();
+ autoUI();instUI();tmUI();
 }
 function render(){
  var s=cur();
  if(!s){if(S.sessions.length){S.active=S.sessions[0].id;s=cur()}else{newSess(t("defname"),100000);return}}
- theme();texts();drawStyle();$("nm").textContent=s.name;prog(s);
+ theme();texts();drawStyle();$("nm").textContent=dispName(s.name);prog(s);
  var h="";S.sessions.forEach(function(x){
   h+='<div class="sess'+(x.id===s.id?' active':'')+'"><div class="t"><b></b><span>'+fmt(x.count)+(x.target?' / '+fmt(x.target):'')+'</span></div>'+
   (x.id===s.id?'':'<button class="go" data-o="'+x.id+'">'+t("open")+'</button>')+'<button class="x" data-d="'+x.id+'">🗑</button></div>'});
  $("list").innerHTML=h;
- var bs=$("list").querySelectorAll(".sess b");S.sessions.forEach(function(x,i){bs[i].textContent=x.name});
+ var bs=$("list").querySelectorAll(".sess b");S.sessions.forEach(function(x,i){bs[i].textContent=dispName(x.name)});
  chips();nchips();thchips();sndchips();gchips();gsync();
- $("tv").className="chip"+(S.vib?" on":"");$("ts").className="chip"+(S.snd?" on":"");$("tw").className="chip"+(S.wake?" on":"");
+ $("snb").textContent=S.snd?"🔔":"🔇";$("snb").className="mbtn"+(S.snd?"":" off");$("tv").className="chip"+(S.vib?" on":"");$("ts").className="chip"+(S.snd?" on":"");$("tw").className="chip"+(S.wake?" on":"");
  $("vh").textContent=(S.vib&&!navigator.vibrate)?t("novib"):"";
 }
 /* ---- sounds ---- */
@@ -351,28 +412,53 @@ function whoosh(){var a=ctx(),t0=a.currentTime,n=Math.floor(a.sampleRate*.8),b=a
  s.connect(f);f.connect(g);g.connect(BUS);s.start(t0);s.stop(t0+.8)}
 function woosh(){if(S.snd){try{whoosh()}catch(e){}}}
 var KA=null,KT=null;
+var KAUD=null;
+function wavURL(){var sr=44100,n=sr,buf=new ArrayBuffer(44+n*2),v=new DataView(buf);function ws(o,x){for(var i=0;i<x.length;i++)v.setUint8(o+i,x.charCodeAt(i))}
+ ws(0,"RIFF");v.setUint32(4,36+n*2,true);ws(8,"WAVE");ws(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);ws(36,"data");v.setUint32(40,n*2,true);
+ for(var i=0;i<n;i++)v.setInt16(44+i*2,Math.round(Math.sin(2*Math.PI*20000*i/sr)*.04*32767),true);return URL.createObjectURL(new Blob([buf],{type:"audio/wav"}))}
+function audKeep(on){try{if(on){if(!KAUD){KAUD=new Audio(wavURL());KAUD.loop=true}var p=KAUD.play();if(p&&p.catch)p.catch(function(){})}else if(KAUD){KAUD.pause()}}catch(e){}}
 function stopKeep(){clearTimeout(KT);try{if(KA)KA.stop()}catch(e){}KA=null}
-function keep(ms){if(!S.snd)return;try{var a=ctx();if(!KA){var o=a.createOscillator(),g=a.createGain();o.frequency.value=30;g.gain.value=.002;o.connect(g);g.connect(BUS);o.start();KA=o}
+function keep(ms){if(!S.snd)return;try{var a=ctx();if(!KA){var o=a.createOscillator(),g=a.createGain();o.frequency.value=20000;g.gain.value=.03;o.connect(g);g.connect(BUS);o.start();KA=o}
  clearTimeout(KT);if(ms)KT=setTimeout(stopKeep,ms)}catch(e){}}
 function feel(big){
  if(S.vib&&navigator.vibrate){try{var ok=navigator.vibrate(big?[400]:30);if(ok===false)$("vh").textContent=t("blocked")}catch(e){}}
- if(S.snd){try{keep(auto?0:8000);(big?MS[S.snds.m]:CS[S.snds.c])()}catch(e){}}
+ if(S.snd){try{var fn=(big&&!TM)?MS[S.snds.m]:CS[S.snds.c];if(fn){keep(auto?0:8000);fn()}}catch(e){}}
 }
 /* ---- counting ---- */
 function doCount(){var s=cur();if(!s)return;s.count++;save();feel(s.count%108===0);prog(s);
  var sp=$("list").querySelector(".sess.active .t span");if(sp)sp.textContent=fmt(s.count)+(s.target?' / '+fmt(s.target):'');
  if(auto&&s.target&&s.count>=s.target)stopAuto()}
 function wake(){var need=S.wake||auto;if(need&&navigator.wakeLock){if(!WL)navigator.wakeLock.request("screen").then(function(l){WL=l;l.addEventListener("release",function(){WL=null})}).catch(function(){})}else if(WL){try{WL.release()}catch(e){}WL=null}}
-function startAuto(){if(auto)return;auto=setInterval(doCount,gapOf(cur())*1000);keep(0);autoUI();wake()}
-function stopAuto(){if(!auto)return;clearInterval(auto);auto=null;if(S.snd)keep(8000);else stopKeep();autoUI();wake()}
+function mmss(x){var h=Math.floor(x/3600),m=Math.floor(x%3600/60),r=x%60,p=function(n){return (n<10?"0":"")+n};return h?h+":"+p(m)+":"+p(r):p(m)+":"+p(r)}
+function tmUI(){var run=!!TM,h="",d=$("tmd");$("tmrow").style.display=(run||S.timer>0)?"flex":"none";d.textContent="⏱ "+mmss(run?tmRem:S.timer*60);d.className="tmd"+((run&&!paused)?" on":"")+(S.tmOn?"":" off");
+ $("tmon").textContent=t("tm_on");$("tmoff").textContent=t("tm_off");$("tmon").className="s tmb"+(S.tmOn?" fill":"");$("tmoff").className="s tmb"+(S.tmOn?"":" fill");$("tms").disabled=run;
+ TMP.forEach(function(x){h+='<button class="chip'+(S.timer===x?' on':'')+'" data-tm="'+x+'"'+(run?' disabled':'')+'>'+(x===0?t("tm_off"):x===60?t("tm_1h"):x+" "+t("tm_min"))+'</button>'});$("tmc").innerHTML=h}
+function tmSw(on){S.tmOn=on;save();if(!on&&TM)stopTimer();if(on&&auto&&!TM)startTimer();tmUI()}
+function tmMsg(){$("tmh").textContent=S.timer>0?t("tm_setmsg").replace("{m}",S.timer):t("tm_offmsg")}
+function setTimer(v){if(TM)return;$("tmh").textContent="";S.timer=Math.max(0,Math.min(600,Math.round(v)));if(S.timer>0)S.tmOn=true;save();tmUI()}
+function startTimer(){if(TM||!(S.timer>0)||!S.tmOn)return;tmEnd=Date.now()+S.timer*60000;tmRem=S.timer*60;TM=setInterval(tmTick,250);$("tmh").textContent="";tmUI()}
+function stopTimer(){if(!TM)return;clearInterval(TM);TM=null;tmUI()}
+function tmTick(){if(paused)return;var r=Math.max(0,Math.ceil((tmEnd-Date.now())/1000));if(r!==tmRem){tmRem=r;$("tmd").textContent="⏱ "+mmss(r)}if(r<=0)finishTimer()}
+function alarm(){if(S.vib&&navigator.vibrate){try{navigator.vibrate([300,150,300,150,300])}catch(e){}}
+ if(S.snd){try{ctx();var fn=MS[S.snds.m];if(fn)fn()}catch(e){}}}
+function finishTimer(){stopAuto();alarm();$("ah").textContent=t("tdone");$("tmh").textContent=t("tdone")}
+function startAuto(){if(auto)return;if(paused){paused=false;if(TM)tmEnd+=Date.now()-pauseAt}
+ auto=setInterval(doCount,gapOf(cur())*1000);keep(0);if(S.snd)audKeep(true);startTimer();autoUI();tmUI();wake()}
+function pauseAuto(){if(!auto)return;clearInterval(auto);auto=null;paused=true;pauseAt=Date.now();audKeep(false);autoUI();tmUI();wake()}
+function stopAuto(){if(!auto&&!paused)return;clearInterval(auto);auto=null;paused=false;stopTimer();audKeep(false);if(S.snd)keep(8000);else stopKeep();autoUI();wake()}
 function syncOpen(){$("menu").classList.toggle("has-open",!!document.querySelector(".mi.open"))}
 function dopen(v){$("dr").classList.toggle("on",v);$("ov").classList.toggle("on",v)}
 /* ---- events ---- */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(b&&b.id!=="tap"&&!b.hasAttribute("data-ns")&&S.snd){try{BS[S.snds.b]()}catch(x){}}},true);
 $("tap").addEventListener("click",doCount);
-$("au").onclick=function(){auto?stopAuto():startAuto()};
+$("au").onclick=function(){apOpen=!apOpen;autoUI()};
+$("bst").onclick=function(){startAuto()};$("bpa").onclick=function(){pauseAuto()};$("bsp").onclick=function(){stopAuto()};
 document.addEventListener("keydown",function(e){if(e.code==="Escape")dopen(false);if(e.code==="Space"&&document.activeElement.tagName!=="INPUT"&&document.activeElement.tagName!=="TEXTAREA"){e.preventDefault();$("tap").click()}});
-document.addEventListener("input",function(e){if(e.target.classList.contains("gr"))setGap(e.target.value)});
+document.addEventListener("pointerdown",function(e){var st=e.target.closest&&e.target.closest(".sl .st");if(!st)return;var r=st.getBoundingClientRect();drag={sl:st.parentNode,st:st,off:e.clientX-(r.left+r.width/2),id:e.pointerId};st.classList.add("drag");try{st.setPointerCapture(e.pointerId)}catch(x){}lastV=gapOf(cur());e.preventDefault()});
+document.addEventListener("pointermove",function(e){if(!drag||e.pointerId!==drag.id)return;var r=drag.sl.getBoundingClientRect(),f=Math.max(0,Math.min(1,(e.clientX-drag.off-r.left-16)/(r.width-32))),v=Math.round((0.2+f*9.8)*10)/10;if(v!==lastV){lastV=v;setGap(v);ratchet()}});
+function endDrag(e){if(drag&&(!e||e.pointerId===drag.id)){drag.st.classList.remove("drag");drag=null}}
+document.addEventListener("pointerup",endDrag);document.addEventListener("pointercancel",endDrag);
+document.addEventListener("keydown",function(e){var st=e.target.closest&&e.target.closest(".sl .st");if(!st)return;if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();setGap(gapOf(cur())+(e.key==="ArrowRight"?.1:-.1));ratchet()}});
 document.addEventListener("change",function(e){if(e.target.classList.contains("gap"))setGap(e.target.value)});
 document.addEventListener("click",function(e){var el=e.target.closest("button");if(!el)return;
  if(el.classList.contains("gm"))setGap(gapOf(cur())-.1);
@@ -382,19 +468,24 @@ $("mb").onclick=function(){dopen(true)};$("ov").onclick=function(){dopen(false)}
 $("menu").addEventListener("click",function(e){var h=e.target.closest(".mh");if(!h)return;
  if(h.id==="lgb"){S.lang=S.lang==="hi"?"en":"hi";save();render();return}
  var mi=h.parentNode,was=mi.classList.contains("open");all(".mi").forEach(function(m){m.classList.remove("open")});if(!was)mi.classList.add("open");syncOpen()});
+$("tmon").onclick=function(){tmSw(true)};$("tmoff").onclick=function(){tmSw(false)};
+$("tms").onclick=function(){var v=parseFloat($("tmi").value);if(v>0){setTimer(v);tmMsg();$("tmi").value=""}};$("tmi").addEventListener("keydown",function(e){if(e.key==="Enter")$("tms").click()});
+
+$("tmc").addEventListener("click",function(e){var x=e.target.closest("[data-tm]");if(x){setTimer(+x.getAttribute("data-tm"));tmMsg()}});
 $("undo").onclick=function(){var s=cur();if(s&&s.count>0){s.count--;save();render()}};
 var rt=null;
 $("rs").onclick=function(){var s=cur();if(!s)return;var b=$("rs");
  if(b.classList.contains("armed")){clearTimeout(rt);b.classList.remove("armed");b.textContent=t("reset");s.count=0;save();render();woosh();if(S.vib&&navigator.vibrate){try{navigator.vibrate(60)}catch(e){}}}
  else{b.classList.add("armed");b.textContent=t("rconf");rt=setTimeout(function(){b.classList.remove("armed");b.textContent=t("reset")},3000)}};
 $("rn").onclick=function(){var s=cur();if(!s)return;var e=$("ed");if(e.classList.contains("on")){e.classList.remove("on");return}
- $("en").value=s.name;$("et").value=s.target||"";$("ec").value="";e.classList.add("on")};
+ $("en").value=dispName(s.name);$("et").value=s.target||"";$("ec").value="";e.classList.add("on")};
 $("ecancel").onclick=function(){$("ed").classList.remove("on")};
 $("esave").onclick=function(){var s=cur();if(!s)return;var n=$("en").value.trim();if(n)s.name=n.slice(0,60);
  s.target=tgt($("et").value);var c=$("ec").value;if(c!==""){var cv=Math.floor(Number(c));if(cv>=0)s.count=Math.min(cv,1e12)}
  save();$("ed").classList.remove("on");render()};
 $("tv").onclick=function(){S.vib=!S.vib;save();render();if(S.vib)feel(false)};
-$("ts").onclick=function(){S.snd=!S.snd;save();render();if(S.snd)feel(false)};
+function toggleSnd(){S.snd=!S.snd;save();if(!S.snd){stopKeep();audKeep(false)}else if(auto)audKeep(true);render();if(S.snd)feel(false)}
+$("ts").onclick=toggleSnd;$("snb").onclick=toggleSnd;
 $("tw").onclick=function(){S.wake=!S.wake;save();render();wake()};
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")wake()});
 $("chips").addEventListener("click",function(e){var p=e.target.getAttribute("data-p");if(p){pick=+p;$("nt").value="";chips()}});
@@ -415,7 +506,7 @@ $("list").addEventListener("click",function(e){var el=e.target,o=el.getAttribute
 /* ---- backup / restore ---- */
 function enc(o){return "NAAM1:"+btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
 function dec(c){c=c.trim();if(c.indexOf("NAAM1:")!==0)throw 0;return JSON.parse(decodeURIComponent(escape(atob(c.slice(6)))))}
-$("bkb").onclick=function(){var code=enc({sessions:S.sessions,active:S.active,lang:S.lang,theme:S.theme,style:S.style,snds:S.snds});var b=$("bkt");b.value=code;
+$("bkb").onclick=function(){var code=enc({sessions:S.sessions,active:S.active,lang:S.lang,theme:S.theme,style:S.style,snds:S.snds,timer:S.timer});var b=$("bkt");b.value=code;
  var ok=function(){$("bkm").textContent=t("bkok")},no=function(){b.focus();b.select();$("bkm").textContent=t("bkman")};
  try{navigator.clipboard.writeText(code).then(ok,no)}catch(e){no()}};
 $("bkr").onclick=function(){var v=$("rst").value;if(!v.trim()){$("rsm").textContent=t("bkempty");return}
@@ -426,15 +517,20 @@ $("bkr").onclick=function(){var v=$("rst").value;if(!v.trim()){$("rsm").textCont
    var k=-1;S.sessions.forEach(function(y,i){if(y.id===o.id)k=i});if(k>=0)S.sessions[k]=o;else S.sessions.push(o);n++});
   if(d.theme&&TH.some(function(h){return h[0]===d.theme}))S.theme=d.theme;
   if(d.style&&STY.indexOf(d.style)>=0)S.style=d.style;
-  if(d.snds)["c","b","m"].forEach(function(k){var v2=+d.snds[k];if(v2>=0&&v2<5)S.snds[k]=v2});
+  if(d.snds)["c","b","m"].forEach(function(k){var v2=+d.snds[k];if((v2>=0&&v2<5)||v2===-1)S.snds[k]=v2});
+  if(typeof d.timer==="number"&&d.timer>=0&&d.timer<=600)S.timer=Math.floor(d.timer);
   if(d.lang==="hi"||d.lang==="en")S.lang=d.lang;
   if(!cur()&&S.sessions.length)S.active=S.sessions[0].id;
   save();render();$("rsm").textContent=t("bkdone")+n}
  catch(e){$("rsm").textContent=t("bkbad")}};
 /* ---- install ---- */
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();DP=e});
-window.addEventListener("appinstalled",function(){$("mi_in").style.display="none"});
-if((window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone)$("mi_in").style.display="none";
+window.addEventListener("appinstalled",function(){S.installed=true;save();$("mi_in").style.display="none";$("inh").style.display="none"});
+if((window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone)S.installed=true;
+$("mi_in").style.display="none";$("inh").style.display="none";
+function chkInst(){if((window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone){S.installed=true;save()}if(!S.installed){$("mi_in").style.display="";$("inh").style.display=""}}
+function showInstall(){dopen(true);all(".mi").forEach(function(m){m.classList.remove("open")});$("mi_in").classList.add("open");syncOpen();ihOpen=true;$("ih").style.display="block";$("ib").style.display="flex";instUI();try{$("mi_in").scrollIntoView({block:"center"})}catch(e){}}
+$("inh").onclick=function(){if(DP){DP.prompt();DP.userChoice.then(function(r){DP=null;if(r&&r.outcome==="accepted"){S.installed=true;save();$("inh").style.display="none";$("mi_in").style.display="none"}}).catch(function(){});return}showInstall()};
 $("instb").onclick=function(){
  if(DP){DP.prompt();DP.userChoice.then(function(){DP=null}).catch(function(){});return}
  ihOpen=!ihOpen;$("ih").style.display=ihOpen?"block":"none";$("ib").style.display=ihOpen?"flex":"none";instUI()};
@@ -445,7 +541,7 @@ $("exn").onclick=function(){all(".mi").forEach(function(m){m.classList.remove("o
 $("exy").onclick=function(){stopAuto();stopKeep();dopen(false);try{window.close()}catch(e){}$("bye").classList.add("on")};
 $("byeb").onclick=function(){$("bye").classList.remove("on")};
 $("sp_main").innerHTML=speedHTML();$("sp_menu").innerHTML=speedHTML();
-load();render();wake();
+load();render();chkInst();wake();
 })();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
