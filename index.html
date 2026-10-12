@@ -148,6 +148,40 @@ button.s.tmb.fill{background:var(--accent);color:#fff}
 button.s.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
 #bsp{border-color:#c0392b}
 .tap.s-jyoti,.tap.s-flow,.tap.s-bub{align-items:flex-end;padding-bottom:22px}
+/* v8 */
+.tap.bd #tl{border:0;padding:7px 18px;background:linear-gradient(135deg,var(--accent),var(--accent2));animation:none}
+.tmrow{flex-direction:column;align-items:stretch;gap:0}
+.tmrow .tmd{flex:none;width:100%}
+.tm3{display:flex;gap:8px;margin-top:8px}
+.tm3 .tmb,button.s.tmb{flex:1 1 0;padding:11px 4px;font-size:15px;font-weight:700;border:2px solid var(--accent);color:var(--accent);background:transparent}
+button.s.tmb.tmgreen{border-color:#2e8b57;color:#2e8b57;background:rgba(46,139,87,.12)}
+button.s.tmb.tmred{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,.12)}
+#tmgo{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tmd.on{border:2px solid transparent;box-shadow:none;color:var(--accent);background:linear-gradient(var(--bg),var(--bg)) padding-box,conic-gradient(from var(--ang),var(--accent) 0deg,var(--accent) 190deg,var(--accent2) 265deg,#fff 330deg,var(--accent) 360deg) border-box;animation:spin 2s linear infinite}
+/* v9 */
+.sec+.sec{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.sech{font-size:13px;font-weight:700;color:var(--ink);text-align:center;margin:0 0 10px}
+.tmg{display:grid;grid-template-columns:1fr 1.6fr 1fr;grid-template-rows:auto auto;gap:8px}
+#tmtg{grid-column:1;grid-row:1/3;align-self:stretch}
+#tmgo{grid-column:3;grid-row:1/3;align-self:stretch}
+#tmd,#tmi2{grid-column:2;grid-row:1;width:100%;margin:0;font-family:inherit}
+#tmd{font-size:22px}
+#tmi2{text-align:center;font-size:22px;font-weight:800;padding:10px;border:2px solid var(--accent);display:none}
+.tmpm{grid-column:2;grid-row:2;display:flex;gap:8px}
+.tmpm .s{flex:1;padding:8px 0;font-size:20px;font-weight:700}
+.pg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.pg3 .chip{text-align:center;padding:9px 0;font-size:14px}
+/* v10 */
+.tmhead{display:flex;align-items:center;justify-content:center;gap:12px}
+.swt{position:relative;width:48px;height:26px;border-radius:14px;border:2px solid #c0392b;padding:0;background:linear-gradient(#2e8b57,#2e8b57) no-repeat 0 0/0% 100%;transition:background-size .4s ease,border-color .4s ease;cursor:pointer;flex:none}
+.swt i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#c0392b;transition:transform .35s ease,background .35s ease;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.swt.on{background-size:100% 100%;border-color:#2e8b57}
+.swt.on i{transform:translateX(22px);background:#fff}
+.tmr3{display:flex;gap:8px;align-items:stretch}
+.tmr3 .tmd{flex:1;width:auto;grid-column:auto;text-align:center}
+.tmr3 .s{flex:0 0 58px;font-size:22px;font-weight:700;padding:8px 0}
+#tmd{grid-column:auto;grid-row:auto}
+#tmgo{grid-column:auto;grid-row:auto;width:100%;margin-top:10px;padding:12px}
 </style>
 </head>
 <body>
@@ -163,11 +197,16 @@ button.s.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
   <div class="row"><span id="pc">0%</span><span id="tg">&nbsp;</span></div>
   <div class="done" id="dn"></div>
   <button class="tap" id="tap"><svg id="tsv" class="sv" viewBox="0 0 260 270"></svg><span id="tl"></span></button>
-  <div class="tmrow" id="tmrow"><div class="tmd" id="tmd"></div><button class="s tmb" id="tmon"></button><button class="s tmb" id="tmoff"></button></div>
   <div class="btns"><button class="s" id="au"></button></div>
   <div class="ap" id="apn">
-    <div id="sp_main"></div>
-    <div class="btns"><button class="s" id="bst"></button><button class="s" id="bpa"></button><button class="s danger" id="bsp"></button></div>
+    <div class="sec">
+      <div class="sech tmhead"><span data-i="tm_sec"></span><button class="swt" id="tmsw" role="switch" aria-checked="false" aria-label="Timer"><i></i></button></div>
+      <div class="tmr3"><button class="s" id="tmm">−</button><div class="tmd" id="tmd"></div><button class="s" id="tmp">+</button></div>
+      <button class="s tmb" id="tmgo"></button>
+      <div class="done" id="tmf" style="margin-top:6px"></div>
+      <div class="hint" data-i="tm_hint2" style="text-align:center;margin-top:0"></div>
+    </div>
+    <div class="sec"><div id="sp_main"></div></div>
   </div>
   <div class="hint" id="ah" style="text-align:center"></div>
   <div class="btns">
@@ -194,16 +233,6 @@ button.s.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
   <nav id="menu">
     <div class="mi"><button class="mh"><span data-i="m_speed"></span><i>›</i></button>
       <div class="mc"><div id="sp_menu"></div></div></div>
-
-    <div class="mi"><button class="mh"><span data-i="m_tm"></span><i>›</i></button>
-      <div class="mc">
-        <div class="hint" data-i="tm_hint" style="margin:0 0 10px"></div>
-        <label data-i="tm_custom" style="margin-top:0"></label>
-        <div class="btns" style="margin-top:6px"><input id="tmi" type="number" inputmode="numeric" min="1" max="600" data-ph="tm_ph" style="margin-top:0"><button class="go" id="tms" style="flex:0 0 90px" data-i="tm_set"></button></div>
-        <label data-i="tm_presets"></label>
-        <div class="chips" id="tmc"></div>
-        <div class="done" id="tmh"></div>
-      </div></div>
 
     <div class="mi"><button class="mh"><span data-i="m_new"></span><i>›</i></button>
       <div class="mc">
@@ -283,16 +312,16 @@ button.s.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
 
 <script>
 (function(){
-var KEY="naam-counter-v1",PRE=[108,1000,100000,1000000,10000000],GP=[0.5,1,2,3,5];
+var KEY="naam-counter-v1",PRE=[108,1008,100000,1000000,10000000],GP=[0.5,0.8,1,2,3,5];
 var NAMES=[{en:"Radha",hi:"राधा"},{en:"OM Namah Shivaya",hi:"ॐ नम शिवाय",alt:["ॐ नमः शिवाय"]},{en:"Sita Ram",hi:"सीता राम"},{en:"Ram",hi:"राम"}];
 var TH=[["auto","#d9791a"],["saffron","#d9791a"],["night","#271c10"],["krishna","#2f6fd6"],["lotus","#d6336c"],["tulsi","#2e9b57"],["rudraksha","#b5361b"],["ganga","#1a8fa8"]];
 var STY=["classic","mala","rud","jyoti","flow","bub"];
 var SN={c:[["Beep","बीप"],["Wood tok","लकड़ी टक"],["Bell ting","घंटी टिंग"],["Water drop","पानी की बूँद"],["Soft click","हल्की क्लिक"]],
  b:[["Keyboard tap","कीबोर्ड टैप"],["Pop","पॉप"],["Soft thump","हल्की थप"],["Chime","चाइम"],["Bubble","बबल"]],
  m:[["Gong","घंटा"],["Temple bell","मंदिर की घंटी"],["Shankh","शंख"],["Singing bowl","सिंगिंग बाउल"],["Drum","ढोल"]]};
-var S={sessions:[],active:null,vib:true,snd:true,wake:false,lang:"en",theme:"rudraksha",style:"classic",snds:{c:1,b:3,m:3},timer:0,tmOn:true},pick=100000,AC=null,BUS=null,WL=null,auto=null,DP=null,ihOpen=false,lastLit=-1,ST=[],pickOwn=false,TM=null,tmRem=0,tmEnd=0,TMP=[0,5,10,15,30,60],apOpen=false,paused=false,pauseAt=0,drag=null,lastTick=0,lastV=0;
+var S={sessions:[],active:null,vib:true,snd:true,wake:true,lang:"en",theme:"saffron",style:"bub",snds:{c:1,b:0,m:3},timer:5,tmOn:false,m5:1,m6:1,m7:1,m8:1},pick=100000,AC=null,BUS=null,WL=null,auto=null,DP=null,ihOpen=false,lastLit=-1,ST=[],pickOwn=false,TM=null,tmRem=0,tmEnd=0,TMP=[0,5,10,15,30,60],apOpen=false,paused=false,pauseAt=0,drag=null,lastTick=0,lastV=0;
 var T={
-en:{title:"🕉️ Naam Counter",menu:"Menu",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst2:"📲 Install app",tm_title:"Chant timer (optional)",tm_custom:"Set your own time (minutes)",tm_ph:"e.g. 45",tm_set:"Set",m_tm:"⏱ Chant timer",tm_presets:"Quick presets",tm_setmsg:"✓ Timer set to {m} min. It starts with Auto Jap.",tm_offmsg:"Timer is off.",tm_hint:"The timer starts when you start Auto Jap. While it runs, the 108 sound is off, and your chosen 108 sound plays when the time is up.",tm_off:"Off",tm_min:"min",tm_1h:"1 hour",tdone:"⏰ Time complete! 🙏",nosnd:"🔇 No sound",own:"+ Your own",auto:"🔁 Auto Jap",bst:"▶ Start",bpa:"⏸ Pause",bsp:"■ Stop",paused:"⏸ Paused",tm_on:"On",stopauto:"⏸ Stop Auto",gap:"Auto jap: time gap per naam (seconds)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",
+en:{title:"🕉️ Naam Counter",menu:"Menu",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst2:"📲 Install app",tm_title:"Chant timer (optional)",tm_custom:"Set your own time (minutes)",tm_ph:"e.g. 45",tm_set:"Set",m_tm:"⏱ Chant timer",tm_presets:"Quick presets",tm_setmsg:"✓ Timer set to {m} min. Use On and Start on the home screen.",tm_offmsg:"Timer is off.",tm_hint:"Set your time here. On the home screen, tap On, then Start. The timer runs on its own, separate from Auto Jap. While it runs, the 108 sound is off, and your chosen 108 sound plays when time is up.",tm_off:"Off",tm_min:"min",tm_1h:"1 hour",tdone:"⏰ Time complete! 🙏",nosnd:"🔇 No sound",own:"+ Your own",auto:"🔁 Auto Jap",bst:"▶ Start",bpa:"⏸ Pause",bsp:"■ Stop",paused:"⏸ Paused",tm_on:"On",bres:"▶ Resume",tm_sec:"⏱ Chant timer",tm_hint2:"Turn the switch on to set the time with − and + (1–60 min). Start runs Auto Jap together with the timer.",tm_ed:"1–60",stopauto:"⏸ Stop Auto",gap:"⚡ Adjust speed (seconds per naam)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",
 m_speed:"⏱️ Counter speed",m_new:"➕ New session",m_old:"📿 Old counts / sessions",m_bk:"📤 Backup code",m_lang:"🌐 Language",m_sv:"🔔 Sound & vibration",m_th:"🎨 Theme",m_snd:"🎵 Change sounds",m_rs:"📥 Restore data",m_in:"📲 Add to Home screen",m_ex:"🚪 Exit app",
 th_colors:"Colors",th_style:"Counter style",c_auto:"Auto",c_saffron:"Saffron",c_night:"Night",c_krishna:"Krishna Blue",c_lotus:"Lotus",c_tulsi:"Tulsi",c_rudraksha:"Rudraksha",c_ganga:"Ganga",
 s_classic:"Classic",s_mala:"Mala Beads",s_rud:"Rudraksha",s_jyoti:"Jyoti (Diya)",s_flow:"Flow Grid",s_bub:"Bubbles",
@@ -301,7 +330,7 @@ bkh:"Backup makes a code with all your sessions and counts. Save it in WhatsApp 
 inst:"📲 Install / Add to Home screen",iand:"1. Open this page in Chrome (not inside another app).<br>2. Tap the ⋮ menu (top right).<br>3. Tap “Add to Home screen” or “Install app”.<br>4. Tap Add.",iios:"1. Open this page in Safari.<br>2. Tap the Share button (square with arrow).<br>3. Tap “Add to Home Screen”, then Add.",copy:"Copy page link",copied:"Link copied ✓",
 exq:"Close the app?",exy:"Exit app",exn:"Stay",byet:"🙏 Thank you!",byes:"You can now close the app with your phone's Home or Back button.",byeb:"Back to app",
 novib:"Vibration isn't supported on this device/browser (e.g. iPhone). Turn on Sound for tap feedback.",blocked:"Your browser blocked vibration. Open this page in Chrome (not inside another app) and check your phone's vibration settings."},
-hi:{title:"🕉️ नाम काउंटर",menu:"मेनू",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst2:"📲 ऐप इंस्टॉल करें",tm_title:"जाप टाइमर (वैकल्पिक)",tm_custom:"अपना समय सेट करें (मिनट)",tm_ph:"जैसे 45",tm_set:"सेट",m_tm:"⏱ जाप टाइमर",tm_presets:"जल्दी चुनें",tm_setmsg:"✓ टाइमर {m} मिनट सेट हुआ। यह ऑटो जाप के साथ शुरू होगा।",tm_offmsg:"टाइमर बंद है।",tm_hint:"टाइमर ऑटो जाप शुरू करने पर चालू होता है। चलते समय 108 की आवाज़ बंद रहती है, और समय पूरा होने पर आपकी चुनी हुई 108 वाली आवाज़ बजती है।",tm_off:"बंद",tm_min:"मिनट",tm_1h:"1 घंटा",tdone:"⏰ समय पूरा हुआ! 🙏",nosnd:"🔇 बिना आवाज़",own:"+ अपना नाम",auto:"🔁 ऑटो जाप",bst:"▶ शुरू",bpa:"⏸ पॉज़",bsp:"■ बंद",paused:"⏸ पॉज़ है",tm_on:"चालू",stopauto:"⏸ ऑटो रोकें",gap:"ऑटो जाप: हर नाम के बीच समय (सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",
+hi:{title:"🕉️ नाम काउंटर",menu:"मेनू",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst2:"📲 ऐप इंस्टॉल करें",tm_title:"जाप टाइमर (वैकल्पिक)",tm_custom:"अपना समय सेट करें (मिनट)",tm_ph:"जैसे 45",tm_set:"सेट",m_tm:"⏱ जाप टाइमर",tm_presets:"जल्दी चुनें",tm_setmsg:"✓ टाइमर {m} मिनट सेट हुआ। होम स्क्रीन पर चालू और शुरू दबाएँ।",tm_offmsg:"टाइमर बंद है।",tm_hint:"यहाँ समय सेट करें। होम स्क्रीन पर चालू दबाएँ, फिर शुरू दबाएँ। टाइमर ऑटो जाप से अलग चलता है। चलते समय 108 की आवाज़ बंद रहती है, और समय पूरा होने पर आपकी चुनी हुई 108 वाली आवाज़ बजती है।",tm_off:"बंद",tm_min:"मिनट",tm_1h:"1 घंटा",tdone:"⏰ समय पूरा हुआ! 🙏",nosnd:"🔇 बिना आवाज़",own:"+ अपना नाम",auto:"🔁 ऑटो जाप",bst:"▶ शुरू",bpa:"⏸ पॉज़",bsp:"■ रोकें",paused:"⏸ पॉज़ है",tm_on:"चालू",bres:"▶ जारी रखें",tm_sec:"⏱ जाप टाइमर",tm_hint2:"टाइमर चालू करने के लिए स्विच दबाएँ, फिर − और + से समय (1–60 मिनट) सेट करें। शुरू दबाने पर ऑटो जाप टाइमर के साथ चलता है।",tm_ed:"1–60",stopauto:"⏸ ऑटो रोकें",gap:"⚡ गति सेट करें (प्रति नाम सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",
 m_speed:"⏱️ गिनती की गति",m_new:"➕ नया सत्र",m_old:"📿 पुरानी गिनती / सत्र",m_bk:"📤 बैकअप कोड",m_lang:"🌐 भाषा",m_sv:"🔔 आवाज़ और कंपन",m_th:"🎨 थीम",m_snd:"🎵 आवाज़ें बदलें",m_rs:"📥 डेटा रीस्टोर",m_in:"📲 होम स्क्रीन पर जोड़ें",m_ex:"🚪 ऐप बंद करें",
 th_colors:"रंग",th_style:"काउंटर स्टाइल",c_auto:"ऑटो",c_saffron:"केसरिया",c_night:"रात",c_krishna:"कृष्ण नीला",c_lotus:"कमल",c_tulsi:"तुलसी",c_rudraksha:"रुद्राक्ष",c_ganga:"गंगा",
 s_classic:"क्लासिक",s_mala:"माला मनके",s_rud:"रुद्राक्ष",s_jyoti:"ज्योति (दीपक)",s_flow:"फ्लो ग्रिड",s_bub:"बबल्स",
@@ -314,8 +343,8 @@ novib:"इस फ़ोन/ब्राउज़र में कंपन स�
 function t(k){return (T[S.lang]||T.hi)[k]}
 function $(i){return document.getElementById(i)}
 function all(q){return document.querySelectorAll(q)}
-function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.sessions){S=d;if(S.vib===undefined)S.vib=true;if(S.snd===undefined)S.snd=true;if(!S.lang)S.lang="en";if(!S.m5){S.lang="en";S.m5=1}if(!S.theme)S.theme="rudraksha";if(!S.m6){S.theme="rudraksha";S.style="classic";S.m6=1}if(STY.indexOf(S.style)<0)S.style="classic";
- if(!S.snds)S.snds={};["c","b","m"].forEach(function(k){var v=+S.snds[k];S.snds[k]=((v>=0&&v<5)||v===-1)?v:({c:1,b:3,m:3})[k]});if(!S.m7){S.snds={c:1,b:3,m:3};S.m7=1}if(S.tmOn===undefined)S.tmOn=true;var tm0=Math.floor(Number(S.timer));S.timer=(tm0>=0&&tm0<=600)?tm0:0}}}catch(e){}}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.sessions){S=d;if(S.vib===undefined)S.vib=true;if(S.snd===undefined)S.snd=true;if(!S.lang)S.lang="en";if(!S.m5){S.lang="en";S.m5=1}if(!S.theme)S.theme="saffron";if(!S.m6){S.theme="rudraksha";S.style="classic";S.m6=1}if(STY.indexOf(S.style)<0)S.style="bub";
+ if(!S.snds)S.snds={};["c","b","m"].forEach(function(k){var v=+S.snds[k];S.snds[k]=((v>=0&&v<5)||v===-1)?v:({c:1,b:0,m:3})[k]});if(!S.m7){S.snds={c:1,b:3,m:3};S.m7=1}if(!S.m8){S.tmOn=false;S.m8=1}if(S.tmOn===undefined)S.tmOn=false;var tm0=Math.floor(Number(S.timer));S.timer=(tm0>=1&&tm0<=60)?tm0:(tm0>60?60:5)}}}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function fmt(n){return Number(n).toLocaleString("en-IN")}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
@@ -323,7 +352,7 @@ function cur(){for(var i=0;i<S.sessions.length;i++)if(S.sessions[i].id===S.activ
 function tgt(v){v=Math.floor(Number(v));return v>0?Math.min(v,1e12):0}
 function norm(x){return String(x).trim().toLowerCase()}
 function dispName(nm){var k=norm(nm);for(var i=0;i<NAMES.length;i++){var n=NAMES[i];if(k===norm(n.en)||k===norm(n.hi)||(n.alt||[]).some(function(a){return k===norm(a)}))return n[S.lang==="en"?"en":"hi"]}return nm}
-function gapOf(s){return s&&s.gap?s.gap:1}
+function gapOf(s){return s&&s.gap?s.gap:0.8}
 function newSess(name,target){stopAuto();var s={id:uid(),name:name||t("defname"),count:0,target:tgt(target)};S.sessions.unshift(s);S.active=s.id;save();render()}
 /* ---- builders ---- */
 function chips(){var h="";PRE.forEach(function(p){h+='<button class="chip'+(p===pick?' on':'')+'" data-p="'+p+'">'+fmt(p)+'</button>'});$("chips").innerHTML=h}
@@ -334,7 +363,7 @@ function thchips(){var h="";TH.forEach(function(x){h+='<button class="chip'+(S.t
 function sndchips(){var h="";[["c","sg_c"],["b","sg_b"],["m","sg_m"]].forEach(function(g,gi){h+='<label'+(gi?'':' style="margin-top:0"')+'>'+t(g[1])+'</label><div class="chips">';
  SN[g[0]].forEach(function(n,i){h+='<button class="chip'+(S.snds[g[0]]===i?' on':'')+'" data-ns data-sn="'+g[0]+':'+i+'">'+(i+1)+'. '+n[S.lang==="en"?0:1]+'</button>'});h+='<button class="chip'+(S.snds[g[0]]===-1?' on':'')+'" data-ns data-sn="'+g[0]+':-1">'+t("nosnd")+'</button>';h+='</div>'});$("sndc").innerHTML=h}
 function theme(){var r=document.documentElement;if(S.theme&&S.theme!=="auto")r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme")}
-function speedHTML(){return '<label class="gl spl" style="text-align:center"></label><div class="btns" style="align-items:center;margin-top:6px"><button class="s gm" style="flex:0 0 52px">−</button><input class="gap" type="number" inputmode="decimal" step="0.1" min="0.2" max="60" style="margin-top:0;text-align:center"><button class="s gpl" style="flex:0 0 52px">+</button></div><div class="sl"><div class="sf"></div><div class="st" tabindex="0" role="slider" aria-valuemin="0.2" aria-valuemax="10"></div></div><div class="row"><span>0.2s</span><span>10s</span></div><div class="chips gch" style="justify-content:center"></div>'}
+function speedHTML(){return '<label class="gl spl" style="text-align:center;margin-top:0"></label><div class="btns" style="align-items:center;margin-top:6px"><button class="s gm" style="flex:0 0 56px;font-size:20px">−</button><input class="gap" type="number" inputmode="decimal" step="0.1" min="0.2" max="60" style="margin-top:0;text-align:center;font-weight:800;font-size:20px"><button class="s gpl" style="flex:0 0 56px;font-size:20px">+</button></div><div class="pg3 gch"></div><div class="sl"><div class="sf"></div><div class="st" tabindex="0" role="slider" aria-valuemin="0.2" aria-valuemax="10"></div></div><div class="row"><span>0.2s</span><span>10s</span></div>'}
 function gchips(){var g=gapOf(cur()),h="";GP.forEach(function(x){h+='<button class="chip'+(x===g?' on':'')+'" data-g="'+x+'">'+x+'s</button>'});all(".gch").forEach(function(e){e.innerHTML=h})}
 function gsync(){var g=gapOf(cur()),p=Math.max(0,Math.min(1,(g-0.2)/9.8));all(".gap").forEach(function(e){e.value=g});
  all(".sl").forEach(function(sl){var th=sl.querySelector(".st");th.style.left="calc((100% - 32px) * "+p+")";sl.querySelector(".sf").style.width="calc((100% - 32px) * "+p+" + 16px)";th.setAttribute("aria-valuenow",g)})}
@@ -361,9 +390,8 @@ function prog(s){
  if(s.target){var p=Math.min(100,s.count/s.target*100);$("pg").style.width=p+"%";$("pc").textContent=p.toFixed(p<10?2:1)+"%";$("tg").textContent=t("target")+" "+fmt(s.target);$("dn").textContent=s.count>=s.target?t("done"):""}
  else{$("pg").style.width="0";$("pc").textContent=t("notarget");$("tg").innerHTML="&nbsp;";$("dn").textContent=""}
 }
-function autoUI(){$("au").textContent=t("auto")+(apOpen?" ▴":" ▾");$("au").className="s"+(auto?" run":"");$("apn").classList.toggle("on",apOpen);
- $("bst").textContent=t("bst");$("bpa").textContent=t("bpa");$("bsp").textContent=t("bsp");$("bst").className="s"+(auto?" sel":"");$("bpa").className="s"+(paused?" sel":"");
- $("ah").textContent=auto?t("autohint").replace("{g}",gapOf(cur())):(paused?t("paused"):"")}
+function autoUI(){$("au").textContent=t("auto")+(apOpen?" ▴":" ▾");$("au").className="s"+(auto?" run":"");$("apn").classList.toggle("on",apOpen);tmUI()}
+function ahUI(){var p=[];if(TM)p.push("⏱ "+mmss(tmRem));if(auto)p.push(t("autohint").replace("{g}",gapOf(cur())));else if(paused)p.push(t("paused"));$("ah").textContent=p.join(" · ")}
 function instUI(){$("instb").textContent=t("inst");$("cp").textContent=t("copy");if(ihOpen){$("ih").innerHTML=/iphone|ipad|ipod/i.test(navigator.userAgent)?t("iios"):t("iand")}}
 function texts(){
  document.documentElement.lang=S.lang;
@@ -376,7 +404,7 @@ function texts(){
 }
 function render(){
  var s=cur();
- if(!s){if(S.sessions.length){S.active=S.sessions[0].id;s=cur()}else{newSess(t("defname"),100000);return}}
+ if(!s){if(S.sessions.length){S.active=S.sessions[0].id;s=cur()}else{newSess(t("defname"),1080);return}}
  theme();texts();drawStyle();$("nm").textContent=dispName(s.name);prog(s);
  var h="";S.sessions.forEach(function(x){
   h+='<div class="sess'+(x.id===s.id?' active':'')+'"><div class="t"><b></b><span>'+fmt(x.count)+(x.target?' / '+fmt(x.target):'')+'</span></div>'+
@@ -428,31 +456,31 @@ function feel(big){
 function doCount(){var s=cur();if(!s)return;s.count++;save();feel(s.count%108===0);prog(s);
  var sp=$("list").querySelector(".sess.active .t span");if(sp)sp.textContent=fmt(s.count)+(s.target?' / '+fmt(s.target):'');
  if(auto&&s.target&&s.count>=s.target)stopAuto()}
-function wake(){var need=S.wake||auto;if(need&&navigator.wakeLock){if(!WL)navigator.wakeLock.request("screen").then(function(l){WL=l;l.addEventListener("release",function(){WL=null})}).catch(function(){})}else if(WL){try{WL.release()}catch(e){}WL=null}}
+function wake(){var need=S.wake||auto||TM;if(need&&navigator.wakeLock){if(!WL)navigator.wakeLock.request("screen").then(function(l){WL=l;l.addEventListener("release",function(){WL=null})}).catch(function(){})}else if(WL){try{WL.release()}catch(e){}WL=null}}
 function mmss(x){var h=Math.floor(x/3600),m=Math.floor(x%3600/60),r=x%60,p=function(n){return (n<10?"0":"")+n};return h?h+":"+p(m)+":"+p(r):p(m)+":"+p(r)}
-function tmUI(){var run=!!TM,h="",d=$("tmd");$("tmrow").style.display=(run||S.timer>0)?"flex":"none";d.textContent="⏱ "+mmss(run?tmRem:S.timer*60);d.className="tmd"+((run&&!paused)?" on":"")+(S.tmOn?"":" off");
- $("tmon").textContent=t("tm_on");$("tmoff").textContent=t("tm_off");$("tmon").className="s tmb"+(S.tmOn?" fill":"");$("tmoff").className="s tmb"+(S.tmOn?"":" fill");$("tms").disabled=run;
- TMP.forEach(function(x){h+='<button class="chip'+(S.timer===x?' on':'')+'" data-tm="'+x+'"'+(run?' disabled':'')+'>'+(x===0?t("tm_off"):x===60?t("tm_1h"):x+" "+t("tm_min"))+'</button>'});$("tmc").innerHTML=h}
-function tmSw(on){S.tmOn=on;save();if(!on&&TM)stopTimer();if(on&&auto&&!TM)startTimer();tmUI()}
-function tmMsg(){$("tmh").textContent=S.timer>0?t("tm_setmsg").replace("{m}",S.timer):t("tm_offmsg")}
-function setTimer(v){if(TM)return;$("tmh").textContent="";S.timer=Math.max(0,Math.min(600,Math.round(v)));if(S.timer>0)S.tmOn=true;save();tmUI()}
-function startTimer(){if(TM||!(S.timer>0)||!S.tmOn)return;tmEnd=Date.now()+S.timer*60000;tmRem=S.timer*60;TM=setInterval(tmTick,250);$("tmh").textContent="";tmUI()}
+function tmUI(){var run=!!TM,armed=!!S.tmOn,d=$("tmd"),go=$("tmgo"),sw=$("tmsw");
+ d.textContent="⏱ "+mmss(run?tmRem:S.timer*60);d.className="tmd"+((run&&!paused)?" on":"")+(armed?"":" off");
+ sw.className="swt"+(armed?" on":"");sw.setAttribute("aria-checked",armed?"true":"false");$("tmm").disabled=!armed;$("tmp").disabled=!armed;
+ go.textContent=auto?t("bpa"):(paused?t("bres"):t("bst"));go.className="s tmb";ahUI()}
+function tmSw(){stopAuto();S.tmOn=!S.tmOn;save();tmUI()}
+function setTimer(v){if(!S.tmOn)return;v=Math.round(Number(v));if(!(v>=1))return;v=Math.min(60,v);if(v===S.timer)return;stopAuto();S.timer=v;save();tmUI()}
+function startTimer(){if(TM||!S.tmOn||!(S.timer>=1))return;tmEnd=Date.now()+S.timer*60000;tmRem=S.timer*60;TM=setInterval(tmTick,250);$("tmf").textContent="";tmUI()}
 function stopTimer(){if(!TM)return;clearInterval(TM);TM=null;tmUI()}
-function tmTick(){if(paused)return;var r=Math.max(0,Math.ceil((tmEnd-Date.now())/1000));if(r!==tmRem){tmRem=r;$("tmd").textContent="⏱ "+mmss(r)}if(r<=0)finishTimer()}
+function tmTick(){if(paused)return;var r=Math.max(0,Math.ceil((tmEnd-Date.now())/1000));if(r!==tmRem){tmRem=r;$("tmd").textContent="⏱ "+mmss(r);ahUI()}if(r<=0)finishTimer()}
 function alarm(){if(S.vib&&navigator.vibrate){try{navigator.vibrate([300,150,300,150,300])}catch(e){}}
  if(S.snd){try{ctx();var fn=MS[S.snds.m];if(fn)fn()}catch(e){}}}
-function finishTimer(){stopAuto();alarm();$("ah").textContent=t("tdone");$("tmh").textContent=t("tdone")}
-function startAuto(){if(auto)return;if(paused){paused=false;if(TM)tmEnd+=Date.now()-pauseAt}
- auto=setInterval(doCount,gapOf(cur())*1000);keep(0);if(S.snd)audKeep(true);startTimer();autoUI();tmUI();wake()}
-function pauseAuto(){if(!auto)return;clearInterval(auto);auto=null;paused=true;pauseAt=Date.now();audKeep(false);autoUI();tmUI();wake()}
-function stopAuto(){if(!auto&&!paused)return;clearInterval(auto);auto=null;paused=false;stopTimer();audKeep(false);if(S.snd)keep(8000);else stopKeep();autoUI();wake()}
+function finishTimer(){stopAuto();alarm();$("tmf").textContent=t("tdone");$("ah").textContent=t("tdone")}
+function startAuto(){if(auto)return;auto=setInterval(doCount,gapOf(cur())*1000);keep(0);if(S.snd)audKeep(true);autoUI();wake()}
+function pauseAuto(){if(!auto)return;clearInterval(auto);auto=null;paused=true;pauseAt=Date.now();audKeep(false);autoUI();wake()}
+function resumeAuto(){if(auto||!paused)return;paused=false;if(TM)tmEnd+=Date.now()-pauseAt;auto=setInterval(doCount,gapOf(cur())*1000);keep(0);if(S.snd)audKeep(true);autoUI();wake()}
+function stopAuto(){if(!auto&&!paused&&!TM)return;clearInterval(auto);auto=null;paused=false;stopTimer();audKeep(false);if(S.snd)keep(8000);else stopKeep();autoUI();wake()}
 function syncOpen(){$("menu").classList.toggle("has-open",!!document.querySelector(".mi.open"))}
 function dopen(v){$("dr").classList.toggle("on",v);$("ov").classList.toggle("on",v)}
 /* ---- events ---- */
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(b&&b.id!=="tap"&&!b.hasAttribute("data-ns")&&S.snd){try{BS[S.snds.b]()}catch(x){}}},true);
 $("tap").addEventListener("click",doCount);
 $("au").onclick=function(){apOpen=!apOpen;autoUI()};
-$("bst").onclick=function(){startAuto()};$("bpa").onclick=function(){pauseAuto()};$("bsp").onclick=function(){stopAuto()};
+
 document.addEventListener("keydown",function(e){if(e.code==="Escape")dopen(false);if(e.code==="Space"&&document.activeElement.tagName!=="INPUT"&&document.activeElement.tagName!=="TEXTAREA"){e.preventDefault();$("tap").click()}});
 document.addEventListener("pointerdown",function(e){var st=e.target.closest&&e.target.closest(".sl .st");if(!st)return;var r=st.getBoundingClientRect();drag={sl:st.parentNode,st:st,off:e.clientX-(r.left+r.width/2),id:e.pointerId};st.classList.add("drag");try{st.setPointerCapture(e.pointerId)}catch(x){}lastV=gapOf(cur());e.preventDefault()});
 document.addEventListener("pointermove",function(e){if(!drag||e.pointerId!==drag.id)return;var r=drag.sl.getBoundingClientRect(),f=Math.max(0,Math.min(1,(e.clientX-drag.off-r.left-16)/(r.width-32))),v=Math.round((0.2+f*9.8)*10)/10;if(v!==lastV){lastV=v;setGap(v);ratchet()}});
@@ -468,10 +496,10 @@ $("mb").onclick=function(){dopen(true)};$("ov").onclick=function(){dopen(false)}
 $("menu").addEventListener("click",function(e){var h=e.target.closest(".mh");if(!h)return;
  if(h.id==="lgb"){S.lang=S.lang==="hi"?"en":"hi";save();render();return}
  var mi=h.parentNode,was=mi.classList.contains("open");all(".mi").forEach(function(m){m.classList.remove("open")});if(!was)mi.classList.add("open");syncOpen()});
-$("tmon").onclick=function(){tmSw(true)};$("tmoff").onclick=function(){tmSw(false)};
-$("tms").onclick=function(){var v=parseFloat($("tmi").value);if(v>0){setTimer(v);tmMsg();$("tmi").value=""}};$("tmi").addEventListener("keydown",function(e){if(e.key==="Enter")$("tms").click()});
+$("tmsw").onclick=tmSw;
+$("tmgo").onclick=function(){if(auto)pauseAuto();else if(paused)resumeAuto();else{startAuto();startTimer()}};
+$("tmm").onclick=function(){setTimer(S.timer-1)};$("tmp").onclick=function(){setTimer(S.timer+1)};
 
-$("tmc").addEventListener("click",function(e){var x=e.target.closest("[data-tm]");if(x){setTimer(+x.getAttribute("data-tm"));tmMsg()}});
 $("undo").onclick=function(){var s=cur();if(s&&s.count>0){s.count--;save();render()}};
 var rt=null;
 $("rs").onclick=function(){var s=cur();if(!s)return;var b=$("rs");
@@ -518,7 +546,7 @@ $("bkr").onclick=function(){var v=$("rst").value;if(!v.trim()){$("rsm").textCont
   if(d.theme&&TH.some(function(h){return h[0]===d.theme}))S.theme=d.theme;
   if(d.style&&STY.indexOf(d.style)>=0)S.style=d.style;
   if(d.snds)["c","b","m"].forEach(function(k){var v2=+d.snds[k];if((v2>=0&&v2<5)||v2===-1)S.snds[k]=v2});
-  if(typeof d.timer==="number"&&d.timer>=0&&d.timer<=600)S.timer=Math.floor(d.timer);
+  if(typeof d.timer==="number"&&d.timer>=1&&d.timer<=60)S.timer=Math.floor(d.timer);
   if(d.lang==="hi"||d.lang==="en")S.lang=d.lang;
   if(!cur()&&S.sessions.length)S.active=S.sessions[0].id;
   save();render();$("rsm").textContent=t("bkdone")+n}
