@@ -182,12 +182,58 @@ button.s.tmb.tmred{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,
 .tmr3 .s{flex:0 0 58px;font-size:22px;font-weight:700;padding:8px 0}
 #tmd{grid-column:auto;grid-row:auto}
 #tmgo{grid-column:auto;grid-row:auto;width:100%;margin-top:10px;padding:12px}
+
+/* v11: pages, read window, traditional theme */
+:root{--pa1:#fdf3dc;--pa2:#f6e2b8;--pb:#a4311a;--pi:#4a1d0e}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--pa1:#2e2112;--pa2:#251a0d;--pb:#f0932b;--pi:#f6e7cf}}
+:root[data-theme="night"]{--pa1:#2e2112;--pa2:#251a0d;--pb:#f0932b;--pi:#f6e7cf}
+.tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px;margin:0 0 12px}
+.tb{flex:1;padding:10px 6px;border-radius:11px;border:0;background:transparent;color:var(--mute);font-size:15px;font-weight:700}
+.tb.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.pgv.inl{animation:inl .3s ease}.pgv.inr{animation:inr .3s ease}
+@keyframes inl{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
+@keyframes inr{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+.strk{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.strk .sk1{font-size:19px;font-weight:700;color:var(--accent)}.strk .sk1 b{font-size:28px}
+.strk .sk2{font-size:13px;color:var(--mute);text-align:right;line-height:1.5}
+.rh{font-size:13px;font-weight:700;color:var(--mute);margin:14px 2px 8px;letter-spacing:.5px;text-transform:uppercase}
+.rc{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;color:var(--ink)}
+.rci{flex:none;width:46px;height:46px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid var(--line)}
+.rct{flex:1;min-width:0}.rct b{display:block;font-size:19px;font-family:"Noto Serif Devanagari","Tiro Devanagari Hindi","Mukta","Noto Sans Devanagari","Nirmala UI",serif}
+.rct small{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+.rcp{flex:none;font-size:13px;font-weight:700;color:var(--accent);background:var(--bg);border-radius:20px;padding:4px 10px;border:1px solid var(--line)}
+.rc .bar{margin:8px 0 0;height:7px}
+.addm{width:100%;padding:12px;font-size:15px;margin-bottom:10px}
+.rbar{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rbar .s{flex:0 0 auto;padding:9px 14px}
+.rtt{flex:1;font-weight:700;color:var(--accent);font-size:17px;text-align:center;font-family:"Noto Serif Devanagari","Tiro Devanagari Hindi","Mukta","Noto Sans Devanagari",serif}
+.rpt{font-size:17px;font-weight:700;text-align:center}
+.rgl{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;font-size:14px;color:var(--mute)}
+.rgl .rg{flex:0 0 38px;padding:4px 0;font-size:18px;font-weight:700}.rgl b{min-width:34px;text-align:center;color:var(--ink);font-size:18px}
+.trad{position:relative;background:linear-gradient(180deg,var(--pa1),var(--pa2));border:3px double var(--pb);border-radius:18px;padding:34px 16px 26px;color:var(--pi);font-family:"Noto Serif Devanagari","Tiro Devanagari Hindi","Mukta","Noto Sans Devanagari","Nirmala UI",serif;text-align:center;box-shadow:inset 0 0 40px rgba(164,49,26,.12),0 6px 18px rgba(0,0,0,.12);margin-bottom:14px}
+.trad:before,.trad:after{content:"❁";position:absolute;top:8px;color:var(--pb);font-size:22px;line-height:1}
+.trad:before{left:14px}.trad:after{right:14px}
+.trad .om{font-size:34px;color:var(--pb);line-height:1.1}
+.trad .th{font-size:27px;font-weight:700;color:var(--pb);margin:2px 0}
+.trad .ths{font-size:14px;color:var(--pi);opacity:.8;margin-bottom:6px}
+.trad .orn{color:var(--pb);letter-spacing:10px;margin:8px 0 10px;font-size:15px}
+.trad .vh{font-size:18px;color:var(--pb);font-weight:700;margin:20px 0 4px}
+.trad .vs{margin:14px 0;font-size:21px;line-height:1.95}
+.trad .vn{display:inline-block;font-size:16px;color:var(--pb);margin-left:6px}
+.trad .gap2{height:12px}
+.rend{display:flex;gap:10px;margin-bottom:12px}.rend .s{flex:0 0 auto;padding:14px 16px}
+.rdone{flex:1;padding:15px;font-size:17px;border-radius:14px}
+.mtl{font-size:13px;color:var(--mute);margin:10px 0 0;display:block}
+.soc-h{padding:12px 16px 6px;font-size:13px;color:var(--mute)}
+.soc{display:flex;flex-wrap:wrap;gap:10px;padding:4px 16px 14px}
+.socb{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px;text-decoration:none;color:var(--ink)}
 </style>
 </head>
 <body>
 <main>
 <div class="top"><button class="mbtn" id="mb" aria-label="Menu">☰</button><h1 data-i="title"></h1><button class="mbtn" id="snb" data-ns aria-label="Sound"></button></div>
-<button class="inh" id="inh"><span data-i="inst2"></span></button>
+<div class="tabs" id="tabs"><button class="tb on" id="tbC" data-pg="0"><span data-i="tab_c"></span></button><button class="tb" id="tbR" data-pg="1"><span data-i="tab_r"></span></button></div>
+<div class="pgv" id="pgC"><button class="inh" id="inh"><span data-i="inst2"></span></button>
 
 <div class="card">
   <div class="name" id="nm"></div>
@@ -222,6 +268,33 @@ button.s.tmb.tmred{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,
     <label data-i="setc"></label>
     <input id="ec" type="number" inputmode="numeric" min="0" data-ph="cph">
     <div class="btns"><button class="s" id="ecancel" data-i="cancel"></button><button class="go" id="esave" style="flex:1" data-i="save"></button></div>
+  </div>
+</div>
+</div>
+<div class="pgv" id="pgR" style="display:none">
+  <div class="card strk" id="strk"></div>
+  <div class="tabs" id="rtabs"></div>
+  <div id="rHome"><div id="rMantra"></div><div id="rChalisa"></div></div>
+  <div id="rReader" style="display:none">
+    <div class="rbar"><button class="s" id="rBack" data-i="rd_back"></button><div class="rtt" id="rTT"></div></div>
+    <div class="card" id="rPr">
+      <div class="rpt" id="rPt"></div>
+      <div class="bar"><i id="rPb"></i></div>
+      <div class="rgl"><span id="rGl"></span><button class="s rg" id="rgm">−</button><b id="rgv"></b><button class="s rg" id="rgp">+</button></div>
+      <div class="chips" id="rGc" style="justify-content:center"></div>
+      <div class="done" id="rTo"></div>
+    </div>
+    <div class="trad" id="rTx"></div>
+    <div class="rend"><button class="s" id="rTop" data-i="rd_top"></button><button class="go rdone" id="rDn" data-i="rd_done"></button></div>
+    <div class="btns"><button class="s" id="rNew" style="display:none" data-i="rd_new"></button><button class="s" id="rEd" style="display:none" data-i="edit"></button></div>
+  </div>
+  <div class="card" id="rEdit" style="display:none">
+    <label data-i="ed_title" style="margin-top:0"></label>
+    <input id="mtT" maxlength="60">
+    <label data-i="ed_text"></label>
+    <textarea class="ta" id="mtX" maxlength="5000" style="height:240px;font-size:16px;font-family:inherit"></textarea>
+    <div class="btns"><button class="s" id="mtC" data-i="cancel"></button><button class="go" id="mtS" style="flex:1" data-i="save"></button></div>
+    <button class="s danger" id="mtD" style="width:100%;margin-top:10px;display:none"></button>
   </div>
 </div>
 
@@ -296,6 +369,10 @@ button.s.tmb.tmred{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,
         <div class="btns" id="ib" style="display:none"><button class="s" id="cp"></button></div>
       </div></div>
 
+    <div class="mi"><button class="mh" id="shb"><span data-i="m_sh"></span><b style="color:var(--accent);font-weight:600">↗</b></button></div>
+    <div class="mi" id="mi_soc" style="display:none"><div class="soc-h" data-i="m_soc"></div><div class="soc" id="soc"></div></div>
+    <div class="mi" id="mi_help" style="display:none"><button class="mh" id="hlb"><span data-i="m_help"></span><b style="color:var(--accent);font-weight:600">↗</b></button></div>
+
     <div class="mi"><button class="mh"><span data-i="m_ex"></span><i>›</i></button>
       <div class="mc">
         <div class="hint" data-i="exq" style="margin:0 0 10px"></div>
@@ -313,6 +390,9 @@ button.s.tmb.tmred{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,
 <script>
 (function(){
 var KEY="naam-counter-v1",PRE=[108,1008,100000,1000000,10000000],GP=[0.5,0.8,1,2,3,5];
+/* ---- CONFIG (fill these later) ---- */
+var HELP_URL="";   /* payment / support link, e.g. "https://..." — shows "Help the author" in the menu when set */
+var SOCIAL=[];     /* e.g. [{name:"Instagram",icon:"📸",url:"https://instagram.com/yourpage"}] — shows "Follow us" icons when set */
 var NAMES=[{en:"Radha",hi:"राधा"},{en:"OM Namah Shivaya",hi:"ॐ नम शिवाय",alt:["ॐ नमः शिवाय"]},{en:"Sita Ram",hi:"सीता राम"},{en:"Ram",hi:"राम"}];
 var TH=[["auto","#d9791a"],["saffron","#d9791a"],["night","#271c10"],["krishna","#2f6fd6"],["lotus","#d6336c"],["tulsi","#2e9b57"],["rudraksha","#b5361b"],["ganga","#1a8fa8"]];
 var STY=["classic","mala","rud","jyoti","flow","bub"];
@@ -321,7 +401,7 @@ var SN={c:[["Beep","बीप"],["Wood tok","लकड़ी टक"],["Bell tin
  m:[["Gong","घंटा"],["Temple bell","मंदिर की घंटी"],["Shankh","शंख"],["Singing bowl","सिंगिंग बाउल"],["Drum","ढोल"]]};
 var S={sessions:[],active:null,vib:true,snd:true,wake:true,lang:"en",theme:"saffron",style:"bub",snds:{c:1,b:0,m:3},timer:5,tmOn:false,m5:1,m6:1,m7:1,m8:1},pick=100000,AC=null,BUS=null,WL=null,auto=null,DP=null,ihOpen=false,lastLit=-1,ST=[],pickOwn=false,TM=null,tmRem=0,tmEnd=0,TMP=[0,5,10,15,30,60],apOpen=false,paused=false,pauseAt=0,drag=null,lastTick=0,lastV=0;
 var T={
-en:{title:"🕉️ Naam Counter",menu:"Menu",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst2:"📲 Install app",tm_title:"Chant timer (optional)",tm_custom:"Set your own time (minutes)",tm_ph:"e.g. 45",tm_set:"Set",m_tm:"⏱ Chant timer",tm_presets:"Quick presets",tm_setmsg:"✓ Timer set to {m} min. Use On and Start on the home screen.",tm_offmsg:"Timer is off.",tm_hint:"Set your time here. On the home screen, tap On, then Start. The timer runs on its own, separate from Auto Jap. While it runs, the 108 sound is off, and your chosen 108 sound plays when time is up.",tm_off:"Off",tm_min:"min",tm_1h:"1 hour",tdone:"⏰ Time complete! 🙏",nosnd:"🔇 No sound",own:"+ Your own",auto:"🔁 Auto Jap",bst:"▶ Start",bpa:"⏸ Pause",bsp:"■ Stop",paused:"⏸ Paused",tm_on:"On",bres:"▶ Resume",tm_sec:"⏱ Chant timer",tm_hint2:"Turn the switch on to set the time with − and + (1–60 min). Start runs Auto Jap together with the timer.",tm_ed:"1–60",stopauto:"⏸ Stop Auto",gap:"⚡ Adjust speed (seconds per naam)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",
+en:{title:"🕉️ Naam Counter",tab_c:"📿 Count",tab_r:"📖 Mantra · Chalisa",rs_m:"Mantra",rs_c:"Chalisa",st_days:"day streak",st_today:"Today",st_best:"Best",my_m:"My mantras",add_m:"➕ Add your own mantra",rdy_m:"Ready mantras",no_my:"Write your own long naam or mantra and read it here.",rd_of:"Reading {a} of {b}",rd_goal:"Goal",rd_done:"✔ Mark reading complete",rd_top:"↑ Back to top",rd_back:"← Back",rd_new:"🔁 Start a new round",rd_ok:"✔ Reading {a} of {b} complete 🙏",rd_goalok:"🙏 Goal complete! {a} of {b} readings done",ed_title:"Mantra name",ed_text:"Write the mantra or naam here (long text is fine)",ed_del:"🗑 Delete this mantra",ed_conf:"Tap again to delete",hc_desc:"Complete Hanuman Chalisa by Tulsidas, in Hindi",more_c:"More chalisas will be added in future updates.",m_sh:"📤 Share app",m_help:"💛 Help the author",m_soc:"Follow us",sh_txt:"Naam Counter — a simple digital mala for naam jap, with Hanuman Chalisa and mantras. Try it:",rd_by:"गोस्वामी तुलसीदास कृत",menu:"Menu",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst2:"📲 Install app",tm_title:"Chant timer (optional)",tm_custom:"Set your own time (minutes)",tm_ph:"e.g. 45",tm_set:"Set",m_tm:"⏱ Chant timer",tm_presets:"Quick presets",tm_setmsg:"✓ Timer set to {m} min. Use On and Start on the home screen.",tm_offmsg:"Timer is off.",tm_hint:"Set your time here. On the home screen, tap On, then Start. The timer runs on its own, separate from Auto Jap. While it runs, the 108 sound is off, and your chosen 108 sound plays when time is up.",tm_off:"Off",tm_min:"min",tm_1h:"1 hour",tdone:"⏰ Time complete! 🙏",nosnd:"🔇 No sound",own:"+ Your own",auto:"🔁 Auto Jap",bst:"▶ Start",bpa:"⏸ Pause",bsp:"■ Stop",paused:"⏸ Paused",tm_on:"On",bres:"▶ Resume",tm_sec:"⏱ Chant timer",tm_hint2:"Turn the switch on to set the time with − and + (1–60 min). Start runs Auto Jap together with the timer.",tm_ed:"1–60",stopauto:"⏸ Stop Auto",gap:"⚡ Adjust speed (seconds per naam)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",
 m_speed:"⏱️ Counter speed",m_new:"➕ New session",m_old:"📿 Old counts / sessions",m_bk:"📤 Backup code",m_lang:"🌐 Language",m_sv:"🔔 Sound & vibration",m_th:"🎨 Theme",m_snd:"🎵 Change sounds",m_rs:"📥 Restore data",m_in:"📲 Add to Home screen",m_ex:"🚪 Exit app",
 th_colors:"Colors",th_style:"Counter style",c_auto:"Auto",c_saffron:"Saffron",c_night:"Night",c_krishna:"Krishna Blue",c_lotus:"Lotus",c_tulsi:"Tulsi",c_rudraksha:"Rudraksha",c_ganga:"Ganga",
 s_classic:"Classic",s_mala:"Mala Beads",s_rud:"Rudraksha",s_jyoti:"Jyoti (Diya)",s_flow:"Flow Grid",s_bub:"Bubbles",
@@ -330,7 +410,7 @@ bkh:"Backup makes a code with all your sessions and counts. Save it in WhatsApp 
 inst:"📲 Install / Add to Home screen",iand:"1. Open this page in Chrome (not inside another app).<br>2. Tap the ⋮ menu (top right).<br>3. Tap “Add to Home screen” or “Install app”.<br>4. Tap Add.",iios:"1. Open this page in Safari.<br>2. Tap the Share button (square with arrow).<br>3. Tap “Add to Home Screen”, then Add.",copy:"Copy page link",copied:"Link copied ✓",
 exq:"Close the app?",exy:"Exit app",exn:"Stay",byet:"🙏 Thank you!",byes:"You can now close the app with your phone's Home or Back button.",byeb:"Back to app",
 novib:"Vibration isn't supported on this device/browser (e.g. iPhone). Turn on Sound for tap feedback.",blocked:"Your browser blocked vibration. Open this page in Chrome (not inside another app) and check your phone's vibration settings."},
-hi:{title:"🕉️ नाम काउंटर",menu:"मेनू",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst2:"📲 ऐप इंस्टॉल करें",tm_title:"जाप टाइमर (वैकल्पिक)",tm_custom:"अपना समय सेट करें (मिनट)",tm_ph:"जैसे 45",tm_set:"सेट",m_tm:"⏱ जाप टाइमर",tm_presets:"जल्दी चुनें",tm_setmsg:"✓ टाइमर {m} मिनट सेट हुआ। होम स्क्रीन पर चालू और शुरू दबाएँ।",tm_offmsg:"टाइमर बंद है।",tm_hint:"यहाँ समय सेट करें। होम स्क्रीन पर चालू दबाएँ, फिर शुरू दबाएँ। टाइमर ऑटो जाप से अलग चलता है। चलते समय 108 की आवाज़ बंद रहती है, और समय पूरा होने पर आपकी चुनी हुई 108 वाली आवाज़ बजती है।",tm_off:"बंद",tm_min:"मिनट",tm_1h:"1 घंटा",tdone:"⏰ समय पूरा हुआ! 🙏",nosnd:"🔇 बिना आवाज़",own:"+ अपना नाम",auto:"🔁 ऑटो जाप",bst:"▶ शुरू",bpa:"⏸ पॉज़",bsp:"■ रोकें",paused:"⏸ पॉज़ है",tm_on:"चालू",bres:"▶ जारी रखें",tm_sec:"⏱ जाप टाइमर",tm_hint2:"टाइमर चालू करने के लिए स्विच दबाएँ, फिर − और + से समय (1–60 मिनट) सेट करें। शुरू दबाने पर ऑटो जाप टाइमर के साथ चलता है।",tm_ed:"1–60",stopauto:"⏸ ऑटो रोकें",gap:"⚡ गति सेट करें (प्रति नाम सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",
+hi:{title:"🕉️ नाम काउंटर",tab_c:"📿 गिनती",tab_r:"📖 मंत्र · चालीसा",rs_m:"मंत्र",rs_c:"चालीसा",st_days:"दिन लगातार",st_today:"आज",st_best:"सर्वश्रेष्ठ",my_m:"मेरे मंत्र",add_m:"➕ अपना मंत्र जोड़ें",rdy_m:"तैयार मंत्र",no_my:"अपना लंबा नाम या मंत्र लिखें और यहाँ पढ़ें।",rd_of:"पाठ {a} / {b}",rd_goal:"लक्ष्य",rd_done:"✔ पाठ पूर्ण हुआ",rd_top:"↑ ऊपर जाएँ",rd_back:"← वापस",rd_new:"🔁 नया चक्र शुरू करें",rd_ok:"✔ पाठ {a} / {b} पूर्ण 🙏",rd_goalok:"🙏 लक्ष्य पूरा! {a} / {b} पाठ हो गए",ed_title:"मंत्र का नाम",ed_text:"मंत्र या नाम यहाँ लिखें (लंबा भी चलेगा)",ed_del:"🗑 यह मंत्र हटाएँ",ed_conf:"हटाने के लिए फिर दबाएँ",hc_desc:"तुलसीदास कृत पूर्ण हनुमान चालीसा",more_c:"और चालीसाएँ आगे के अपडेट में जुड़ेंगी।",m_sh:"📤 ऐप शेयर करें",m_help:"💛 लेखक की सहायता करें",m_soc:"हमें फ़ॉलो करें",sh_txt:"नाम काउंटर — नाम जप के लिए एक सरल डिजिटल माला, हनुमान चालीसा और मंत्रों के साथ। आज़माएँ:",rd_by:"गोस्वामी तुलसीदास कृत",menu:"मेनू",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst2:"📲 ऐप इंस्टॉल करें",tm_title:"जाप टाइमर (वैकल्पिक)",tm_custom:"अपना समय सेट करें (मिनट)",tm_ph:"जैसे 45",tm_set:"सेट",m_tm:"⏱ जाप टाइमर",tm_presets:"जल्दी चुनें",tm_setmsg:"✓ टाइमर {m} मिनट सेट हुआ। होम स्क्रीन पर चालू और शुरू दबाएँ।",tm_offmsg:"टाइमर बंद है।",tm_hint:"यहाँ समय सेट करें। होम स्क्रीन पर चालू दबाएँ, फिर शुरू दबाएँ। टाइमर ऑटो जाप से अलग चलता है। चलते समय 108 की आवाज़ बंद रहती है, और समय पूरा होने पर आपकी चुनी हुई 108 वाली आवाज़ बजती है।",tm_off:"बंद",tm_min:"मिनट",tm_1h:"1 घंटा",tdone:"⏰ समय पूरा हुआ! 🙏",nosnd:"🔇 बिना आवाज़",own:"+ अपना नाम",auto:"🔁 ऑटो जाप",bst:"▶ शुरू",bpa:"⏸ पॉज़",bsp:"■ रोकें",paused:"⏸ पॉज़ है",tm_on:"चालू",bres:"▶ जारी रखें",tm_sec:"⏱ जाप टाइमर",tm_hint2:"टाइमर चालू करने के लिए स्विच दबाएँ, फिर − और + से समय (1–60 मिनट) सेट करें। शुरू दबाने पर ऑटो जाप टाइमर के साथ चलता है।",tm_ed:"1–60",stopauto:"⏸ ऑटो रोकें",gap:"⚡ गति सेट करें (प्रति नाम सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",
 m_speed:"⏱️ गिनती की गति",m_new:"➕ नया सत्र",m_old:"📿 पुरानी गिनती / सत्र",m_bk:"📤 बैकअप कोड",m_lang:"🌐 भाषा",m_sv:"🔔 आवाज़ और कंपन",m_th:"🎨 थीम",m_snd:"🎵 आवाज़ें बदलें",m_rs:"📥 डेटा रीस्टोर",m_in:"📲 होम स्क्रीन पर जोड़ें",m_ex:"🚪 ऐप बंद करें",
 th_colors:"रंग",th_style:"काउंटर स्टाइल",c_auto:"ऑटो",c_saffron:"केसरिया",c_night:"रात",c_krishna:"कृष्ण नीला",c_lotus:"कमल",c_tulsi:"तुलसी",c_rudraksha:"रुद्राक्ष",c_ganga:"गंगा",
 s_classic:"क्लासिक",s_mala:"माला मनके",s_rud:"रुद्राक्ष",s_jyoti:"ज्योति (दीपक)",s_flow:"फ्लो ग्रिड",s_bub:"बबल्स",
@@ -393,7 +473,7 @@ function prog(s){
 function autoUI(){$("au").textContent=t("auto")+(apOpen?" ▴":" ▾");$("au").className="s"+(auto?" run":"");$("apn").classList.toggle("on",apOpen);tmUI()}
 function ahUI(){var p=[];if(TM)p.push("⏱ "+mmss(tmRem));if(auto)p.push(t("autohint").replace("{g}",gapOf(cur())));else if(paused)p.push(t("paused"));$("ah").textContent=p.join(" · ")}
 function instUI(){$("instb").textContent=t("inst");$("cp").textContent=t("copy");if(ihOpen){$("ih").innerHTML=/iphone|ipad|ipod/i.test(navigator.userAgent)?t("iios"):t("iand")}}
-function texts(){
+function texts(){rdUI();
  document.documentElement.lang=S.lang;
  all("[data-i]").forEach(function(e){e.textContent=t(e.getAttribute("data-i"))});
  all("[data-ph]").forEach(function(e){e.placeholder=t(e.getAttribute("data-ph"))});
@@ -494,7 +574,7 @@ document.addEventListener("click",function(e){var el=e.target.closest("button");
  else if(el.hasAttribute("data-g"))setGap(el.getAttribute("data-g"))});
 $("mb").onclick=function(){dopen(true)};$("ov").onclick=function(){dopen(false)};$("dx").onclick=function(){dopen(false)};
 $("menu").addEventListener("click",function(e){var h=e.target.closest(".mh");if(!h)return;
- if(h.id==="lgb"){S.lang=S.lang==="hi"?"en":"hi";save();render();return}
+ if(h.id==="shb"){shareApp();return}if(h.id==="hlb"){if(HELP_URL)window.open(HELP_URL,"_blank","noopener");return}if(h.id==="lgb"){S.lang=S.lang==="hi"?"en":"hi";save();render();return}
  var mi=h.parentNode,was=mi.classList.contains("open");all(".mi").forEach(function(m){m.classList.remove("open")});if(!was)mi.classList.add("open");syncOpen()});
 $("tmsw").onclick=tmSw;
 $("tmgo").onclick=function(){if(auto)pauseAuto();else if(paused)resumeAuto();else{startAuto();startTimer()}};
@@ -534,7 +614,7 @@ $("list").addEventListener("click",function(e){var el=e.target,o=el.getAttribute
 /* ---- backup / restore ---- */
 function enc(o){return "NAAM1:"+btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
 function dec(c){c=c.trim();if(c.indexOf("NAAM1:")!==0)throw 0;return JSON.parse(decodeURIComponent(escape(atob(c.slice(6)))))}
-$("bkb").onclick=function(){var code=enc({sessions:S.sessions,active:S.active,lang:S.lang,theme:S.theme,style:S.style,snds:S.snds,timer:S.timer});var b=$("bkt");b.value=code;
+$("bkb").onclick=function(){var code=enc({sessions:S.sessions,active:S.active,lang:S.lang,theme:S.theme,style:S.style,snds:S.snds,timer:S.timer,rd:S.rd});var b=$("bkt");b.value=code;
  var ok=function(){$("bkm").textContent=t("bkok")},no=function(){b.focus();b.select();$("bkm").textContent=t("bkman")};
  try{navigator.clipboard.writeText(code).then(ok,no)}catch(e){no()}};
 $("bkr").onclick=function(){var v=$("rst").value;if(!v.trim()){$("rsm").textContent=t("bkempty");return}
@@ -549,7 +629,7 @@ $("bkr").onclick=function(){var v=$("rst").value;if(!v.trim()){$("rsm").textCont
   if(typeof d.timer==="number"&&d.timer>=1&&d.timer<=60)S.timer=Math.floor(d.timer);
   if(d.lang==="hi"||d.lang==="en")S.lang=d.lang;
   if(!cur()&&S.sessions.length)S.active=S.sessions[0].id;
-  save();render();$("rsm").textContent=t("bkdone")+n}
+  rdMerge(d.rd);save();render();$("rsm").textContent=t("bkdone")+n}
  catch(e){$("rsm").textContent=t("bkbad")}};
 /* ---- install ---- */
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();DP=e});
@@ -568,6 +648,94 @@ $("cp").onclick=function(){var u=location.href;var done=function(){$("cp").textC
 $("exn").onclick=function(){all(".mi").forEach(function(m){m.classList.remove("open")});syncOpen()};
 $("exy").onclick=function(){stopAuto();stopKeep();dopen(false);try{window.close()}catch(e){}$("bye").classList.add("on")};
 $("byeb").onclick=function(){$("bye").classList.remove("on")};
+
+/* ================= Read window: Mantra & Chalisa ================= */
+var HC=[{"h": "॥ श्री हनुमते नमः ॥"}, {"h": "॥ दोहा ॥"}, {"a": "श्रीगुरु चरन सरोज रज, निज मनु मुकुरु सुधारि ।", "b": "बरनउँ रघुबर बिमल जसु, जो दायकु फल चारि ॥", "n": ""}, {"a": "बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार ।", "b": "बल बुधि बिद्या देहु मोहिं, हरहु कलेस बिकार ॥", "n": ""}, {"h": "॥ चौपाई ॥"}, {"a": "जय हनुमान ज्ञान गुन सागर ।", "b": "जय कपीस तिहुँ लोक उजागर ॥", "n": "१"}, {"a": "राम दूत अतुलित बल धामा ।", "b": "अंजनि-पुत्र पवनसुत नामा ॥", "n": "२"}, {"a": "महाबीर बिक्रम बजरंगी ।", "b": "कुमति निवार सुमति के संगी ॥", "n": "३"}, {"a": "कंचन बरन बिराज सुबेसा ।", "b": "कानन कुंडल कुंचित केसा ॥", "n": "४"}, {"a": "हाथ बज्र औ ध्वजा बिराजै ।", "b": "काँधे मूँज जनेऊ साजै ॥", "n": "५"}, {"a": "संकर सुवन केसरीनंदन ।", "b": "तेज प्रताप महा जग बंदन ॥", "n": "६"}, {"a": "बिद्यावान गुनी अति चातुर ।", "b": "राम काज करिबे को आतुर ॥", "n": "७"}, {"a": "प्रभु चरित्र सुनिबे को रसिया ।", "b": "राम लखन सीता मन बसिया ॥", "n": "८"}, {"a": "सूक्ष्म रूप धरि सियहिं दिखावा ।", "b": "बिकट रूप धरि लंक जरावा ॥", "n": "९"}, {"a": "भीम रूप धरि असुर सँहारे ।", "b": "रामचंद्र के काज सँवारे ॥", "n": "१०"}, {"a": "लाय सजीवन लखन जियाये ।", "b": "श्रीरघुबीर हरषि उर लाये ॥", "n": "११"}, {"a": "रघुपति कीन्ही बहुत बड़ाई ।", "b": "तुम मम प्रिय भरतहि सम भाई ॥", "n": "१२"}, {"a": "सहस बदन तुम्हरो जस गावैं ।", "b": "अस कहि श्रीपति कंठ लगावैं ॥", "n": "१३"}, {"a": "सनकादिक ब्रह्मादि मुनीसा ।", "b": "नारद सारद सहित अहीसा ॥", "n": "१४"}, {"a": "जम कुबेर दिगपाल जहाँ ते ।", "b": "कबि कोबिद कहि सके कहाँ ते ॥", "n": "१५"}, {"a": "तुम उपकार सुग्रीवहिं कीन्हा ।", "b": "राम मिलाय राज पद दीन्हा ॥", "n": "१६"}, {"a": "तुम्हरो मंत्र बिभीषन माना ।", "b": "लंकेस्वर भए सब जग जाना ॥", "n": "१७"}, {"a": "जुग सहस्र जोजन पर भानू ।", "b": "लील्यो ताहि मधुर फल जानू ॥", "n": "१८"}, {"a": "प्रभु मुद्रिका मेलि मुख माहीं ।", "b": "जलधि लाँघि गये अचरज नाहीं ॥", "n": "१९"}, {"a": "दुर्गम काज जगत के जेते ।", "b": "सुगम अनुग्रह तुम्हरे तेते ॥", "n": "२०"}, {"a": "राम दुआरे तुम रखवारे ।", "b": "होत न आज्ञा बिनु पैसारे ॥", "n": "२१"}, {"a": "सब सुख लहै तुम्हारी सरना ।", "b": "तुम रच्छक काहू को डर ना ॥", "n": "२२"}, {"a": "आपन तेज सम्हारो आपै ।", "b": "तीनों लोक हाँक तें काँपै ॥", "n": "२३"}, {"a": "भूत पिसाच निकट नहिं आवै ।", "b": "महाबीर जब नाम सुनावै ॥", "n": "२४"}, {"a": "नासै रोग हरै सब पीरा ।", "b": "जपत निरंतर हनुमत बीरा ॥", "n": "२५"}, {"a": "संकट तें हनुमान छुड़ावै ।", "b": "मन क्रम बचन ध्यान जो लावै ॥", "n": "२६"}, {"a": "सब पर राम तपस्वी राजा ।", "b": "तिन के काज सकल तुम साजा ॥", "n": "२७"}, {"a": "और मनोरथ जो कोइ लावै ।", "b": "सोइ अमित जीवन फल पावै ॥", "n": "२८"}, {"a": "चारों जुग परताप तुम्हारा ।", "b": "है परसिद्ध जगत उजियारा ॥", "n": "२९"}, {"a": "साधु संत के तुम रखवारे ।", "b": "असुर निकंदन राम दुलारे ॥", "n": "३०"}, {"a": "अष्ट सिद्धि नौ निधि के दाता ।", "b": "अस बर दीन जानकी माता ॥", "n": "३१"}, {"a": "राम रसायन तुम्हरे पासा ।", "b": "सदा रहो रघुपति के दासा ॥", "n": "३२"}, {"a": "तुम्हरे भजन राम को पावै ।", "b": "जनम जनम के दुख बिसरावै ॥", "n": "३३"}, {"a": "अंत काल रघुबर पुर जाई ।", "b": "जहाँ जन्म हरि-भक्त कहाई ॥", "n": "३४"}, {"a": "और देवता चित्त न धरई ।", "b": "हनुमत सेइ सर्ब सुख करई ॥", "n": "३५"}, {"a": "संकट कटै मिटै सब पीरा ।", "b": "जो सुमिरै हनुमत बलबीरा ॥", "n": "३६"}, {"a": "जै जै जै हनुमान गोसाईं ।", "b": "कृपा करहु गुरु देव की नाईं ॥", "n": "३७"}, {"a": "जो सत बार पाठ कर कोई ।", "b": "छूटहि बंदि महा सुख होई ॥", "n": "३८"}, {"a": "जो यह पढ़ै हनुमान चालीसा ।", "b": "होय सिद्धि साखी गौरीसा ॥", "n": "३९"}, {"a": "तुलसीदास सदा हरि चेरा ।", "b": "कीजै नाथ हृदय महँ डेरा ॥", "n": "४०"}, {"h": "॥ दोहा ॥"}, {"a": "पवनतनय संकट हरन, मंगल मूरति रूप ।", "b": "राम लखन सीता सहित, हृदय बसहु सुर भूप ॥", "n": ""}, {"h": "॥ जय घोष ॥"}, {"a": "सियावर रामचन्द्र की जय ।", "b": "पवनसुत हनुमान की जय ॥", "n": ""}];
+var RSTD=[{"id": "m_gayatri", "type": "m", "ti": "गायत्री मंत्र", "en": "Gayatri Mantra", "txt": "ॐ भूर्भुवः स्वः ।\nतत्सवितुर्वरेण्यं ।\nभर्गो देवस्य धीमहि ।\nधियो यो नः प्रचोदयात् ॥", "ic": "🌅", "goal": 11}, {"id": "m_mrityunjaya", "type": "m", "ti": "महामृत्युंजय मंत्र", "en": "Mahamrityunjaya Mantra", "txt": "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।\nउर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥", "ic": "🔱", "goal": 11}, {"id": "m_shiva", "type": "m", "ti": "पंचाक्षरी शिव मंत्र", "en": "Om Namah Shivaya", "txt": "ॐ नमः शिवाय", "ic": "🕉️", "goal": 11}, {"id": "m_krishna", "type": "m", "ti": "हरे कृष्ण महामंत्र", "en": "Hare Krishna Maha Mantra", "txt": "हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे ।\nहरे राम हरे राम राम राम हरे हरे ॥", "ic": "🪈", "goal": 11}, {"id": "m_ram", "type": "m", "ti": "राम नाम जप", "en": "Ram Naam", "txt": "श्री राम जय राम जय जय राम", "ic": "🏹", "goal": 11}, {"id": "m_radha", "type": "m", "ti": "राधा नाम", "en": "Radha Naam", "txt": "राधे राधे राधे राधे", "ic": "🌸", "goal": 11}, {"id": "m_hanuman", "type": "m", "ti": "हनुमान मंत्र", "en": "Hanuman Mantra", "txt": "ॐ श्री हनुमते नमः", "ic": "🙏", "goal": 11}, {"id": "m_ganesh", "type": "m", "ti": "गणेश मंत्र", "en": "Ganesh Mantra", "txt": "ॐ गं गणपतये नमः", "ic": "🐘", "goal": 11}, {"id": "m_vishnu", "type": "m", "ti": "विष्णु मंत्र", "en": "Vishnu Mantra", "txt": "ॐ नमो भगवते वासुदेवाय", "ic": "🪷", "goal": 11}, {"id": "m_durga", "type": "m", "ti": "दुर्गा नवार्ण मंत्र", "en": "Durga Navarna Mantra", "txt": "ॐ ऐं ह्रीं क्लीं चामुण्डायै विच्चे", "ic": "🦁", "goal": 11}, {"id": "m_lakshmi", "type": "m", "ti": "लक्ष्मी मंत्र", "en": "Lakshmi Mantra", "txt": "ॐ श्रीं महालक्ष्म्यै नमः", "ic": "🪔", "goal": 11}, {"id": "m_saraswati", "type": "m", "ti": "सरस्वती मंत्र", "en": "Saraswati Mantra", "txt": "ॐ ऐं सरस्वत्यै नमः", "ic": "📜", "goal": 11}, {"id": "c_hanuman", "type": "c", "ti": "श्री हनुमान चालीसा", "en": "Hanuman Chalisa", "ic": "🚩", "goal": 7}];
+var rdCur=null,pgIdx=0,pgScr=[0,0],rdDelArm=null;
+function esc(x){return String(x).replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]})}
+function p2(n){return n<10?"0"+n:""+n}
+function ymd(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
+function ydayStr(){var d=new Date();d.setDate(d.getDate()-1);return ymd(d)}
+function rdInit(){var r=S.rd;if(!r||typeof r!=="object")r=S.rd={};if(!r.items||typeof r.items!=="object")r.items={};if(!Array.isArray(r.custom))r.custom=[];
+ if(!r.streak||typeof r.streak!=="object")r.streak={last:"",days:0,best:0};if(!r.today||typeof r.today!=="object")r.today={d:"",n:0};if(r.sec!=="c")r.sec="m"}
+function itemById(id){var i,c;for(i=0;i<RSTD.length;i++)if(RSTD[i].id===id)return RSTD[i];c=S.rd.custom;for(i=0;i<c.length;i++)if(c[i].id===id)return{id:c[i].id,type:"m",ti:c[i].title,en:"",txt:c[i].text,ic:"✍️",goal:11,custom:true};return null}
+function getIt(id,def){var x=S.rd.items[id];if(!x)x=S.rd.items[id]={reads:0,goal:def||11};return x}
+function streakNow(){var k=S.rd.streak;return(k.last===ymd(new Date())||k.last===ydayStr())?k.days:0}
+function todayN(){var q=S.rd.today;return q.d===ymd(new Date())?q.n:0}
+function textHTML(it){var h='<div class="om">ॐ</div><div class="th">'+(it.type==="c"?'॥ '+esc(it.ti)+' ॥':esc(it.ti))+'</div>';
+ if(it.type==="c"){h+='<div class="ths">'+esc(t("rd_by"))+'</div><div class="orn">❖ ❖ ❖</div>';
+  HC.forEach(function(b){if(b.h)h+='<div class="vh">'+esc(b.h)+'</div>';else h+='<div class="vs">'+esc(b.a)+'<br>'+esc(b.b)+(b.n?' <span class="vn">॥'+esc(b.n)+'॥</span>':'')+'</div>'})}
+ else{if(it.en)h+='<div class="ths">'+esc(it.en)+'</div>';h+='<div class="orn">❖ ❖ ❖</div>';
+  String(it.txt).split("\n").forEach(function(l){h+=l.trim()?'<div class="vs">'+esc(l)+'</div>':'<div class="gap2"></div>'});h+='<div class="orn">❖ ❖ ❖</div>'}
+ return h}
+function card(it){var st=S.rd.items[it.id]||{reads:0,goal:it.goal},g=st.goal||it.goal,r=st.reads||0,pc=Math.min(100,r/g*100);
+ return '<button class="rc" data-open="'+esc(it.id)+'"><span class="rci">'+it.ic+'</span><span class="rct"><b>'+esc(it.ti)+'</b><small>'+esc(it.type==="c"?t("hc_desc"):(it.en||""))+'</small>'+(it.type==="c"?'<div class="bar"><i style="width:'+pc+'%"></i></div>':'')+'</span><span class="rcp">'+r+' / '+g+'</span></button>'}
+function rdUI(){rdInit();socUI();
+ var k=S.rd;$("strk").innerHTML='<div class="sk1">🔥 <b>'+streakNow()+'</b> '+esc(t("st_days"))+'</div><div class="sk2">'+esc(t("st_today"))+': '+todayN()+'<br>'+esc(t("st_best"))+': '+(k.streak.best||0)+'</div>';
+ $("rtabs").innerHTML='<button class="tb'+(k.sec==="m"?' on':'')+'" data-rs="m">'+esc(t("rs_m"))+'</button><button class="tb'+(k.sec==="c"?' on':'')+'" data-rs="c">'+esc(t("rs_c"))+'</button>';
+ var m='<div class="rh">'+esc(t("my_m"))+'</div><button class="go addm" data-addm="1">'+esc(t("add_m"))+'</button>';
+ if(!k.custom.length)m+='<div class="hint" style="margin:0 2px 8px">'+esc(t("no_my"))+'</div>';
+ k.custom.forEach(function(c){m+=card(itemById(c.id))});
+ m+='<div class="rh">'+esc(t("rdy_m"))+'</div>';RSTD.forEach(function(x){if(x.type==="m")m+=card(x)});
+ $("rMantra").innerHTML=m;
+ var c='';RSTD.forEach(function(x){if(x.type==="c")c+=card(x)});c+='<div class="hint" style="text-align:center;margin-top:12px">'+esc(t("more_c"))+'</div>';$("rChalisa").innerHTML=c;
+ $("rMantra").style.display=k.sec==="m"?"block":"none";$("rChalisa").style.display=k.sec==="c"?"block":"none";
+ if(rdCur)rdReaderUI()}
+function rdReaderUI(){var it=itemById(rdCur);if(!it)return;var st=getIt(it.id,it.goal),g=st.goal,r=st.reads;
+ $("rTT").textContent=it.ti;$("rPt").textContent=t("rd_of").replace("{a}",r).replace("{b}",g);$("rPb").style.width=Math.min(100,r/g*100)+"%";
+ $("rGl").textContent=t("rd_goal");$("rgv").textContent=g;
+ var h="";[1,7,11,21,108].forEach(function(x){h+='<button class="chip'+(g===x?' on':'')+'" data-goal="'+x+'">'+x+'</button>'});$("rGc").innerHTML=h;
+ $("rNew").style.display=r>=g?"block":"none";$("rEd").style.display=it.custom?"block":"none"}
+function openItem(id){var it=itemById(id);if(!it)return;rdCur=id;$("rHome").style.display="none";$("rEdit").style.display="none";$("rReader").style.display="block";
+ $("rTx").innerHTML=textHTML(it);$("rTo").textContent="";rdReaderUI();window.scrollTo(0,0)}
+function closeReader(){rdCur=null;$("rReader").style.display="none";$("rEdit").style.display="none";$("rHome").style.display="block";rdUI();window.scrollTo(0,0)}
+function rdSetGoal(v){var it=itemById(rdCur);if(!it)return;v=Math.max(1,Math.min(1008,Math.floor(v)));getIt(rdCur,it.goal).goal=v;save();rdReaderUI();rdUI()}
+function rdDone(){var it=itemById(rdCur);if(!it)return;var st=getIt(rdCur,it.goal),d=ymd(new Date()),k=S.rd.streak;st.reads++;
+ if(k.last!==d){k.days=(k.last===ydayStr())?(k.days||0)+1:1;k.last=d;k.best=Math.max(k.best||0,k.days)}
+ if(S.rd.today.d!==d)S.rd.today={d:d,n:0};S.rd.today.n++;save();
+ var msg=st.reads===st.goal?t("rd_goalok"):t("rd_ok");$("rTo").textContent=msg.replace("{a}",st.reads).replace("{b}",st.goal);
+ if(S.vib&&navigator.vibrate){try{navigator.vibrate([200,100,200])}catch(e){}}
+ if(S.snd){try{var fn=MS[S.snds.m];if(fn)fn()}catch(e){}}
+ rdReaderUI();rdUI();window.scrollTo({top:0,behavior:"smooth"})}
+function rdNew(){var it=itemById(rdCur);if(!it)return;getIt(rdCur,it.goal).reads=0;save();$("rTo").textContent="";rdReaderUI();rdUI()}
+function openEditor(id){var c=null;S.rd.custom.forEach(function(x){if(x.id===id)c=x});rdEid=c?c.id:null;rdDelArm=null;
+ $("mtT").value=c?c.title:"";$("mtX").value=c?c.text:"";$("mtD").style.display=c?"block":"none";$("mtD").textContent=t("ed_del");$("mtD").classList.remove("armed");
+ $("rHome").style.display="none";$("rReader").style.display="none";$("rEdit").style.display="block";window.scrollTo(0,0)}
+var rdEid=null;
+function pageTo(i){if(i===pgIdx)return;pgScr[pgIdx]=window.scrollY;var from=pgIdx;pgIdx=i;$("pgC").style.display=i?"none":"block";$("pgR").style.display=i?"block":"none";
+ $("tbC").classList.toggle("on",!i);$("tbR").classList.toggle("on",!!i);var el=$(i?"pgR":"pgC");el.classList.remove("inl","inr");void el.offsetWidth;el.classList.add(i?"inl":"inr");window.scrollTo(0,pgScr[i]||0)}
+function socUI(){var h="";SOCIAL.forEach(function(x){h+='<a class="socb" href="'+esc(x.url)+'" target="_blank" rel="noopener" title="'+esc(x.name)+'">'+esc(x.icon||String(x.name).charAt(0))+'</a>'});
+ $("soc").innerHTML=h;$("mi_soc").style.display=SOCIAL.length?"block":"none";$("mi_help").style.display=HELP_URL?"block":"none"}
+function shareApp(){var u=location.href.split("#")[0],tx=t("sh_txt");
+ if(navigator.share){navigator.share({title:"Naam Counter",text:tx,url:u}).catch(function(){})}
+ else{var done=function(){var sp=$("shb").firstChild;sp.textContent=t("copied");setTimeout(texts,1800)};try{navigator.clipboard.writeText(tx+" "+u).then(done,function(){})}catch(e){}}}
+function rdMerge(r){if(!r||typeof r!=="object")return;rdInit();
+ (Array.isArray(r.custom)?r.custom:[]).forEach(function(c){if(c&&typeof c.id==="string"&&typeof c.title==="string"&&typeof c.text==="string"){var o={id:c.id.slice(0,40),title:c.title.slice(0,60),text:c.text.slice(0,5000)},k=-1;S.rd.custom.forEach(function(y,i){if(y.id===o.id)k=i});if(k>=0)S.rd.custom[k]=o;else S.rd.custom.push(o)}});
+ if(r.items&&typeof r.items==="object")Object.keys(r.items).forEach(function(id){var v=r.items[id];if(v&&+v.reads>=0&&+v.goal>=1)S.rd.items[id.slice(0,40)]={reads:Math.min(1e6,Math.floor(+v.reads)),goal:Math.min(1008,Math.floor(+v.goal))}});
+ if(r.streak&&typeof r.streak.last==="string"&&r.streak.last>(S.rd.streak.last||""))S.rd.streak={last:r.streak.last.slice(0,10),days:Math.max(0,Math.floor(+r.streak.days||0)),best:Math.max(S.rd.streak.best||0,Math.floor(+r.streak.best||0))}}
+$("tabs").addEventListener("click",function(e){var b=e.target.closest("[data-pg]");if(b)pageTo(+b.getAttribute("data-pg"))});
+$("pgR").addEventListener("click",function(e){var x;
+ if(x=e.target.closest("[data-rs]")){S.rd.sec=x.getAttribute("data-rs");save();rdUI();return}
+ if(x=e.target.closest("[data-open]")){openItem(x.getAttribute("data-open"));return}
+ if(e.target.closest("[data-addm]")){openEditor(null);return}
+ if(x=e.target.closest("[data-goal]")){rdSetGoal(+x.getAttribute("data-goal"));return}});
+$("rBack").onclick=closeReader;$("rTop").onclick=function(){window.scrollTo({top:0,behavior:"smooth"})};$("rDn").onclick=rdDone;$("rNew").onclick=rdNew;
+$("rgm").onclick=function(){var it=itemById(rdCur);if(it)rdSetGoal(getIt(rdCur,it.goal).goal-1)};$("rgp").onclick=function(){var it=itemById(rdCur);if(it)rdSetGoal(getIt(rdCur,it.goal).goal+1)};
+$("rEd").onclick=function(){openEditor(rdCur)};
+$("mtC").onclick=function(){rdEid&&itemById(rdEid)?openItem(rdEid):closeReader()};
+$("mtS").onclick=function(){var tx=$("mtX").value.trim().slice(0,5000),ti=$("mtT").value.trim().slice(0,60);if(!tx){$("mtX").focus();return}
+ if(!ti)ti=tx.split("\n")[0].slice(0,30);var id=rdEid;
+ if(id){S.rd.custom.forEach(function(c){if(c.id===id){c.title=ti;c.text=tx}})}else{id="u"+uid();S.rd.custom.unshift({id:id,title:ti,text:tx})}
+ save();rdEid=id;openItem(id)};
+$("mtD").onclick=function(){var b=$("mtD");if(!b.classList.contains("armed")){b.classList.add("armed");b.textContent=t("ed_conf");clearTimeout(rdDelArm);rdDelArm=setTimeout(function(){b.classList.remove("armed");b.textContent=t("ed_del")},3000);return}
+ S.rd.custom=S.rd.custom.filter(function(c){return c.id!==rdEid});delete S.rd.items[rdEid];save();rdEid=null;closeReader()};
+/* swipe between windows */
+var tx0=0,ty0=0,tt0=0,tOK=false;
+document.addEventListener("touchstart",function(e){var q=e.touches[0];tOK=e.touches.length===1&&!$("dr").classList.contains("on")&&!$("bye").classList.contains("on")&&!(e.target.closest&&e.target.closest(".sl,input,textarea,select"));tx0=q.clientX;ty0=q.clientY;tt0=Date.now()},{passive:true});
+document.addEventListener("touchend",function(e){if(!tOK)return;tOK=false;var q=e.changedTouches[0],dx=q.clientX-tx0,dy=q.clientY-ty0;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.8&&Date.now()-tt0<800){pageTo(dx<0?1:0)}},{passive:true});
+document.addEventListener("keydown",function(e){var a=document.activeElement.tagName;if(a==="INPUT"||a==="TEXTAREA")return;if(e.key==="ArrowRight")pageTo(1);else if(e.key==="ArrowLeft")pageTo(0)});
+
 $("sp_main").innerHTML=speedHTML();$("sp_menu").innerHTML=speedHTML();
 load();render();chkInst();wake();
 })();
