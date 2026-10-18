@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#d9791a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Naam Counter">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>नाम काउंटर · Naam Counter</title>
+<style>
+:root{--bg:#fff8ee;--card:#fff;--ink:#3b2a14;--mute:#8a7557;--accent:#d9791a;--accent2:#f4b04a;--line:#ecd9bd;--ok:#2e8b57;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--bg:#1b140b;--card:#271c10;--ink:#f6e7cf;--mute:#b39a73;--accent:#f0932b;--accent2:#ffc46b;--line:#403019;--ok:#58c58a}}
+:root[data-theme="night"]{--bg:#1b140b;--card:#271c10;--ink:#f6e7cf;--mute:#b39a73;--accent:#f0932b;--accent2:#ffc46b;--line:#403019;--ok:#58c58a}
+:root[data-theme="krishna"]{--bg:#eef4ff;--card:#fff;--ink:#12233f;--mute:#5f7390;--accent:#2f6fd6;--accent2:#7fb0ff;--line:#cfdcf2;--ok:#2e8b57}
+:root[data-theme="lotus"]{--bg:#fff0f5;--card:#fff;--ink:#3d1a2b;--mute:#8a5a70;--accent:#d6336c;--accent2:#ff8fb3;--line:#f4cddc;--ok:#2e8b57}
+:root[data-theme="tulsi"]{--bg:#eefaf0;--card:#fff;--ink:#12301c;--mute:#5a7f66;--accent:#2e9b57;--accent2:#7fd69a;--line:#cde9d5;--ok:#1f7a45}
+:root[data-theme="saffron"]{--bg:#fff8ee;--card:#fff;--ink:#3b2a14;--mute:#8a7557;--accent:#d9791a;--accent2:#f4b04a;--line:#ecd9bd;--ok:#2e8b57}
+:root[data-theme="rudraksha"]{--bg:#fbeedb;--card:#fffaf2;--ink:#3a1f10;--mute:#8d6e55;--accent:#b5361b;--accent2:#e08a3c;--line:#ecd3b0;--ok:#2e8b57}
+:root[data-theme="ganga"]{--bg:#eaf7fb;--card:#fff;--ink:#0f2f3a;--mute:#5b8795;--accent:#1a8fa8;--accent2:#7ad0e0;--line:#c6e5ee;--ok:#2e8b57}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;min-height:100vh}
+main{max-width:480px;margin:0 auto;padding:16px}
+.top{display:flex;align-items:center;margin:4px 0 12px}
+.top h1{flex:1;text-align:center;font-size:18px;margin:0}
+.mbtn{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.name{font-size:24px;font-weight:700;text-align:center;color:var(--accent);word-break:break-word}
+.sub{font-size:13px;color:var(--mute);text-align:center;margin-top:2px}
+.count{font-size:48px;font-weight:800;text-align:center;margin:10px 0 4px;font-variant-numeric:tabular-nums;word-break:break-all}
+.bar{height:10px;border-radius:6px;background:var(--line);overflow:hidden;margin:10px 0 6px}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.row{display:flex;justify-content:space-between;font-size:13px;color:var(--mute)}
+.tap{position:relative;display:flex;align-items:center;justify-content:center;margin:10px auto 4px;width:min(70vw,250px);height:min(70vw,250px);border-radius:50%;border:0;color:#fff;font-size:22px;font-weight:700;background:radial-gradient(circle at 35% 30%,var(--accent2),var(--accent));box-shadow:0 10px 28px rgba(0,0,0,.22);touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:transform .06s}
+.tap:active{transform:scale(.95)}
+.tap.flat{background:none;box-shadow:none;color:var(--accent);border-radius:20px}
+.tap.flat #tl{font-size:20px}
+#tl{position:relative;z-index:1}
+.sv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.sv .b{fill:var(--line)}
+.sv.mala .b.lit{fill:#a9672b}.sv.mala .gb{fill:#a9672b}
+.sv.rud .b{stroke:rgba(0,0,0,.15);stroke-width:.6}.sv.rud .b.lit{fill:#7e3318;stroke:#3a140a;stroke-width:.8}.sv.rud .gb{fill:#7e3318}
+.sv .ts{fill:#b5361b}
+.sv.flow .b.lit{fill:var(--accent)}
+.sv.bub .b{fill:none;stroke:var(--line);stroke-width:1.3}.sv.bub .b.lit{fill:var(--accent2);stroke:var(--accent)}
+.fk{transform-box:fill-box;transform-origin:50% 100%;animation:fk 1.2s ease-in-out infinite alternate}
+@keyframes fk{from{transform:scale(1,1) rotate(-1.5deg)}to{transform:scale(.96,1.05) rotate(1.5deg)}}
+.btns{display:flex;gap:8px;margin-top:12px}
+button.s{flex:1;padding:11px 6px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:14px}
+button.s.danger{color:#c0392b}
+button.s.armed{background:#c0392b;color:#fff;border-color:#c0392b}
+button.s.run{background:var(--accent);color:#fff;border-color:var(--accent)}
+input[type=range]{accent-color:var(--accent)}
+input,.ta{width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:16px;margin-top:6px}
+.ta{height:90px;font-size:12px;resize:vertical}
+label{font-size:13px;color:var(--mute);display:block;margin-top:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{padding:7px 11px;border-radius:20px;border:1px solid var(--line);font-size:13px;background:transparent;color:var(--ink)}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle;border:1px solid rgba(0,0,0,.2)}
+.sess{display:flex;align-items:center;gap:8px;padding:11px 0;border-top:1px solid var(--line)}
+.sess:first-child{border-top:0}
+.sess .t{flex:1;min-width:0}
+.sess .t b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sess .t span{font-size:12px;color:var(--mute)}
+.sess.active b{color:var(--accent)}
+.go{padding:9px 13px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-size:13px}
+.x{padding:8px 10px;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--mute);font-size:14px}
+.x.armed{background:#c0392b;color:#fff}
+.done{color:var(--ok);font-weight:700;text-align:center;font-size:14px;min-height:20px;margin-top:4px}
+.hint{font-size:12px;color:var(--mute);margin-top:6px}
+.edit{display:none;margin-top:12px;border-top:1px solid var(--line);padding-top:6px}
+.edit.on{display:block}
+.gl{font-size:12px;color:var(--mute);margin:10px 0 2px;display:block}
+/* drawer */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:19}
+.ov.on{opacity:1;pointer-events:auto}
+.dr{position:fixed;top:0;left:0;bottom:0;width:min(88vw,360px);background:var(--card);color:var(--ink);transform:translateX(-104%);transition:transform .25s;z-index:20;overflow-y:auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-shadow:4px 0 24px rgba(0,0,0,.25)}
+.dr.on{transform:none}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line);font-weight:700;color:var(--accent)}
+.dx{border:0;background:transparent;color:var(--ink);font-size:20px;padding:4px 8px}
+.mi{border-bottom:1px solid var(--line)}
+.mh{display:flex;align-items:center;justify-content:space-between;width:100%;padding:15px 16px;background:none;border:0;color:var(--ink);font-size:15px;text-align:left}
+.mh i{font-style:normal;color:var(--mute);transition:transform .2s}
+.mi.open .mh i{transform:rotate(90deg)}
+.mc{display:none;padding:0 16px 16px}
+.mi.open .mc{display:block}
+.bye{display:none;position:fixed;inset:0;z-index:30;background:var(--bg);color:var(--ink);align-items:center;justify-content:center;text-align:center;padding:24px;flex-direction:column;gap:12px}
+.bye.on{display:flex}
+.bye h2{font-size:28px;margin:0;color:var(--accent)}
+
+/* v3 */
+.mh{transition:background .2s,color .2s}
+.mi.open>.mh{background:linear-gradient(100deg,var(--accent),var(--accent2),var(--accent));background-size:220% 100%;color:#fff;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:shm 2.6s linear infinite}
+.mi.open>.mh i,.mi.open>.mh b{color:#fff!important}
+@keyframes shm{from{background-position:120% 0}to{background-position:-120% 0}}
+@media (prefers-reduced-motion:reduce){.mi.open>.mh{animation:none}}
+.mi.open>.mc{background:var(--bg);margin:0 10px 12px;padding:14px;border-radius:0 0 14px 14px;border:1px solid var(--accent);border-top:0;box-shadow:inset 0 4px 10px rgba(0,0,0,.07)}
+#menu .mi{transition:opacity .2s,filter .2s}
+#menu.has-open .mi:not(.open){opacity:.42;filter:blur(1.3px)}
+.tap.bd{border:3px solid var(--accent);background:radial-gradient(circle at 50% 38%,var(--card),var(--bg));box-shadow:0 8px 22px rgba(0,0,0,.18),inset 0 0 0 5px var(--card)}
+.tap.s-jyoti,.tap.s-bub{border-radius:50%}
+.tap.s-flow{border-radius:26px}
+.tap.bd .sv{inset:5%;width:90%;height:90%}
+#undo{border-color:var(--accent);color:var(--accent);font-weight:600;background:rgba(127,127,127,.08)}
+@supports (background:color-mix(in srgb,red,blue)){#undo{background:color-mix(in srgb,var(--accent) 14%,transparent)}}
+
+/* v4 */
+.inh{display:block;width:100%;padding:12px;border-radius:14px;border:0;color:#fff;font-size:15px;font-weight:700;margin:0 0 12px;background:linear-gradient(100deg,var(--accent),var(--accent2),var(--accent));background-size:220% 100%;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:shm 2.2s linear infinite}
+.tmd{flex:1;text-align:center;font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;padding:6px;border-radius:12px;border:1px solid var(--line);background:var(--bg)}
+.tmd.on{color:var(--accent);border-color:var(--accent);animation:glw 1.4s ease-in-out infinite}
+@keyframes glw{0%,100%{box-shadow:0 0 4px 0 var(--accent)}50%{box-shadow:0 0 18px 5px var(--accent2)}}
+button:disabled{opacity:.4}
+.mbtn.off{opacity:.55}
+.tap.bd #tl{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:7px 18px;border-radius:999px;box-shadow:0 3px 10px rgba(0,0,0,.25);text-shadow:0 1px 2px rgba(0,0,0,.35)}
+@media (prefers-reduced-motion:reduce){.inh,.tmd.on,button.s.run{animation:none}}
+
+/* v5 */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes spin{to{--ang:360deg}}
+button.s.run{border:3px solid transparent;padding:9px 6px;color:#fff;background:linear-gradient(var(--accent),var(--accent)) padding-box,conic-gradient(from var(--ang),var(--accent) 0deg,var(--accent) 190deg,var(--accent2) 265deg,#fff 330deg,var(--accent) 360deg) border-box;animation:spin 2s linear infinite}
+.tap.flat{border-radius:50%}
+.tap.s-flow{border-radius:26px}
+#rs{border-color:#c0392b;background:rgba(192,57,43,.1);font-weight:600}
+#rs.armed{background:#c0392b;color:#fff}
+@media (prefers-reduced-motion:reduce){.tap.bd #tl,button.s.run{animation:none}}
+/* v6 */
+.tap.bd #tl{border:2px solid transparent;padding:5px 16px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2)) padding-box,conic-gradient(from var(--ang),var(--accent) 0deg,var(--accent) 180deg,var(--accent2) 260deg,#fff 330deg,var(--accent) 360deg) border-box;animation:spin 2.2s linear infinite}
+/* v7 */
+.sl{position:relative;height:36px;margin:10px 4px 0;pointer-events:none}
+.sl::before{content:"";position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:var(--line)}
+.sl .sf{position:absolute;left:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.sl .st{position:absolute;top:0;width:32px;height:32px;margin-top:2px;border-radius:50%;background:var(--accent);border:3px solid var(--card);box-shadow:0 2px 8px rgba(0,0,0,.3);pointer-events:auto;touch-action:none;cursor:grab}
+.sl .st.drag{cursor:grabbing;box-shadow:0 0 0 7px rgba(127,127,127,.22),0 2px 8px rgba(0,0,0,.3)}
+.sl .st:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+.ap{display:none;margin-top:10px;padding:12px;border-radius:14px;border:1px solid var(--accent);background:var(--bg)}
+.ap.on{display:block}
+.tmrow{display:none;align-items:stretch;gap:8px;margin-top:12px}
+.tmrow .tmd{flex:1;margin:0}
+.tmd.off{opacity:.5}
+button.s.tmb{flex:0 0 62px;padding:6px 0;border:2px solid var(--accent);color:var(--accent);background:transparent;font-weight:700}
+button.s.tmb.fill{background:var(--accent);color:#fff}
+button.s.sel{background:var(--accent);color:#fff;border-color:var(--accent)}
+#bsp{border-color:#c0392b}
+.tap.s-jyoti,.tap.s-flow,.tap.s-bub{align-items:flex-end;padding-bottom:22px}
+/* v8 */
+.tap.bd #tl{border:0;padding:7px 18px;background:linear-gradient(135deg,var(--accent),var(--accent2));animation:none}
+.tmrow{flex-direction:column;align-items:stretch;gap:0}
+.tmrow .tmd{flex:none;width:100%}
+.tm3{display:flex;gap:8px;margin-top:8px}
+.tm3 .tmb,button.s.tmb{flex:1 1 0;padding:11px 4px;font-size:15px;font-weight:700;border:2px solid var(--accent);color:var(--accent);background:transparent}
+button.s.tmb.tmgreen{border-color:#2e8b57;color:#2e8b57;background:rgba(46,139,87,.12)}
+button.s.tmb.tmred{border-color:#c0392b;color:#c0392b;background:rgba(192,57,43,.12)}
+#tmgo{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tmd.on{border:2px solid transparent;box-shadow:none;color:var(--accent);background:linear-gradient(var(--bg),var(--bg)) padding-box,conic-gradient(from var(--ang),var(--accent) 0deg,var(--accent) 190deg,var(--accent2) 265deg,#fff 330deg,var(--accent) 360deg) border-box;animation:spin 2s linear infinite}
+/* v9 */
+.sec+.sec{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.sech{font-size:13px;font-weight:700;color:var(--ink);text-align:center;margin:0 0 10px}
+.tmg{display:grid;grid-template-columns:1fr 1.6fr 1fr;grid-template-rows:auto auto;gap:8px}
+#tmtg{grid-column:1;grid-row:1/3;align-self:stretch}
+#tmgo{grid-column:3;grid-row:1/3;align-self:stretch}
+#tmd,#tmi2{grid-column:2;grid-row:1;width:100%;margin:0;font-family:inherit}
+#tmd{font-size:22px}
+#tmi2{text-align:center;font-size:22px;font-weight:800;padding:10px;border:2px solid var(--accent);display:none}
+.tmpm{grid-column:2;grid-row:2;display:flex;gap:8px}
+.tmpm .s{flex:1;padding:8px 0;font-size:20px;font-weight:700}
+.pg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.pg3 .chip{text-align:center;padding:9px 0;font-size:14px}
+/* v10 */
+.tmhead{display:flex;align-items:center;justify-content:center;gap:12px}
+.swt{position:relative;width:48px;height:26px;border-radius:14px;border:2px solid #c0392b;padding:0;background:linear-gradient(#2e8b57,#2e8b57) no-repeat 0 0/0% 100%;transition:background-size .4s ease,border-color .4s ease;cursor:pointer;flex:none}
+.swt i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#c0392b;transition:transform .35s ease,background .35s ease;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.swt.on{background-size:100% 100%;border-color:#2e8b57}
+.swt.on i{transform:translateX(22px);background:#fff}
+.tmr3{display:flex;gap:8px;align-items:stretch}
+.tmr3 .tmd{flex:1;width:auto;grid-column:auto;text-align:center}
+.tmr3 .s{flex:0 0 58px;font-size:22px;font-weight:700;padding:8px 0}
+#tmd{grid-column:auto;grid-row:auto}
+#tmgo{grid-column:auto;grid-row:auto;width:100%;margin-top:10px;padding:12px}
+
+/* v11: pages, read window, traditional theme */
+:root{--pa1:#fdf3dc;--pa2:#f6e2b8;--pb:#a4311a;--pi:#4a1d0e}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--pa1:#2e2112;--pa2:#251a0d;--pb:#f0932b;--pi:#f6e7cf}}
+:root[data-theme="night"]{--pa1:#2e2112;--pa2:#251a0d;--pb:#f0932b;--pi:#f6e7cf}
+.tabs{display:flex;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px;margin:0 0 12px}
+.tb{flex:1;padding:10px 6px;border-radius:11px;border:0;background:transparent;color:var(--mute);font-size:15px;font-weight:700}
+.tb.on{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.pgv.inl{animation:inl .3s ease}.pgv.inr{animation:inr .3s ease}
+@keyframes inl{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
+@keyframes inr{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+.strk{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.strk .sk1{font-size:19px;font-weight:700;color:var(--accent)}.strk .sk1 b{font-size:28px}
+.strk .sk2{font-size:13px;color:var(--mute);text-align:right;line-height:1.5}
+.rh{font-size:13px;font-weight:700;color:var(--mute);margin:14px 2px 8px;letter-spacing:.5px;text-transform:uppercase}
+.rc{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;color:var(--ink)}
+.rci{flex:none;width:46px;height:46px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid var(--line)}
+.rct{flex:1;min-width:0}.rct b{display:block;font-size:19px;font-family:"Noto Serif Devanagari","Tiro Devanagari Hindi","Mukta","Noto Sans Devanagari","Nirmala UI",serif}
+.rct small{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+.rcp{flex:none;font-size:13px;font-weight:700;color:var(--accent);background:var(--bg);border-radius:20px;padding:4px 10px;border:1px solid var(--line)}
+.rc .bar{margin:8px 0 0;height:7px}
+.addm{width:100%;padding:12px;font-size:15px;margin-bottom:10px}
+.rbar{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.rbar .s{flex:0 0 auto;padding:9px 14px}
+.rtt{flex:1;font-weight:700;color:var(--accent);font-size:17px;text-align:center;font-family:"Noto Serif Devanagari","Tiro Devanagari Hindi","Mukta","Noto Sans Devanagari",serif}
+.rpt{font-size:17px;font-weight:700;text-align:center}
+.rgl{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;font-size:14px;color:var(--mute)}
+.rgl .rg{flex:0 0 38px;padding:4px 0;font-size:18px;font-weight:700}.rgl b{min-width:34px;text-align:center;color:var(--ink);font-size:18px}
+.trad{position:relative;background:linear-gradient(180deg,var(--pa1),var(--pa2));border:3px double var(--pb);border-radius:18px;padding:34px 16px 26px;color:var(--pi);font-family:"Noto Serif Devanagari","Tiro Devanagari Hindi","Mukta","Noto Sans Devanagari","Nirmala UI",serif;text-align:center;box-shadow:inset 0 0 40px rgba(164,49,26,.12),0 6px 18px rgba(0,0,0,.12);margin-bottom:14px}
+.trad:before,.trad:after{content:"❁";position:absolute;top:8px;color:var(--pb);font-size:22px;line-height:1}
+.trad:before{left:14px}.trad:after{right:14px}
+.trad .om{font-size:34px;color:var(--pb);line-height:1.1}
+.trad .th{font-size:27px;font-weight:700;color:var(--pb);margin:2px 0}
+.trad .ths{font-size:14px;color:var(--pi);opacity:.8;margin-bottom:6px}
+.trad .orn{color:var(--pb);letter-spacing:10px;margin:8px 0 10px;font-size:15px}
+.trad .vh{font-size:18px;color:var(--pb);font-weight:700;margin:20px 0 4px}
+.trad .vs{margin:14px 0;font-size:21px;line-height:1.95}
+.trad .vn{display:inline-block;font-size:16px;color:var(--pb);margin-left:6px}
+.trad .gap2{height:12px}
+.rend{display:flex;gap:10px;margin-bottom:12px}.rend .s{flex:0 0 auto;padding:14px 16px}
+.rdone{flex:1;padding:15px;font-size:17px;border-radius:14px}
+.mtl{font-size:13px;color:var(--mute);margin:10px 0 0;display:block}
+.soc-h{padding:12px 16px 6px;font-size:13px;color:var(--mute)}
+.soc{display:flex;flex-wrap:wrap;gap:10px;padding:4px 16px 14px}
+.socb{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px;text-decoration:none;color:var(--ink)}
+.mcs{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 12px}
+.aud{display:flex;align-items:center;gap:12px;margin:0 0 12px;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><button class="mbtn" id="mb" aria-label="Menu">☰</button><h1 data-i="title"></h1><button class="mbtn" id="snb" data-ns aria-label="Sound"></button></div>
+<div class="tabs" id="tabs"><button class="tb on" id="tbC" data-pg="0"><span data-i="tab_c"></span></button><button class="tb" id="tbR" data-pg="1"><span data-i="tab_r"></span></button></div>
+<div class="pgv" id="pgC"><button class="inh" id="inh"><span data-i="inst2"></span></button>
+
+<div class="card">
+  <div class="name" id="nm"></div>
+  <div class="sub" id="sb"></div>
+  <div class="count" id="ct">0</div>
+  <div class="bar"><i id="pg"></i></div>
+  <div class="row"><span id="pc">0%</span><span id="tg">&nbsp;</span></div>
+  <div class="done" id="dn"></div>
+  <button class="tap" id="tap"><svg id="tsv" class="sv" viewBox="0 0 260 270"></svg><span id="tl"></span></button>
+  <div class="btns"><button class="s" id="au"></button></div>
+  <div class="ap" id="apn">
+    <div class="sec">
+      <div class="sech tmhead"><span data-i="tm_sec"></span><button class="swt" id="tmsw" role="switch" aria-checked="false" aria-label="Timer"><i></i></button></div>
+      <div class="tmr3"><button class="s" id="tmm">−</button><div class="tmd" id="tmd"></div><button class="s" id="tmp">+</button></div>
+      <button class="s tmb" id="tmgo"></button>
+      <div class="done" id="tmf" style="margin-top:6px"></div>
+      <div class="hint" data-i="tm_hint2" style="text-align:center;margin-top:0"></div>
+    </div>
+    <div class="sec"><div id="sp_main"></div></div>
+  </div>
+  <div class="hint" id="ah" style="text-align:center"></div>
+  <div class="btns">
+    <button class="s" id="undo" data-i="undo"></button>
+    <button class="s" id="rn" data-i="edit"></button>
+    <button class="s danger" id="rs"></button>
+  </div>
+  <div class="edit" id="ed">
+    <label data-i="name"></label>
+    <input id="en" maxlength="60">
+    <label data-i="tlabel"></label>
+    <input id="et" type="number" inputmode="numeric" min="1" data-ph="tph">
+    <label data-i="setc"></label>
+    <input id="ec" type="number" inputmode="numeric" min="0" data-ph="cph">
+    <div class="btns"><button class="s" id="ecancel" data-i="cancel"></button><button class="go" id="esave" style="flex:1" data-i="save"></button></div>
+  </div>
+</div>
+</div>
+<div class="pgv" id="pgR" style="display:none">
+  <div class="card strk" id="strk"></div>
+  <div class="tabs" id="rtabs"></div>
+  <div id="rHome"><div id="rMantra"></div><div id="rChalisa"></div><div id="rStotra"></div></div>
+  <div id="rReader" style="display:none">
+    <div class="rbar"><button class="s" id="rBack" data-i="rd_back"></button><div class="rtt" id="rTT"></div></div>
+    <div class="card" id="rPr">
+      <div class="rpt" id="rPt"></div>
+      <div class="bar"><i id="rPb"></i></div>
+      <div class="rgl"><span id="rGl"></span><button class="s rg" id="rgm">−</button><b id="rgv"></b><button class="s rg" id="rgp">+</button></div>
+      <div class="chips" id="rGc" style="justify-content:center"></div>
+      <div class="done" id="rTo"></div>
+    </div>
+    <div class="aud" id="rAu" style="display:none"><button class="go" id="rAb"></button><span class="hint" id="rAm"></span></div>
+    <div class="trad" id="rTx"></div>
+    <div class="rend"><button class="s" id="rTop" data-i="rd_top"></button><button class="go rdone" id="rDn" data-i="rd_done"></button></div>
+    <div class="btns"><button class="s" id="rNew" style="display:none" data-i="rd_new"></button><button class="s" id="rEd" style="display:none" data-i="edit"></button></div>
+  </div>
+  <div class="card" id="rEdit" style="display:none">
+    <label data-i="ed_title" style="margin-top:0"></label>
+    <input id="mtT" maxlength="60">
+    <label data-i="ed_text"></label>
+    <textarea class="ta" id="mtX" maxlength="5000" style="height:240px;font-size:16px;font-family:inherit"></textarea>
+    <div class="btns"><button class="s" id="mtC" data-i="cancel"></button><button class="go" id="mtS" style="flex:1" data-i="save"></button></div>
+    <button class="s danger" id="mtD" style="width:100%;margin-top:10px;display:none"></button>
+  </div>
+</div>
+
+</main>
+
+<div class="ov" id="ov"></div>
+<aside class="dr" id="dr">
+  <div class="dh"><span data-i="menu"></span><button class="dx" id="dx" aria-label="Close">✕</button></div>
+  <nav id="menu">
+    <div class="mi"><button class="mh"><span data-i="m_speed"></span><i>›</i></button>
+      <div class="mc"><div id="sp_menu"></div></div></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_new"></span><i>›</i></button>
+      <div class="mc">
+        <label data-i="quick" style="margin-top:0"></label>
+        <div class="chips" id="nchips"></div>
+        <label data-i="nname"></label>
+        <input id="nn" maxlength="60" data-ph="nph">
+        <label data-i="ntarget"></label>
+        <div class="chips" id="chips"></div>
+        <input id="nt" type="number" inputmode="numeric" min="1" data-ph="cust">
+        <button class="go" id="add" style="width:100%;margin-top:12px;padding:12px;font-size:15px" data-i="start"></button>
+        <div class="hint" data-i="hint"></div>
+      </div></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_old"></span><i>›</i></button>
+      <div class="mc"><div id="list"></div></div></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_bk"></span><i>›</i></button>
+      <div class="mc">
+        <div class="hint" data-i="bkh" style="margin:0 0 10px"></div>
+        <button class="go" id="bkb" style="width:100%;padding:12px" data-i="bkb"></button>
+        <textarea class="ta" id="bkt" data-ph="bkph" style="margin-top:10px"></textarea>
+        <div class="hint" id="bkm"></div>
+      </div></div>
+
+    <div class="mi"><button class="mh" id="lgb"><span data-i="m_lang"></span><b id="lgv" style="color:var(--accent);font-weight:600"></b></button></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_sv"></span><i>›</i></button>
+      <div class="mc">
+        <div class="chips">
+          <button class="chip" id="tv" data-i="vib" data-ns></button>
+          <button class="chip" id="ts" data-i="snd" data-ns></button>
+          <button class="chip" id="tw" data-i="wake" data-ns></button>
+        </div>
+        <div class="hint" id="vh"></div>
+      </div></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_th"></span><i>›</i></button>
+      <div class="mc">
+        <label data-i="th_colors" style="margin-top:0"></label>
+        <div class="chips" id="thc"></div>
+        <label data-i="th_style"></label>
+        <div class="chips" id="stc"></div>
+      </div></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_snd"></span><i>›</i></button>
+      <div class="mc" id="sndc"></div></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_rs"></span><i>›</i></button>
+      <div class="mc">
+        <div class="hint" data-i="rsh" style="margin:0 0 10px"></div>
+        <textarea class="ta" id="rst" data-ph="bkph2"></textarea>
+        <button class="go" id="bkr" style="width:100%;padding:12px;margin-top:10px" data-i="bkr"></button>
+        <div class="hint" id="rsm"></div>
+      </div></div>
+
+    <div class="mi" id="mi_in"><button class="mh"><span data-i="m_in"></span><i>›</i></button>
+      <div class="mc">
+        <button class="go" id="instb" style="width:100%;padding:12px"></button>
+        <div class="hint" id="ih" style="display:none;line-height:1.6"></div>
+        <div class="btns" id="ib" style="display:none"><button class="s" id="cp"></button></div>
+      </div></div>
+
+    <div class="mi"><button class="mh" id="shb"><span data-i="m_sh"></span><b style="color:var(--accent);font-weight:600">↗</b></button></div>
+    <div class="mi" id="mi_soc" style="display:none"><div class="soc-h" data-i="m_soc"></div><div class="soc" id="soc"></div></div>
+    <div class="mi" id="mi_help" style="display:none"><button class="mh" id="hlb"><span data-i="m_help"></span><b style="color:var(--accent);font-weight:600">↗</b></button></div>
+
+    <div class="mi"><button class="mh"><span data-i="m_ex"></span><i>›</i></button>
+      <div class="mc">
+        <div class="hint" data-i="exq" style="margin:0 0 10px"></div>
+        <div class="btns" style="margin-top:0"><button class="s" id="exn" data-i="exn"></button><button class="s danger" id="exy" data-i="exy"></button></div>
+      </div></div>
+  </nav>
+</aside>
+
+<div class="bye" id="bye">
+  <h2 data-i="byet"></h2>
+  <div class="hint" data-i="byes" style="font-size:15px"></div>
+  <button class="go" id="byeb" style="padding:12px 20px;font-size:15px" data-i="byeb"></button>
+</div>
+
+<script>
+(function(){
+var KEY="naam-counter-v1",PRE=[108,1008,100000,1000000,10000000],GP=[0.5,0.8,1,2,3,5];
+/* ---- CONFIG (fill these later) ---- */
+var HELP_URL="";   /* payment / support link, e.g. "https://..." — shows "Help the author" in the menu when set */
+var SOCIAL=[];     /* e.g. [{name:"Instagram",icon:"📸",url:"https://instagram.com/yourpage"}] — shows "Follow us" icons when set */
+var NAMES=[{en:"Radha",hi:"राधा"},{en:"OM Namah Shivaya",hi:"ॐ नम शिवाय",alt:["ॐ नमः शिवाय"]},{en:"Sita Ram",hi:"सीता राम"},{en:"Ram",hi:"राम"}];
+var TH=[["auto","#d9791a"],["saffron","#d9791a"],["night","#271c10"],["krishna","#2f6fd6"],["lotus","#d6336c"],["tulsi","#2e9b57"],["rudraksha","#b5361b"],["ganga","#1a8fa8"]];
+var STY=["classic","mala","rud","jyoti","flow","bub"];
+var SN={c:[["Beep","बीप"],["Wood tok","लकड़ी टक"],["Bell ting","घंटी टिंग"],["Water drop","पानी की बूँद"],["Soft click","हल्की क्लिक"]],
+ b:[["Keyboard tap","कीबोर्ड टैप"],["Pop","पॉप"],["Soft thump","हल्की थप"],["Chime","चाइम"],["Bubble","बबल"]],
+ m:[["Gong","घंटा"],["Temple bell","मंदिर की घंटी"],["Shankh","शंख"],["Singing bowl","सिंगिंग बाउल"],["Drum","ढोल"]]};
+var S={sessions:[],active:null,vib:true,snd:true,wake:true,lang:"en",theme:"saffron",style:"bub",snds:{c:1,b:0,m:3},timer:5,tmOn:false,m5:1,m6:1,m7:1,m8:1},pick=100000,AC=null,BUS=null,WL=null,auto=null,DP=null,ihOpen=false,lastLit=-1,ST=[],pickOwn=false,TM=null,tmRem=0,tmEnd=0,TMP=[0,5,10,15,30,60],apOpen=false,paused=false,pauseAt=0,drag=null,lastTick=0,lastV=0;
+var T={
+en:{title:"🕉️ Naam Counter",tab_c:"📿 Count",tab_r:"📖 Read",rs_m:"Mantra",rs_c:"Chalisa",rs_s:"Stotra",mc_u:"✍️ My mantras",mc_g:"🙏 God mantras",mc_v:"🕉️ Vedic",mc_b:"🪐 Beej (Navagraha)",mcd_g:"Mantras of Shiva, Hanuman, Ganesh, Vishnu, Durga, Lakshmi and Saraswati.",mcd_v:"Vedic mantras: Gayatri and Mahamrityunjaya.",mcd_b:"Beej mantras for the nine planets (Navagraha). Chant with faith.",ah_desc:"Complete Aditya Hridaya Stotra, from the Valmiki Ramayana",st_by:"वाल्मीकि रामायण · युद्धकाण्ड",more_s:"More stotras will be added in future updates.",aud_play:"🔊 Listen",aud_pause:"⏸ Pause",aud_na:"Audio not available",st_days:"day streak",st_today:"Today",st_best:"Best",my_m:"My mantras",add_m:"➕ Add your own mantra",rdy_m:"Ready mantras",no_my:"Write your own long naam or mantra and read it here.",rd_of:"Reading {a} of {b}",rd_goal:"Goal",rd_done:"✔ Mark reading complete",rd_top:"↑ Back to top",rd_back:"← Back",rd_new:"🔁 Start a new round",rd_ok:"✔ Reading {a} of {b} complete 🙏",rd_goalok:"🙏 Goal complete! {a} of {b} readings done",ed_title:"Mantra name",ed_text:"Write the mantra or naam here (long text is fine)",ed_del:"🗑 Delete this mantra",ed_conf:"Tap again to delete",hc_desc:"Complete Hanuman Chalisa by Tulsidas, in Hindi",more_c:"More chalisas will be added in future updates.",m_sh:"📤 Share app",m_help:"💛 Help the author",m_soc:"Follow us",sh_txt:"Naam Counter — a simple digital mala for naam jap, with Hanuman Chalisa and mantras. Try it:",rd_by:"गोस्वामी तुलसीदास कृत",menu:"Menu",tap:"TAP",undo:"− Undo",edit:"✎ Edit",reset:"Reset",rconf:"Tap again to confirm",name:"Name",tlabel:"Target (any number, or leave empty for no target)",setc:"Set count to (optional)",tph:"e.g. 5000, 125000, 2500000",cph:"Current count",cancel:"Cancel",save:"Save",vib:"📳 Vibrate",snd:"🔔 Sound",wake:"☀️ Screen on",quick:"Quick names",nname:"Name to count (pick above or type your own)",nph:"Type any name",ntarget:"Target — pick one or type any number",cust:"Custom target (any number)",start:"Start session",hint:"Saved automatically on this device. Leave the target empty to count without a limit.",open:"Open",conf:"Confirm?",target:"Target",notarget:"No target",done:"🙏 Target complete! (keep tapping to go beyond)",mala:"Malas of 108",beads:"Beads",defname:"OM Namah Shivaya",lang:"हिन्दी",inst2:"📲 Install app",tm_title:"Chant timer (optional)",tm_custom:"Set your own time (minutes)",tm_ph:"e.g. 45",tm_set:"Set",m_tm:"⏱ Chant timer",tm_presets:"Quick presets",tm_setmsg:"✓ Timer set to {m} min. Use On and Start on the home screen.",tm_offmsg:"Timer is off.",tm_hint:"Set your time here. On the home screen, tap On, then Start. The timer runs on its own, separate from Auto Jap. While it runs, the 108 sound is off, and your chosen 108 sound plays when time is up.",tm_off:"Off",tm_min:"min",tm_1h:"1 hour",tdone:"⏰ Time complete! 🙏",nosnd:"🔇 No sound",own:"+ Your own",auto:"🔁 Auto Jap",bst:"▶ Start",bpa:"⏸ Pause",bsp:"■ Stop",paused:"⏸ Paused",tm_on:"On",bres:"▶ Resume",tm_sec:"⏱ Chant timer",tm_hint2:"Turn the switch on to set the time with − and + (1–60 min). Start runs Auto Jap together with the timer.",tm_ed:"1–60",stopauto:"⏸ Stop Auto",gap:"⚡ Adjust speed (seconds per naam)",autohint:"Auto mode: 1 count every {g} seconds. Screen stays on.",
+m_speed:"⏱️ Counter speed",m_new:"➕ New session",m_old:"📿 Old counts / sessions",m_bk:"📤 Backup code",m_lang:"🌐 Language",m_sv:"🔔 Sound & vibration",m_th:"🎨 Theme",m_snd:"🎵 Change sounds",m_rs:"📥 Restore data",m_in:"📲 Add to Home screen",m_ex:"🚪 Exit app",
+th_colors:"Colors",th_style:"Counter style",c_auto:"Auto",c_saffron:"Saffron",c_night:"Night",c_krishna:"Krishna Blue",c_lotus:"Lotus",c_tulsi:"Tulsi",c_rudraksha:"Rudraksha",c_ganga:"Ganga",
+s_classic:"Classic",s_mala:"Mala Beads",s_rud:"Rudraksha",s_jyoti:"Jyoti (Diya)",s_flow:"Flow Grid",s_bub:"Bubbles",
+sg_c:"Naam tap sound",sg_b:"Button tap sound",sg_m:"108 (mala complete) sound",
+bkh:"Backup makes a code with all your sessions and counts. Save it in WhatsApp or Notes. Use Restore data later to bring everything back, even in a new link or phone.",bkb:"📤 Create backup code",bkr:"📥 Restore",bkph:"Your backup code appears here.",bkph2:"Paste your backup code here",rsh:"Paste your backup code below, then tap Restore. Sessions in the code are added to this app.",bkok:"Backup code ready and copied ✓ Save it somewhere safe.",bkman:"Backup code ready. Press and hold the box, choose Select all, then Copy.",bkbad:"This code is not valid.",bkdone:"Restored ✓ sessions added: ",bkempty:"Paste your backup code in the box first.",
+inst:"📲 Install / Add to Home screen",iand:"1. Open this page in Chrome (not inside another app).<br>2. Tap the ⋮ menu (top right).<br>3. Tap “Add to Home screen” or “Install app”.<br>4. Tap Add.",iios:"1. Open this page in Safari.<br>2. Tap the Share button (square with arrow).<br>3. Tap “Add to Home Screen”, then Add.",copy:"Copy page link",copied:"Link copied ✓",
+exq:"Close the app?",exy:"Exit app",exn:"Stay",byet:"🙏 Thank you!",byes:"You can now close the app with your phone's Home or Back button.",byeb:"Back to app",
+novib:"Vibration isn't supported on this device/browser (e.g. iPhone). Turn on Sound for tap feedback.",blocked:"Your browser blocked vibration. Open this page in Chrome (not inside another app) and check your phone's vibration settings."},
+hi:{title:"🕉️ नाम काउंटर",tab_c:"📿 गिनती",tab_r:"📖 पढ़ें",rs_m:"मंत्र",rs_c:"चालीसा",rs_s:"स्तोत्र",mc_u:"✍️ मेरे मंत्र",mc_g:"🙏 देव मंत्र",mc_v:"🕉️ वैदिक",mc_b:"🪐 बीज (नवग्रह)",mcd_g:"शिव, हनुमान, गणेश, विष्णु, दुर्गा, लक्ष्मी और सरस्वती के मंत्र।",mcd_v:"वैदिक मंत्र: गायत्री और महामृत्युंजय।",mcd_b:"नौ ग्रहों (नवग्रह) के बीज मंत्र — श्रद्धा से जपें।",ah_desc:"संपूर्ण आदित्य हृदय स्तोत्र, वाल्मीकि रामायण से",st_by:"वाल्मीकि रामायण · युद्धकाण्ड",more_s:"आगे के अपडेट में और स्तोत्र जोड़े जाएँगे।",aud_play:"🔊 सुनें",aud_pause:"⏸ रोकें",aud_na:"ऑडियो उपलब्ध नहीं",st_days:"दिन लगातार",st_today:"आज",st_best:"सर्वश्रेष्ठ",my_m:"मेरे मंत्र",add_m:"➕ अपना मंत्र जोड़ें",rdy_m:"तैयार मंत्र",no_my:"अपना लंबा नाम या मंत्र लिखें और यहाँ पढ़ें।",rd_of:"पाठ {a} / {b}",rd_goal:"लक्ष्य",rd_done:"✔ पाठ पूर्ण हुआ",rd_top:"↑ ऊपर जाएँ",rd_back:"← वापस",rd_new:"🔁 नया चक्र शुरू करें",rd_ok:"✔ पाठ {a} / {b} पूर्ण 🙏",rd_goalok:"🙏 लक्ष्य पूरा! {a} / {b} पाठ हो गए",ed_title:"मंत्र का नाम",ed_text:"मंत्र या नाम यहाँ लिखें (लंबा भी चलेगा)",ed_del:"🗑 यह मंत्र हटाएँ",ed_conf:"हटाने के लिए फिर दबाएँ",hc_desc:"तुलसीदास कृत पूर्ण हनुमान चालीसा",more_c:"और चालीसाएँ आगे के अपडेट में जुड़ेंगी।",m_sh:"📤 ऐप शेयर करें",m_help:"💛 लेखक की सहायता करें",m_soc:"हमें फ़ॉलो करें",sh_txt:"नाम काउंटर — नाम जप के लिए एक सरल डिजिटल माला, हनुमान चालीसा और मंत्रों के साथ। आज़माएँ:",rd_by:"गोस्वामी तुलसीदास कृत",menu:"मेनू",tap:"टैप करें",undo:"− वापस",edit:"✎ बदलें",reset:"रीसेट",rconf:"पक्का? फिर दबाएँ",name:"नाम",tlabel:"लक्ष्य (कोई भी संख्या, या खाली छोड़ें)",setc:"गिनती सीधे सेट करें (वैकल्पिक)",tph:"जैसे 5000, 125000, 2500000",cph:"वर्तमान गिनती",cancel:"रद्द करें",save:"सेव करें",vib:"📳 कंपन",snd:"🔔 आवाज़",wake:"☀️ स्क्रीन चालू",quick:"जल्दी चुनें",nname:"गिनने के लिए नाम (ऊपर से चुनें या खुद लिखें)",nph:"कोई भी नाम लिखें",ntarget:"लक्ष्य — चुनें या कोई भी संख्या लिखें",cust:"अपना लक्ष्य (कोई भी संख्या)",start:"सत्र शुरू करें",hint:"आपके फ़ोन में अपने-आप सेव होता है। बिना सीमा के गिनने के लिए लक्ष्य खाली छोड़ें।",open:"खोलें",conf:"पक्का?",target:"लक्ष्य",notarget:"कोई लक्ष्य नहीं",done:"🙏 लक्ष्य पूरा हुआ! (आगे भी गिन सकते हैं)",mala:"माला (108)",beads:"मनके",defname:"ॐ नम शिवाय",lang:"English",inst2:"📲 ऐप इंस्टॉल करें",tm_title:"जाप टाइमर (वैकल्पिक)",tm_custom:"अपना समय सेट करें (मिनट)",tm_ph:"जैसे 45",tm_set:"सेट",m_tm:"⏱ जाप टाइमर",tm_presets:"जल्दी चुनें",tm_setmsg:"✓ टाइमर {m} मिनट सेट हुआ। होम स्क्रीन पर चालू और शुरू दबाएँ।",tm_offmsg:"टाइमर बंद है।",tm_hint:"यहाँ समय सेट करें। होम स्क्रीन पर चालू दबाएँ, फिर शुरू दबाएँ। टाइमर ऑटो जाप से अलग चलता है। चलते समय 108 की आवाज़ बंद रहती है, और समय पूरा होने पर आपकी चुनी हुई 108 वाली आवाज़ बजती है।",tm_off:"बंद",tm_min:"मिनट",tm_1h:"1 घंटा",tdone:"⏰ समय पूरा हुआ! 🙏",nosnd:"🔇 बिना आवाज़",own:"+ अपना नाम",auto:"🔁 ऑटो जाप",bst:"▶ शुरू",bpa:"⏸ पॉज़",bsp:"■ रोकें",paused:"⏸ पॉज़ है",tm_on:"चालू",bres:"▶ जारी रखें",tm_sec:"⏱ जाप टाइमर",tm_hint2:"टाइमर चालू करने के लिए स्विच दबाएँ, फिर − और + से समय (1–60 मिनट) सेट करें। शुरू दबाने पर ऑटो जाप टाइमर के साथ चलता है।",tm_ed:"1–60",stopauto:"⏸ ऑटो रोकें",gap:"⚡ गति सेट करें (प्रति नाम सेकंड)",autohint:"ऑटो मोड: हर {g} सेकंड में 1 गिनती। स्क्रीन चालू रहेगी।",
+m_speed:"⏱️ गिनती की गति",m_new:"➕ नया सत्र",m_old:"📿 पुरानी गिनती / सत्र",m_bk:"📤 बैकअप कोड",m_lang:"🌐 भाषा",m_sv:"🔔 आवाज़ और कंपन",m_th:"🎨 थीम",m_snd:"🎵 आवाज़ें बदलें",m_rs:"📥 डेटा रीस्टोर",m_in:"📲 होम स्क्रीन पर जोड़ें",m_ex:"🚪 ऐप बंद करें",
+th_colors:"रंग",th_style:"काउंटर स्टाइल",c_auto:"ऑटो",c_saffron:"केसरिया",c_night:"रात",c_krishna:"कृष्ण नीला",c_lotus:"कमल",c_tulsi:"तुलसी",c_rudraksha:"रुद्राक्ष",c_ganga:"गंगा",
+s_classic:"क्लासिक",s_mala:"माला मनके",s_rud:"रुद्राक्ष",s_jyoti:"ज्योति (दीपक)",s_flow:"फ्लो ग्रिड",s_bub:"बबल्स",
+sg_c:"नाम टैप की आवाज़",sg_b:"बटन टैप की आवाज़",sg_m:"108 (माला पूरी) की आवाज़",
+bkh:"बैकअप से आपके सभी सत्र और गिनती का एक कोड बनता है। उसे WhatsApp या Notes में सेव करें। बाद में, नए लिंक या नए फ़ोन में भी, डेटा रीस्टोर से सब कुछ वापस ला सकते हैं।",bkb:"📤 बैकअप कोड बनाएँ",bkr:"📥 रीस्टोर",bkph:"आपका बैकअप कोड यहाँ दिखेगा।",bkph2:"अपना बैकअप कोड यहाँ पेस्ट करें",rsh:"नीचे अपना बैकअप कोड पेस्ट करें और रीस्टोर दबाएँ। कोड के सत्र इस ऐप में जुड़ जाएँगे।",bkok:"बैकअप कोड तैयार और कॉपी हो गया ✓ इसे सुरक्षित जगह सेव करें।",bkman:"बैकअप कोड तैयार है। बॉक्स को दबाए रखें, Select all चुनें, फिर Copy करें।",bkbad:"यह कोड सही नहीं है।",bkdone:"रीस्टोर हो गया ✓ जुड़े सत्र: ",bkempty:"पहले बैकअप कोड बॉक्स में पेस्ट करें।",
+inst:"📲 इंस्टॉल / होम स्क्रीन पर जोड़ें",iand:"1. इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं)।<br>2. ऊपर दाएँ ⋮ मेनू दबाएँ।<br>3. “Add to Home screen” या “Install app” दबाएँ।<br>4. Add दबाएँ।",iios:"1. इस पेज को Safari में खोलें।<br>2. Share बटन (तीर वाला चौकोर) दबाएँ।<br>3. “Add to Home Screen” चुनें, फिर Add दबाएँ।",copy:"पेज का लिंक कॉपी करें",copied:"लिंक कॉपी हुआ ✓",
+exq:"क्या ऐप बंद करें?",exy:"ऐप बंद करें",exn:"रुकें",byet:"🙏 धन्यवाद!",byes:"अब आप फ़ोन के Home या Back बटन से ऐप बंद कर सकते हैं।",byeb:"ऐप पर वापस",
+novib:"इस फ़ोन/ब्राउज़र में कंपन समर्थित नहीं है (जैसे iPhone)। टैप फ़ीडबैक के लिए आवाज़ चालू करें।",blocked:"ब्राउज़र ने कंपन रोक दिया। इस पेज को Chrome में खोलें (किसी दूसरे ऐप के अंदर नहीं) और फ़ोन की कंपन सेटिंग जाँचें।"}
+};
+function t(k){return (T[S.lang]||T.hi)[k]}
+function $(i){return document.getElementById(i)}
+function all(q){return document.querySelectorAll(q)}
+function load(){try{var r=localStorage.getItem(KEY);if(r){var d=JSON.parse(r);if(d&&d.sessions){S=d;if(S.vib===undefined)S.vib=true;if(S.snd===undefined)S.snd=true;if(!S.lang)S.lang="en";if(!S.m5){S.lang="en";S.m5=1}if(!S.theme)S.theme="saffron";if(!S.m6){S.theme="rudraksha";S.style="classic";S.m6=1}if(STY.indexOf(S.style)<0)S.style="bub";
+ if(!S.snds)S.snds={};["c","b","m"].forEach(function(k){var v=+S.snds[k];S.snds[k]=((v>=0&&v<5)||v===-1)?v:({c:1,b:0,m:3})[k]});if(!S.m7){S.snds={c:1,b:3,m:3};S.m7=1}if(!S.m8){S.tmOn=false;S.m8=1}if(S.tmOn===undefined)S.tmOn=false;var tm0=Math.floor(Number(S.timer));S.timer=(tm0>=1&&tm0<=60)?tm0:(tm0>60?60:5)}}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function fmt(n){return Number(n).toLocaleString("en-IN")}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function cur(){for(var i=0;i<S.sessions.length;i++)if(S.sessions[i].id===S.active)return S.sessions[i];return null}
+function tgt(v){v=Math.floor(Number(v));return v>0?Math.min(v,1e12):0}
+function norm(x){return String(x).trim().toLowerCase()}
+function dispName(nm){var k=norm(nm);for(var i=0;i<NAMES.length;i++){var n=NAMES[i];if(k===norm(n.en)||k===norm(n.hi)||(n.alt||[]).some(function(a){return k===norm(a)}))return n[S.lang==="en"?"en":"hi"]}return nm}
+function gapOf(s){return s&&s.gap?s.gap:0.8}
+function newSess(name,target){stopAuto();var s={id:uid(),name:name||t("defname"),count:0,target:tgt(target)};S.sessions.unshift(s);S.active=s.id;save();render()}
+/* ---- builders ---- */
+function chips(){var h="";PRE.forEach(function(p){h+='<button class="chip'+(p===pick?' on':'')+'" data-p="'+p+'">'+fmt(p)+'</button>'});$("chips").innerHTML=h}
+function nchips(){var v=$("nn").value,h="",m=false;NAMES.forEach(function(n,i){var on=v!==""&&v===n[S.lang];if(on)m=true;h+='<button class="chip'+(on?' on':'')+'" data-n="'+i+'">'+n.hi+' · '+n.en+'</button>'});
+ h+='<button class="chip'+(!m&&(v!==""||pickOwn)?' on':'')+'" data-n="own">'+t("own")+'</button>';$("nchips").innerHTML=h}
+function thchips(){var h="";TH.forEach(function(x){h+='<button class="chip'+(S.theme===x[0]?' on':'')+'" data-th="'+x[0]+'"><span class="dot" style="background:'+x[1]+'"></span>'+t("c_"+x[0])+'</button>'});$("thc").innerHTML=h;
+ h="";STY.forEach(function(x){h+='<button class="chip'+(S.style===x?' on':'')+'" data-st="'+x+'">'+t("s_"+x)+'</button>'});$("stc").innerHTML=h}
+function sndchips(){var h="";[["c","sg_c"],["b","sg_b"],["m","sg_m"]].forEach(function(g,gi){h+='<label'+(gi?'':' style="margin-top:0"')+'>'+t(g[1])+'</label><div class="chips">';
+ SN[g[0]].forEach(function(n,i){h+='<button class="chip'+(S.snds[g[0]]===i?' on':'')+'" data-ns data-sn="'+g[0]+':'+i+'">'+(i+1)+'. '+n[S.lang==="en"?0:1]+'</button>'});h+='<button class="chip'+(S.snds[g[0]]===-1?' on':'')+'" data-ns data-sn="'+g[0]+':-1">'+t("nosnd")+'</button>';h+='</div>'});$("sndc").innerHTML=h}
+function theme(){var r=document.documentElement;if(S.theme&&S.theme!=="auto")r.setAttribute("data-theme",S.theme);else r.removeAttribute("data-theme")}
+function speedHTML(){return '<label class="gl spl" style="text-align:center;margin-top:0"></label><div class="btns" style="align-items:center;margin-top:6px"><button class="s gm" style="flex:0 0 56px;font-size:20px">−</button><input class="gap" type="number" inputmode="decimal" step="0.1" min="0.2" max="60" style="margin-top:0;text-align:center;font-weight:800;font-size:20px"><button class="s gpl" style="flex:0 0 56px;font-size:20px">+</button></div><div class="pg3 gch"></div><div class="sl"><div class="sf"></div><div class="st" tabindex="0" role="slider" aria-valuemin="0.2" aria-valuemax="10"></div></div><div class="row"><span>0.2s</span><span>10s</span></div>'}
+function gchips(){var g=gapOf(cur()),h="";GP.forEach(function(x){h+='<button class="chip'+(x===g?' on':'')+'" data-g="'+x+'">'+x+'s</button>'});all(".gch").forEach(function(e){e.innerHTML=h})}
+function gsync(){var g=gapOf(cur()),p=Math.max(0,Math.min(1,(g-0.2)/9.8));all(".gap").forEach(function(e){e.value=g});
+ all(".sl").forEach(function(sl){var th=sl.querySelector(".st");th.style.left="calc((100% - 32px) * "+p+")";sl.querySelector(".sf").style.width="calc((100% - 32px) * "+p+" + 16px)";th.setAttribute("aria-valuenow",g)})}
+function ratchet(){var n=Date.now();if(n-lastTick<30)return;lastTick=n;if(!S.snd)return;try{nz(.007,3000,1.2,1.5);osc("triangle",1000,520,.025,.3)}catch(e){}}
+function setGap(v){var s=cur();if(!s)return;v=Math.round(Number(v)*100)/100;if(!(v>=0.2))v=0.2;if(v>60)v=60;s.gap=v;save();gsync();
+ if(auto){clearInterval(auto);auto=setInterval(doCount,v*1000)}autoUI();gchips()}
+/* ---- counter style ---- */
+function drawStyle(){var sv=$("tsv"),st=S.style,h="",i,a,x,y;lastLit=-1;ST=[];
+ $("tap").className="tap"+(st==="classic"?"":" flat")+((st==="jyoti"||st==="flow"||st==="bub")?" bd s-"+st:"");
+ if(st==="classic"){sv.setAttribute("class","sv");sv.innerHTML="";return}
+ sv.setAttribute("class","sv "+st);
+ if(st==="mala"||st==="rud"){for(i=0;i<108;i++){a=(90+(i+1)*360/109)*Math.PI/180;x=130+108*Math.cos(a);y=118+108*Math.sin(a);h+='<circle class="b" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+(st==="rud"?3.4:3.2)+'"/>'}
+  h+='<circle class="gb" cx="130" cy="226" r="7"/><path class="ts" d="M130 233 L121 257 L139 257 Z"/>'} else if(st==="flow"){for(i=0;i<108;i++){h+='<rect class="b" x="'+(18+(i%12)*19)+'" y="'+(24+Math.floor(i/12)*19)+'" width="15" height="15" rx="4"/>'}}
+ else if(st==="bub"){for(i=0;i<108;i++){var r=8.2*Math.sqrt(i+.5);a=i*2.39996;h+='<circle class="b" cx="'+(130+r*Math.cos(a)).toFixed(1)+'" cy="'+(96+r*Math.sin(a)).toFixed(1)+'" r="'+(2.4+i*.028).toFixed(1)+'"/>'}}
+ else if(st==="jyoti"){h='<defs><radialGradient id="gl"><stop offset="0" stop-color="#ffd36b" stop-opacity=".85"/><stop offset="1" stop-color="#ffd36b" stop-opacity="0"/></radialGradient><linearGradient id="fg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#ff7a18"/><stop offset="1" stop-color="#ffe066"/></linearGradient></defs><g transform="translate(130 14) scale(.8) translate(-130 -14)"><circle cx="130" cy="125" r="115" fill="url(#gl)"/><g id="fl"><g class="fk"><path d="M130 45 C100 95 98 140 130 178 C162 140 160 95 130 45 Z" fill="url(#fg)"/></g></g><path d="M62 182 Q130 252 198 182 Z" fill="#a4561b"/><rect x="58" y="178" width="144" height="8" rx="4" fill="#c47a2c"/></g>'}
+ sv.innerHTML=h;ST=sv.querySelectorAll(".b")}
+function paint(c){var st=S.style;if(st==="classic")return;var n=c%108,lit=(c>0&&n===0)?108:n;
+ if(st==="jyoti"){var f=$("fl");if(f)f.setAttribute("transform","translate(130 178) scale("+(.55+.45*lit/108).toFixed(3)+") translate(-130 -178)");return}
+ var lo=lastLit,hi=lit;if(lastLit<0||lit<lastLit){lo=0;hi=108}
+ for(var i=lo;i<hi&&i<ST.length;i++)ST[i].setAttribute("class","b"+(i<lit?" lit":""));lastLit=lit}
+function sub(s){return t("mala")+": "+fmt(Math.floor(s.count/108))+" · "+t("beads")+": "+(s.count%108)}
+function prog(s){
+ $("ct").textContent=fmt(s.count);$("sb").textContent=sub(s);paint(s.count);
+ if(s.target){var p=Math.min(100,s.count/s.target*100);$("pg").style.width=p+"%";$("pc").textContent=p.toFixed(p<10?2:1)+"%";$("tg").textContent=t("target")+" "+fmt(s.target);$("dn").textContent=s.count>=s.target?t("done"):""}
+ else{$("pg").style.width="0";$("pc").textContent=t("notarget");$("tg").innerHTML="&nbsp;";$("dn").textContent=""}
+}
+function autoUI(){$("au").textContent=t("auto")+(apOpen?" ▴":" ▾");$("au").className="s"+(auto?" run":"");$("apn").classList.toggle("on",apOpen);tmUI()}
+function ahUI(){var p=[];if(TM)p.push("⏱ "+mmss(tmRem));if(auto)p.push(t("autohint").replace("{g}",gapOf(cur())));else if(paused)p.push(t("paused"));$("ah").textContent=p.join(" · ")}
+function instUI(){$("instb").textContent=t("inst");$("cp").textContent=t("copy");if(ihOpen){$("ih").innerHTML=/iphone|ipad|ipod/i.test(navigator.userAgent)?t("iios"):t("iand")}}
+function texts(){rdUI();
+ document.documentElement.lang=S.lang;
+ all("[data-i]").forEach(function(e){e.textContent=t(e.getAttribute("data-i"))});
+ all("[data-ph]").forEach(function(e){e.placeholder=t(e.getAttribute("data-ph"))});
+ all(".spl").forEach(function(e){e.textContent=t("gap")});
+ $("tl").textContent=t("tap");$("lgv").textContent=t("lang");
+ if(!$("rs").classList.contains("armed"))$("rs").textContent=t("reset");
+ autoUI();instUI();tmUI();
+}
+function render(){
+ var s=cur();
+ if(!s){if(S.sessions.length){S.active=S.sessions[0].id;s=cur()}else{newSess(t("defname"),1080);return}}
+ theme();texts();drawStyle();$("nm").textContent=dispName(s.name);prog(s);
+ var h="";S.sessions.forEach(function(x){
+  h+='<div class="sess'+(x.id===s.id?' active':'')+'"><div class="t"><b></b><span>'+fmt(x.count)+(x.target?' / '+fmt(x.target):'')+'</span></div>'+
+  (x.id===s.id?'':'<button class="go" data-o="'+x.id+'">'+t("open")+'</button>')+'<button class="x" data-d="'+x.id+'">🗑</button></div>'});
+ $("list").innerHTML=h;
+ var bs=$("list").querySelectorAll(".sess b");S.sessions.forEach(function(x,i){bs[i].textContent=dispName(x.name)});
+ chips();nchips();thchips();sndchips();gchips();gsync();
+ $("snb").textContent=S.snd?"🔔":"🔇";$("snb").className="mbtn"+(S.snd?"":" off");$("tv").className="chip"+(S.vib?" on":"");$("ts").className="chip"+(S.snd?" on":"");$("tw").className="chip"+(S.wake?" on":"");
+ $("vh").textContent=(S.vib&&!navigator.vibrate)?t("novib"):"";
+}
+/* ---- sounds ---- */
+function ctx(){AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();
+ if(!BUS){BUS=AC.createDynamicsCompressor();BUS.threshold.value=-8;BUS.ratio.value=8;BUS.connect(AC.destination)}return AC}
+function osc(type,f1,f2,d,v,dl){var a=ctx(),t0=a.currentTime+(dl||0),o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f1,t0);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t0+d*.8);
+ o.connect(g);g.connect(BUS);g.gain.setValueAtTime(.0001,t0);g.gain.linearRampToValueAtTime(v,t0+.005);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.start(t0);o.stop(t0+d+.05)}
+function nz(d,f,q,v,dl){var a=ctx(),t0=a.currentTime+(dl||0),n=Math.max(1,Math.floor(a.sampleRate*d)),b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);
+ for(var i=0;i<n;i++)x[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);
+ var s=a.createBufferSource();s.buffer=b;var fl=a.createBiquadFilter();fl.type="bandpass";fl.frequency.value=f;fl.Q.value=q;var g=a.createGain();g.gain.value=v;s.connect(fl);fl.connect(g);g.connect(BUS);s.start(t0)}
+var CS=[function(){osc("triangle",1100,0,.09,.7)},function(){osc("sine",700,260,.08,1)},function(){osc("sine",1760,0,.4,.5);osc("sine",2637,0,.25,.25)},function(){osc("sine",1400,500,.1,.9)},function(){nz(.02,3000,.9,2.2)}];
+var BS=[function(){nz(.012,2600,1.2,1.8);osc("sine",1900,1100,.03,.5)},function(){osc("sine",620,190,.11,1.1)},function(){osc("sine",160,70,.13,1.3)},function(){osc("sine",880,0,.28,.5);osc("sine",1320,0,.22,.25)},function(){osc("sine",300,800,.1,.9)}];
+var MS=[
+ function(){[[98,1.4],[196,1],[294,.63],[392,.42],[588,.25]].forEach(function(p,i){osc("sine",p[0]*(i?1.003:1),0,3,p[1])})},
+ function(){[[440,1],[1188,.5],[2130,.3],[3300,.18]].forEach(function(p){osc("sine",p[0],0,2.4,p[1])})},
+ function(){var a=ctx(),t0=a.currentTime;[233,236].forEach(function(f){var o=a.createOscillator(),fl=a.createBiquadFilter(),g=a.createGain();o.type="sawtooth";o.frequency.value=f;fl.type="lowpass";fl.frequency.value=900;o.connect(fl);fl.connect(g);g.connect(BUS);
+  g.gain.setValueAtTime(.0001,t0);g.gain.linearRampToValueAtTime(.7,t0+.3);g.gain.setValueAtTime(.7,t0+1.4);g.gain.exponentialRampToValueAtTime(.0001,t0+2.2);o.start(t0);o.stop(t0+2.3)})},
+ function(){[[432,1],[434,.8],[1192,.3]].forEach(function(p){osc("sine",p[0],0,4.5,p[1])})},
+ function(){osc("sine",120,45,.7,2);nz(.15,200,.7,1.2)}
+];
+function whoosh(){var a=ctx(),t0=a.currentTime,n=Math.floor(a.sampleRate*.8),b=a.createBuffer(1,n,a.sampleRate),d=b.getChannelData(0);
+ for(var i=0;i<n;i++)d[i]=Math.random()*2-1;
+ var s=a.createBufferSource();s.buffer=b;var f=a.createBiquadFilter();f.type="bandpass";f.Q.value=1.4;f.frequency.setValueAtTime(250,t0);f.frequency.exponentialRampToValueAtTime(4500,t0+.55);
+ var g=a.createGain();g.gain.setValueAtTime(.001,t0);g.gain.exponentialRampToValueAtTime(1.6,t0+.22);g.gain.exponentialRampToValueAtTime(.001,t0+.7);
+ s.connect(f);f.connect(g);g.connect(BUS);s.start(t0);s.stop(t0+.8)}
+function woosh(){if(S.snd){try{whoosh()}catch(e){}}}
+var KA=null,KT=null;
+var KAUD=null;
+function wavURL(){var sr=44100,n=sr,buf=new ArrayBuffer(44+n*2),v=new DataView(buf);function ws(o,x){for(var i=0;i<x.length;i++)v.setUint8(o+i,x.charCodeAt(i))}
+ ws(0,"RIFF");v.setUint32(4,36+n*2,true);ws(8,"WAVE");ws(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,sr,true);v.setUint32(28,sr*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);ws(36,"data");v.setUint32(40,n*2,true);
+ for(var i=0;i<n;i++)v.setInt16(44+i*2,Math.round(Math.sin(2*Math.PI*20000*i/sr)*.04*32767),true);return URL.createObjectURL(new Blob([buf],{type:"audio/wav"}))}
+function audKeep(on){try{if(on){if(!KAUD){KAUD=new Audio(wavURL());KAUD.loop=true}var p=KAUD.play();if(p&&p.catch)p.catch(function(){})}else if(KAUD){KAUD.pause()}}catch(e){}}
+function stopKeep(){clearTimeout(KT);try{if(KA)KA.stop()}catch(e){}KA=null}
+function keep(ms){if(!S.snd)return;try{var a=ctx();if(!KA){var o=a.createOscillator(),g=a.createGain();o.frequency.value=20000;g.gain.value=.03;o.connect(g);g.connect(BUS);o.start();KA=o}
+ clearTimeout(KT);if(ms)KT=setTimeout(stopKeep,ms)}catch(e){}}
+function feel(big){
+ if(S.vib&&navigator.vibrate){try{var ok=navigator.vibrate(big?[400]:30);if(ok===false)$("vh").textContent=t("blocked")}catch(e){}}
+ if(S.snd){try{var fn=(big&&!TM)?MS[S.snds.m]:CS[S.snds.c];if(fn){keep(auto?0:8000);fn()}}catch(e){}}
+}
+/* ---- counting ---- */
+function doCount(){var s=cur();if(!s)return;s.count++;save();feel(s.count%108===0);prog(s);
+ var sp=$("list").querySelector(".sess.active .t span");if(sp)sp.textContent=fmt(s.count)+(s.target?' / '+fmt(s.target):'');
+ if(auto&&s.target&&s.count>=s.target)stopAuto()}
+function wake(){var need=S.wake||auto||TM;if(need&&navigator.wakeLock){if(!WL)navigator.wakeLock.request("screen").then(function(l){WL=l;l.addEventListener("release",function(){WL=null})}).catch(function(){})}else if(WL){try{WL.release()}catch(e){}WL=null}}
+function mmss(x){var h=Math.floor(x/3600),m=Math.floor(x%3600/60),r=x%60,p=function(n){return (n<10?"0":"")+n};return h?h+":"+p(m)+":"+p(r):p(m)+":"+p(r)}
+function tmUI(){var run=!!TM,armed=!!S.tmOn,d=$("tmd"),go=$("tmgo"),sw=$("tmsw");
+ d.textContent="⏱ "+mmss(run?tmRem:S.timer*60);d.className="tmd"+((run&&!paused)?" on":"")+(armed?"":" off");
+ sw.className="swt"+(armed?" on":"");sw.setAttribute("aria-checked",armed?"true":"false");$("tmm").disabled=!armed;$("tmp").disabled=!armed;
+ go.textContent=auto?t("bpa"):(paused?t("bres"):t("bst"));go.className="s tmb";ahUI()}
+function tmSw(){stopAuto();S.tmOn=!S.tmOn;save();tmUI()}
+function setTimer(v){if(!S.tmOn)return;v=Math.round(Number(v));if(!(v>=1))return;v=Math.min(60,v);if(v===S.timer)return;stopAuto();S.timer=v;save();tmUI()}
+function startTimer(){if(TM||!S.tmOn||!(S.timer>=1))return;tmEnd=Date.now()+S.timer*60000;tmRem=S.timer*60;TM=setInterval(tmTick,250);$("tmf").textContent="";tmUI()}
+function stopTimer(){if(!TM)return;clearInterval(TM);TM=null;tmUI()}
+function tmTick(){if(paused)return;var r=Math.max(0,Math.ceil((tmEnd-Date.now())/1000));if(r!==tmRem){tmRem=r;$("tmd").textContent="⏱ "+mmss(r);ahUI()}if(r<=0)finishTimer()}
+function alarm(){if(S.vib&&navigator.vibrate){try{navigator.vibrate([300,150,300,150,300])}catch(e){}}
+ if(S.snd){try{ctx();var fn=MS[S.snds.m];if(fn)fn()}catch(e){}}}
+function finishTimer(){stopAuto();alarm();$("tmf").textContent=t("tdone");$("ah").textContent=t("tdone")}
+function startAuto(){if(auto)return;auto=setInterval(doCount,gapOf(cur())*1000);keep(0);if(S.snd)audKeep(true);autoUI();wake()}
+function pauseAuto(){if(!auto)return;clearInterval(auto);auto=null;paused=true;pauseAt=Date.now();audKeep(false);autoUI();wake()}
+function resumeAuto(){if(auto||!paused)return;paused=false;if(TM)tmEnd+=Date.now()-pauseAt;auto=setInterval(doCount,gapOf(cur())*1000);keep(0);if(S.snd)audKeep(true);autoUI();wake()}
+function stopAuto(){if(!auto&&!paused&&!TM)return;clearInterval(auto);auto=null;paused=false;stopTimer();audKeep(false);if(S.snd)keep(8000);else stopKeep();autoUI();wake()}
+function syncOpen(){$("menu").classList.toggle("has-open",!!document.querySelector(".mi.open"))}
+function dopen(v){$("dr").classList.toggle("on",v);$("ov").classList.toggle("on",v)}
+/* ---- events ---- */
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("button");if(b&&b.id!=="tap"&&!b.hasAttribute("data-ns")&&S.snd){try{BS[S.snds.b]()}catch(x){}}},true);
+$("tap").addEventListener("click",doCount);
+$("au").onclick=function(){apOpen=!apOpen;autoUI()};
+
+document.addEventListener("keydown",function(e){if(e.code==="Escape")dopen(false);if(e.code==="Space"&&document.activeElement.tagName!=="INPUT"&&document.activeElement.tagName!=="TEXTAREA"){e.preventDefault();$("tap").click()}});
+document.addEventListener("pointerdown",function(e){var st=e.target.closest&&e.target.closest(".sl .st");if(!st)return;var r=st.getBoundingClientRect();drag={sl:st.parentNode,st:st,off:e.clientX-(r.left+r.width/2),id:e.pointerId};st.classList.add("drag");try{st.setPointerCapture(e.pointerId)}catch(x){}lastV=gapOf(cur());e.preventDefault()});
+document.addEventListener("pointermove",function(e){if(!drag||e.pointerId!==drag.id)return;var r=drag.sl.getBoundingClientRect(),f=Math.max(0,Math.min(1,(e.clientX-drag.off-r.left-16)/(r.width-32))),v=Math.round((0.2+f*9.8)*10)/10;if(v!==lastV){lastV=v;setGap(v);ratchet()}});
+function endDrag(e){if(drag&&(!e||e.pointerId===drag.id)){drag.st.classList.remove("drag");drag=null}}
+document.addEventListener("pointerup",endDrag);document.addEventListener("pointercancel",endDrag);
+document.addEventListener("keydown",function(e){var st=e.target.closest&&e.target.closest(".sl .st");if(!st)return;if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();setGap(gapOf(cur())+(e.key==="ArrowRight"?.1:-.1));ratchet()}});
+document.addEventListener("change",function(e){if(e.target.classList.contains("gap"))setGap(e.target.value)});
+document.addEventListener("click",function(e){var el=e.target.closest("button");if(!el)return;
+ if(el.classList.contains("gm"))setGap(gapOf(cur())-.1);
+ else if(el.classList.contains("gpl"))setGap(gapOf(cur())+.1);
+ else if(el.hasAttribute("data-g"))setGap(el.getAttribute("data-g"))});
+$("mb").onclick=function(){dopen(true)};$("ov").onclick=function(){dopen(false)};$("dx").onclick=function(){dopen(false)};
+$("menu").addEventListener("click",function(e){var h=e.target.closest(".mh");if(!h)return;
+ if(h.id==="shb"){shareApp();return}if(h.id==="hlb"){if(HELP_URL)window.open(HELP_URL,"_blank","noopener");return}if(h.id==="lgb"){S.lang=S.lang==="hi"?"en":"hi";save();render();return}
+ var mi=h.parentNode,was=mi.classList.contains("open");all(".mi").forEach(function(m){m.classList.remove("open")});if(!was)mi.classList.add("open");syncOpen()});
+$("tmsw").onclick=tmSw;
+$("tmgo").onclick=function(){if(auto)pauseAuto();else if(paused)resumeAuto();else{startAuto();startTimer()}};
+$("tmm").onclick=function(){setTimer(S.timer-1)};$("tmp").onclick=function(){setTimer(S.timer+1)};
+
+$("undo").onclick=function(){var s=cur();if(s&&s.count>0){s.count--;save();render()}};
+var rt=null;
+$("rs").onclick=function(){var s=cur();if(!s)return;var b=$("rs");
+ if(b.classList.contains("armed")){clearTimeout(rt);b.classList.remove("armed");b.textContent=t("reset");s.count=0;save();render();woosh();if(S.vib&&navigator.vibrate){try{navigator.vibrate(60)}catch(e){}}}
+ else{b.classList.add("armed");b.textContent=t("rconf");rt=setTimeout(function(){b.classList.remove("armed");b.textContent=t("reset")},3000)}};
+$("rn").onclick=function(){var s=cur();if(!s)return;var e=$("ed");if(e.classList.contains("on")){e.classList.remove("on");return}
+ $("en").value=dispName(s.name);$("et").value=s.target||"";$("ec").value="";e.classList.add("on")};
+$("ecancel").onclick=function(){$("ed").classList.remove("on")};
+$("esave").onclick=function(){var s=cur();if(!s)return;var n=$("en").value.trim();if(n)s.name=n.slice(0,60);
+ s.target=tgt($("et").value);var c=$("ec").value;if(c!==""){var cv=Math.floor(Number(c));if(cv>=0)s.count=Math.min(cv,1e12)}
+ save();$("ed").classList.remove("on");render()};
+$("tv").onclick=function(){S.vib=!S.vib;save();render();if(S.vib)feel(false)};
+function toggleSnd(){S.snd=!S.snd;save();if(!S.snd){stopKeep();audKeep(false)}else if(auto)audKeep(true);render();if(S.snd)feel(false)}
+$("ts").onclick=toggleSnd;$("snb").onclick=toggleSnd;
+$("tw").onclick=function(){S.wake=!S.wake;save();render();wake()};
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")wake()});
+$("chips").addEventListener("click",function(e){var p=e.target.getAttribute("data-p");if(p){pick=+p;$("nt").value="";chips()}});
+$("nt").addEventListener("input",function(){pick=0;chips()});
+$("nchips").addEventListener("click",function(e){var n=e.target.getAttribute("data-n");if(n===null)return;
+ if(n==="own"){pickOwn=true;$("nn").value="";$("nn").focus()}else{pickOwn=false;$("nn").value=NAMES[+n][S.lang]}nchips()});
+$("nn").addEventListener("input",function(){nchips()});
+$("thc").addEventListener("click",function(e){var x=e.target.closest("[data-th]");if(x){S.theme=x.getAttribute("data-th");save();theme();thchips()}});
+$("stc").addEventListener("click",function(e){var x=e.target.closest("[data-st]");if(x){S.style=x.getAttribute("data-st");save();drawStyle();var s=cur();if(s)paint(s.count);thchips()}});
+$("sndc").addEventListener("click",function(e){var x=e.target.closest("[data-sn]");if(!x)return;var p=x.getAttribute("data-sn").split(":"),k=p[0],i=+p[1];
+ S.snds[k]=i;save();sndchips();try{(k==="c"?CS:k==="b"?BS:MS)[i]()}catch(er){}});
+$("add").onclick=function(){var n=$("nn").value.trim();if(!n){$("nn").focus();return}
+ var c=$("nt").value;newSess(n,c?tgt(c):pick);$("nn").value="";$("nt").value="";pick=100000;pickOwn=false;nchips();dopen(false);window.scrollTo(0,0)};
+$("list").addEventListener("click",function(e){var el=e.target,o=el.getAttribute("data-o"),d=el.getAttribute("data-d");
+ if(o){stopAuto();S.active=o;save();render();dopen(false);window.scrollTo(0,0)}
+ if(d){if(el.classList.contains("armed")){stopAuto();woosh();S.sessions=S.sessions.filter(function(x){return x.id!==d});if(S.active===d)S.active=S.sessions[0]?S.sessions[0].id:null;save();render()}
+  else{el.classList.add("armed");el.textContent=t("conf");setTimeout(function(){el.classList.remove("armed");el.textContent="🗑"},3000)}}});
+/* ---- backup / restore ---- */
+function enc(o){return "NAAM1:"+btoa(unescape(encodeURIComponent(JSON.stringify(o))))}
+function dec(c){c=c.trim();if(c.indexOf("NAAM1:")!==0)throw 0;return JSON.parse(decodeURIComponent(escape(atob(c.slice(6)))))}
+$("bkb").onclick=function(){var code=enc({sessions:S.sessions,active:S.active,lang:S.lang,theme:S.theme,style:S.style,snds:S.snds,timer:S.timer,rd:S.rd});var b=$("bkt");b.value=code;
+ var ok=function(){$("bkm").textContent=t("bkok")},no=function(){b.focus();b.select();$("bkm").textContent=t("bkman")};
+ try{navigator.clipboard.writeText(code).then(ok,no)}catch(e){no()}};
+$("bkr").onclick=function(){var v=$("rst").value;if(!v.trim()){$("rsm").textContent=t("bkempty");return}
+ try{var d=dec(v);if(!d||!Array.isArray(d.sessions))throw 0;var n=0;
+  d.sessions.forEach(function(x){if(!x||typeof x.id!=="string"||typeof x.name!=="string")return;
+   var o={id:x.id.slice(0,40),name:x.name.slice(0,60),count:Math.max(0,Math.min(1e12,Math.floor(Number(x.count)||0))),target:Math.max(0,Math.min(1e12,Math.floor(Number(x.target)||0)))};
+   if(typeof x.gap==="number"&&x.gap>0&&x.gap<=60)o.gap=x.gap;
+   var k=-1;S.sessions.forEach(function(y,i){if(y.id===o.id)k=i});if(k>=0)S.sessions[k]=o;else S.sessions.push(o);n++});
+  if(d.theme&&TH.some(function(h){return h[0]===d.theme}))S.theme=d.theme;
+  if(d.style&&STY.indexOf(d.style)>=0)S.style=d.style;
+  if(d.snds)["c","b","m"].forEach(function(k){var v2=+d.snds[k];if((v2>=0&&v2<5)||v2===-1)S.snds[k]=v2});
+  if(typeof d.timer==="number"&&d.timer>=1&&d.timer<=60)S.timer=Math.floor(d.timer);
+  if(d.lang==="hi"||d.lang==="en")S.lang=d.lang;
+  if(!cur()&&S.sessions.length)S.active=S.sessions[0].id;
+  rdMerge(d.rd);save();render();$("rsm").textContent=t("bkdone")+n}
+ catch(e){$("rsm").textContent=t("bkbad")}};
+/* ---- install ---- */
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();DP=e});
+window.addEventListener("appinstalled",function(){S.installed=true;save();$("mi_in").style.display="none";$("inh").style.display="none"});
+if((window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone)S.installed=true;
+$("mi_in").style.display="none";$("inh").style.display="none";
+function chkInst(){if((window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone){S.installed=true;save()}if(!S.installed){$("mi_in").style.display="";$("inh").style.display=""}}
+function showInstall(){dopen(true);all(".mi").forEach(function(m){m.classList.remove("open")});$("mi_in").classList.add("open");syncOpen();ihOpen=true;$("ih").style.display="block";$("ib").style.display="flex";instUI();try{$("mi_in").scrollIntoView({block:"center"})}catch(e){}}
+$("inh").onclick=function(){if(DP){DP.prompt();DP.userChoice.then(function(r){DP=null;if(r&&r.outcome==="accepted"){S.installed=true;save();$("inh").style.display="none";$("mi_in").style.display="none"}}).catch(function(){});return}showInstall()};
+$("instb").onclick=function(){
+ if(DP){DP.prompt();DP.userChoice.then(function(){DP=null}).catch(function(){});return}
+ ihOpen=!ihOpen;$("ih").style.display=ihOpen?"block":"none";$("ib").style.display=ihOpen?"flex":"none";instUI()};
+$("cp").onclick=function(){var u=location.href;var done=function(){$("cp").textContent=t("copied");setTimeout(instUI,1800)};
+ try{navigator.clipboard.writeText(u).then(done,function(){})}catch(e){}};
+/* ---- exit ---- */
+$("exn").onclick=function(){all(".mi").forEach(function(m){m.classList.remove("open")});syncOpen()};
+$("exy").onclick=function(){stopAuto();stopKeep();dopen(false);try{window.close()}catch(e){}$("bye").classList.add("on")};
+$("byeb").onclick=function(){$("bye").classList.remove("on")};
+
+/* ================= Read window: Mantra & Chalisa ================= */
+var HC=[{"h": "॥ श्री हनुमते नमः ॥"}, {"h": "॥ दोहा ॥"}, {"a": "श्रीगुरु चरन सरोज रज, निज मनु मुकुरु सुधारि ।", "b": "बरनउँ रघुबर बिमल जसु, जो दायकु फल चारि ॥", "n": ""}, {"a": "बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार ।", "b": "बल बुधि बिद्या देहु मोहिं, हरहु कलेस बिकार ॥", "n": ""}, {"h": "॥ चौपाई ॥"}, {"a": "जय हनुमान ज्ञान गुन सागर ।", "b": "जय कपीस तिहुँ लोक उजागर ॥", "n": "१"}, {"a": "राम दूत अतुलित बल धामा ।", "b": "अंजनि-पुत्र पवनसुत नामा ॥", "n": "२"}, {"a": "महाबीर बिक्रम बजरंगी ।", "b": "कुमति निवार सुमति के संगी ॥", "n": "३"}, {"a": "कंचन बरन बिराज सुबेसा ।", "b": "कानन कुंडल कुंचित केसा ॥", "n": "४"}, {"a": "हाथ बज्र औ ध्वजा बिराजै ।", "b": "काँधे मूँज जनेऊ साजै ॥", "n": "५"}, {"a": "संकर सुवन केसरीनंदन ।", "b": "तेज प्रताप महा जग बंदन ॥", "n": "६"}, {"a": "बिद्यावान गुनी अति चातुर ।", "b": "राम काज करिबे को आतुर ॥", "n": "७"}, {"a": "प्रभु चरित्र सुनिबे को रसिया ।", "b": "राम लखन सीता मन बसिया ॥", "n": "८"}, {"a": "सूक्ष्म रूप धरि सियहिं दिखावा ।", "b": "बिकट रूप धरि लंक जरावा ॥", "n": "९"}, {"a": "भीम रूप धरि असुर सँहारे ।", "b": "रामचंद्र के काज सँवारे ॥", "n": "१०"}, {"a": "लाय सजीवन लखन जियाये ।", "b": "श्रीरघुबीर हरषि उर लाये ॥", "n": "११"}, {"a": "रघुपति कीन्ही बहुत बड़ाई ।", "b": "तुम मम प्रिय भरतहि सम भाई ॥", "n": "१२"}, {"a": "सहस बदन तुम्हरो जस गावैं ।", "b": "अस कहि श्रीपति कंठ लगावैं ॥", "n": "१३"}, {"a": "सनकादिक ब्रह्मादि मुनीसा ।", "b": "नारद सारद सहित अहीसा ॥", "n": "१४"}, {"a": "जम कुबेर दिगपाल जहाँ ते ।", "b": "कबि कोबिद कहि सके कहाँ ते ॥", "n": "१५"}, {"a": "तुम उपकार सुग्रीवहिं कीन्हा ।", "b": "राम मिलाय राज पद दीन्हा ॥", "n": "१६"}, {"a": "तुम्हरो मंत्र बिभीषन माना ।", "b": "लंकेस्वर भए सब जग जाना ॥", "n": "१७"}, {"a": "जुग सहस्र जोजन पर भानू ।", "b": "लील्यो ताहि मधुर फल जानू ॥", "n": "१८"}, {"a": "प्रभु मुद्रिका मेलि मुख माहीं ।", "b": "जलधि लाँघि गये अचरज नाहीं ॥", "n": "१९"}, {"a": "दुर्गम काज जगत के जेते ।", "b": "सुगम अनुग्रह तुम्हरे तेते ॥", "n": "२०"}, {"a": "राम दुआरे तुम रखवारे ।", "b": "होत न आज्ञा बिनु पैसारे ॥", "n": "२१"}, {"a": "सब सुख लहै तुम्हारी सरना ।", "b": "तुम रच्छक काहू को डर ना ॥", "n": "२२"}, {"a": "आपन तेज सम्हारो आपै ।", "b": "तीनों लोक हाँक तें काँपै ॥", "n": "२३"}, {"a": "भूत पिसाच निकट नहिं आवै ।", "b": "महाबीर जब नाम सुनावै ॥", "n": "२४"}, {"a": "नासै रोग हरै सब पीरा ।", "b": "जपत निरंतर हनुमत बीरा ॥", "n": "२५"}, {"a": "संकट तें हनुमान छुड़ावै ।", "b": "मन क्रम बचन ध्यान जो लावै ॥", "n": "२६"}, {"a": "सब पर राम तपस्वी राजा ।", "b": "तिन के काज सकल तुम साजा ॥", "n": "२७"}, {"a": "और मनोरथ जो कोइ लावै ।", "b": "सोइ अमित जीवन फल पावै ॥", "n": "२८"}, {"a": "चारों जुग परताप तुम्हारा ।", "b": "है परसिद्ध जगत उजियारा ॥", "n": "२९"}, {"a": "साधु संत के तुम रखवारे ।", "b": "असुर निकंदन राम दुलारे ॥", "n": "३०"}, {"a": "अष्ट सिद्धि नौ निधि के दाता ।", "b": "अस बर दीन जानकी माता ॥", "n": "३१"}, {"a": "राम रसायन तुम्हरे पासा ।", "b": "सदा रहो रघुपति के दासा ॥", "n": "३२"}, {"a": "तुम्हरे भजन राम को पावै ।", "b": "जनम जनम के दुख बिसरावै ॥", "n": "३३"}, {"a": "अंत काल रघुबर पुर जाई ।", "b": "जहाँ जन्म हरि-भक्त कहाई ॥", "n": "३४"}, {"a": "और देवता चित्त न धरई ।", "b": "हनुमत सेइ सर्ब सुख करई ॥", "n": "३५"}, {"a": "संकट कटै मिटै सब पीरा ।", "b": "जो सुमिरै हनुमत बलबीरा ॥", "n": "३६"}, {"a": "जै जै जै हनुमान गोसाईं ।", "b": "कृपा करहु गुरु देव की नाईं ॥", "n": "३७"}, {"a": "जो सत बार पाठ कर कोई ।", "b": "छूटहि बंदि महा सुख होई ॥", "n": "३८"}, {"a": "जो यह पढ़ै हनुमान चालीसा ।", "b": "होय सिद्धि साखी गौरीसा ॥", "n": "३९"}, {"a": "तुलसीदास सदा हरि चेरा ।", "b": "कीजै नाथ हृदय महँ डेरा ॥", "n": "४०"}, {"h": "॥ दोहा ॥"}, {"a": "पवनतनय संकट हरन, मंगल मूरति रूप ।", "b": "राम लखन सीता सहित, हृदय बसहु सुर भूप ॥", "n": ""}, {"h": "॥ जय घोष ॥"}, {"a": "सियावर रामचन्द्र की जय ।", "b": "पवनसुत हनुमान की जय ॥", "n": ""}];
+var RSTD=[{"id": "m_gayatri", "type": "m", "ti": "गायत्री मंत्र", "en": "Gayatri Mantra", "txt": "ॐ भूर्भुवः स्वः ।\nतत्सवितुर्वरेण्यं ।\nभर्गो देवस्य धीमहि ।\nधियो यो नः प्रचोदयात् ॥", "ic": "🌅", "goal": 11, "cat": "v", "audio": "audio/gayatri-mantra.mp3"}, {"id": "m_mrityunjaya", "type": "m", "ti": "महामृत्युंजय मंत्र", "en": "Mahamrityunjaya Mantra", "txt": "ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम् ।\nउर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात् ॥", "ic": "🔱", "goal": 11, "cat": "v"}, {"id": "m_shiva", "type": "m", "ti": "पंचाक्षरी शिव मंत्र", "en": "Om Namah Shivaya", "txt": "ॐ नमः शिवाय", "ic": "🕉️", "goal": 11, "cat": "g"}, {"id": "m_hanuman", "type": "m", "ti": "हनुमान मंत्र", "en": "Hanuman Mantra", "txt": "ॐ श्री हनुमते नमः", "ic": "🙏", "goal": 11, "cat": "g"}, {"id": "m_ganesh", "type": "m", "ti": "गणेश मंत्र", "en": "Ganesh Mantra", "txt": "ॐ गं गणपतये नमः", "ic": "🐘", "goal": 11, "cat": "g"}, {"id": "m_vishnu", "type": "m", "ti": "विष्णु मंत्र", "en": "Vishnu Mantra", "txt": "ॐ नमो भगवते वासुदेवाय", "ic": "🪷", "goal": 11, "cat": "g"}, {"id": "m_durga", "type": "m", "ti": "दुर्गा नवार्ण मंत्र", "en": "Durga Navarna Mantra", "txt": "ॐ ऐं ह्रीं क्लीं चामुण्डायै विच्चे", "ic": "🦁", "goal": 11, "cat": "g"}, {"id": "m_lakshmi", "type": "m", "ti": "लक्ष्मी मंत्र", "en": "Lakshmi Mantra", "txt": "ॐ श्रीं महालक्ष्म्यै नमः", "ic": "🪔", "goal": 11, "cat": "g"}, {"id": "m_saraswati", "type": "m", "ti": "सरस्वती मंत्र", "en": "Saraswati Mantra", "txt": "ॐ ऐं सरस्वत्यै नमः", "ic": "📜", "goal": 11, "cat": "g"}, {"id": "c_hanuman", "type": "c", "ti": "श्री हनुमान चालीसा", "en": "Hanuman Chalisa", "ic": "🚩", "goal": 7}, {"id": "m_b_surya", "type": "m", "cat": "b", "ti": "सूर्य बीज मंत्र", "en": "Sun (Surya) Beej Mantra", "txt": "ॐ ह्रां ह्रीं ह्रौं सः सूर्याय नमः", "ic": "☀️", "goal": 11}, {"id": "m_b_chandra", "type": "m", "cat": "b", "ti": "चंद्र बीज मंत्र", "en": "Moon (Chandra) Beej Mantra", "txt": "ॐ श्रां श्रीं श्रौं सः चंद्रमसे नमः", "ic": "🌙", "goal": 11}, {"id": "m_b_mangal", "type": "m", "cat": "b", "ti": "मंगल बीज मंत्र", "en": "Mars (Mangal) Beej Mantra", "txt": "ॐ क्रां क्रीं क्रौं सः भौमाय नमः", "ic": "🔴", "goal": 11}, {"id": "m_b_budh", "type": "m", "cat": "b", "ti": "बुध बीज मंत्र", "en": "Mercury (Budh) Beej Mantra", "txt": "ॐ ब्रां ब्रीं ब्रौं सः बुधाय नमः", "ic": "💚", "goal": 11}, {"id": "m_b_guru", "type": "m", "cat": "b", "ti": "गुरु (बृहस्पति) बीज मंत्र", "en": "Jupiter (Guru) Beej Mantra", "txt": "ॐ ग्रां ग्रीं ग्रौं सः गुरवे नमः", "ic": "🟡", "goal": 11}, {"id": "m_b_shukra", "type": "m", "cat": "b", "ti": "शुक्र बीज मंत्र", "en": "Venus (Shukra) Beej Mantra", "txt": "ॐ द्रां द्रीं द्रौं सः शुक्राय नमः", "ic": "💎", "goal": 11}, {"id": "m_b_shani", "type": "m", "cat": "b", "ti": "शनि बीज मंत्र", "en": "Saturn (Shani) Beej Mantra", "txt": "ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः", "ic": "🪐", "goal": 11}, {"id": "m_b_rahu", "type": "m", "cat": "b", "ti": "राहु बीज मंत्र", "en": "Rahu Beej Mantra", "txt": "ॐ भ्रां भ्रीं भ्रौं सः राहवे नमः", "ic": "🌑", "goal": 11}, {"id": "m_b_ketu", "type": "m", "cat": "b", "ti": "केतु बीज मंत्र", "en": "Ketu Beej Mantra", "txt": "ॐ स्रां स्रीं स्रौं सः केतवे नमः", "ic": "🔥", "goal": 11}, {"id": "s_aditya", "type": "s", "ti": "श्री आदित्य हृदय स्तोत्र", "en": "Aditya Hridaya Stotra", "ic": "☀️", "goal": 7}];
+var AH=[{"a": "ततो युद्धपरिश्रान्तं समरे चिन्तया स्थितम् ।", "b": "रावणं चाग्रतो दृष्ट्वा युद्धाय समुपस्थितम् ॥", "n": "१"}, {"a": "दैवतैश्च समागम्य द्रष्टुमभ्यागतो रणम् ।", "b": "उपागम्याब्रवीद्राममगस्त्यो भगवान् ऋषिः ॥", "n": "२"}, {"a": "राम राम महाबाहो शृणु गुह्यं सनातनम् ।", "b": "येन सर्वानरीन् वत्स समरे विजयिष्यसि ॥", "n": "३"}, {"a": "आदित्यहृदयं पुण्यं सर्वशत्रुविनाशनम् ।", "b": "जयावहं जपेन्नित्यमक्षय्यं परमं शिवम् ॥", "n": "४"}, {"a": "सर्वमङ्गलमाङ्गल्यं सर्वपापप्रणाशनम् ।", "b": "चिन्ताशोकप्रशमनमायुर्वर्धनमुत्तमम् ॥", "n": "५"}, {"a": "रश्मिमन्तं समुद्यन्तं देवासुरनमस्कृतम् ।", "b": "पूजयस्व विवस्वन्तं भास्करं भुवनेश्वरम् ॥", "n": "६"}, {"a": "सर्वदेवात्मको ह्येष तेजस्वी रश्मिभावनः ।", "b": "एष देवासुरगणाँल्लोकान् पाति गभस्तिभिः ॥", "n": "७"}, {"a": "एष ब्रह्मा च विष्णुश्च शिवः स्कन्दः प्रजापतिः ।", "b": "महेन्द्रो धनदः कालो यमः सोमो ह्यपां पतिः ॥", "n": "८"}, {"a": "पितरो वसवः साध्या ह्यश्विनौ मरुतो मनुः ।", "b": "वायुर्वह्निः प्रजाप्राण ऋतुकर्ता प्रभाकरः ॥", "n": "९"}, {"a": "आदित्यः सविता सूर्यः खगः पूषा गभस्तिमान् ।", "b": "सुवर्णसदृशो भानुर्हिरण्यरेता दिवाकरः ॥", "n": "१०"}, {"a": "हरिदश्वः सहस्रार्चिः सप्तसप्तिर्मरीचिमान् ।", "b": "तिमिरोन्मथनः शम्भुस्त्वष्टा मार्ताण्ड अंशुमान् ॥", "n": "११"}, {"a": "हिरण्यगर्भः शिशिरस्तपनो भास्करो रविः ।", "b": "अग्निगर्भोऽदितेः पुत्रः शङ्खः शिशिरनाशनः ॥", "n": "१२"}, {"a": "व्योमनाथस्तमोभेदी ऋग्यजुःसामपारगः ।", "b": "घनवृष्टिरपां मित्रो विन्ध्यवीथीप्लवङ्गमः ॥", "n": "१३"}, {"a": "आतपी मण्डली मृत्युः पिङ्गलः सर्वतापनः ।", "b": "कविर्विश्वो महातेजाः रक्तः सर्वभवोद्भवः ॥", "n": "१४"}, {"a": "नक्षत्रग्रहताराणामधिपो विश्वभावनः ।", "b": "तेजसामपि तेजस्वी द्वादशात्मन् नमोऽस्तु ते ॥", "n": "१५"}, {"a": "नमः पूर्वाय गिरये पश्चिमायाद्रये नमः ।", "b": "ज्योतिर्गणानां पतये दिनाधिपतये नमः ॥", "n": "१६"}, {"a": "जयाय जयभद्राय हर्यश्वाय नमो नमः ।", "b": "नमो नमः सहस्रांशो आदित्याय नमो नमः ॥", "n": "१७"}, {"a": "नम उग्राय वीराय सारङ्गाय नमो नमः ।", "b": "नमः पद्मप्रबोधाय मार्ताण्डाय नमो नमः ॥", "n": "१८"}, {"a": "ब्रह्मेशानाच्युतेशाय सूर्यायादित्यवर्चसे ।", "b": "भास्वते सर्वभक्षाय रौद्राय वपुषे नमः ॥", "n": "१९"}, {"a": "तमोघ्नाय हिमघ्नाय शत्रुघ्नायामितात्मने ।", "b": "कृतघ्नघ्नाय देवाय ज्योतिषां पतये नमः ॥", "n": "२०"}, {"a": "तप्तचामीकराभाय वह्नये विश्वकर्मणे ।", "b": "नमस्तमोऽभिनिघ्नाय रुचये लोकसाक्षिणे ॥", "n": "२१"}, {"a": "नाशयत्येष वै भूतं तदेव सृजति प्रभुः ।", "b": "पायत्येष तपत्येष वर्षत्येष गभस्तिभिः ॥", "n": "२२"}, {"a": "एष सुप्तेषु जागर्ति भूतेषु परिनिष्ठितः ।", "b": "एष चैवाग्निहोत्रं च फलं चैवाग्निहोत्रिणाम् ॥", "n": "२३"}, {"a": "वेदाश्च क्रतवश्चैव क्रतूनां फलमेव च ।", "b": "यानि कृत्यानि लोकेषु सर्व एष रविः प्रभुः ॥", "n": "२४"}, {"a": "एनमापत्सु कृच्छ्रेषु कान्तारेषु भयेषु च ।", "b": "कीर्तयन् पुरुषः कश्चिन्नावसीदति राघव ॥", "n": "२५"}, {"a": "पूजयस्वैनमेकाग्रो देवदेवं जगत्पतिम् ।", "b": "एतत् त्रिगुणितं जप्त्वा युद्धेषु विजयिष्यसि ॥", "n": "२६"}, {"a": "अस्मिन् क्षणे महाबाहो रावणं त्वं वधिष्यसि ।", "b": "एवमुक्त्वा तदागस्त्यो जगाम च यथागतम् ॥", "n": "२७"}, {"a": "एतच्छ्रुत्वा महातेजा नष्टशोकोऽभवत्तदा ।", "b": "धारयामास सुप्रीतो राघवः प्रयतात्मवान् ॥", "n": "२८"}, {"a": "आदित्यं प्रेक्ष्य जप्त्वा तु परं हर्षमवाप्तवान् ।", "b": "त्रिराचम्य शुचिर्भूत्वा धनुरादाय वीर्यवान् ॥", "n": "२९"}, {"a": "रावणं प्रेक्ष्य हृष्टात्मा युद्धाय समुपागमत् ।", "b": "सर्वयत्नेन महता वधे तस्य धृतोऽभवत् ॥", "n": "३०"}, {"a": "अथ रविरवदन्निरीक्ष्य रामं मुदितमनाः परमं प्रहृष्यमाणः ।", "b": "निशिचरपतिसंक्षयं विदित्वा सुरगणमध्यगतो वचस्त्वरेति ॥", "n": "३१"}, {"h": "॥ इति आदित्यहृदयम् मन्त्रस्य ॥"}];
+var rdCur=null,pgIdx=0,pgScr=[0,0],rdDelArm=null;
+function esc(x){return String(x).replace(/[&<>"']/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]})}
+function p2(n){return n<10?"0"+n:""+n}
+function ymd(d){return d.getFullYear()+"-"+p2(d.getMonth()+1)+"-"+p2(d.getDate())}
+function ydayStr(){var d=new Date();d.setDate(d.getDate()-1);return ymd(d)}
+function rdInit(){var r=S.rd;if(!r||typeof r!=="object")r=S.rd={};if(!r.items||typeof r.items!=="object")r.items={};if(!Array.isArray(r.custom))r.custom=[];
+ if(!r.streak||typeof r.streak!=="object")r.streak={last:"",days:0,best:0};if(!r.today||typeof r.today!=="object")r.today={d:"",n:0};if(r.sec!=="c"&&r.sec!=="s")r.sec="m";if(["u","g","v","b"].indexOf(r.mc)<0)r.mc="g"}
+function itemById(id){var i,c;for(i=0;i<RSTD.length;i++)if(RSTD[i].id===id)return RSTD[i];c=S.rd.custom;for(i=0;i<c.length;i++)if(c[i].id===id)return{id:c[i].id,type:"m",ti:c[i].title,en:"",txt:c[i].text,ic:"✍️",goal:11,custom:true};return null}
+function getIt(id,def){var x=S.rd.items[id];if(!x)x=S.rd.items[id]={reads:0,goal:def||11};return x}
+function streakNow(){var k=S.rd.streak;return(k.last===ymd(new Date())||k.last===ydayStr())?k.days:0}
+function todayN(){var q=S.rd.today;return q.d===ymd(new Date())?q.n:0}
+function textHTML(it){var h='<div class="om">ॐ</div><div class="th">'+((it.type==="c"||it.type==="s")?'॥ '+esc(it.ti)+' ॥':esc(it.ti))+'</div>';
+ if(it.type==="c"||it.type==="s"){h+='<div class="ths">'+esc(t(it.type==="s"?"st_by":"rd_by"))+'</div><div class="orn">❖ ❖ ❖</div>';
+  (it.type==="s"?AH:HC).forEach(function(b){if(b.h)h+='<div class="vh">'+esc(b.h)+'</div>';else h+='<div class="vs">'+esc(b.a)+'<br>'+esc(b.b)+(b.n?' <span class="vn">॥'+esc(b.n)+'॥</span>':'')+'</div>'})}
+ else{if(it.en)h+='<div class="ths">'+esc(it.en)+'</div>';h+='<div class="orn">❖ ❖ ❖</div>';
+  String(it.txt).split("\n").forEach(function(l){h+=l.trim()?'<div class="vs">'+esc(l)+'</div>':'<div class="gap2"></div>'});h+='<div class="orn">❖ ❖ ❖</div>'}
+ return h}
+function card(it){var st=S.rd.items[it.id]||{reads:0,goal:it.goal},g=st.goal||it.goal,r=st.reads||0,pc=Math.min(100,r/g*100);
+ return '<button class="rc" data-open="'+esc(it.id)+'"><span class="rci">'+it.ic+'</span><span class="rct"><b>'+esc(it.ti)+'</b><small>'+esc(it.type==="c"?t("hc_desc"):it.type==="s"?t("ah_desc"):(it.en||""))+'</small>'+((it.type==="c"||it.type==="s")?'<div class="bar"><i style="width:'+pc+'%"></i></div>':'')+'</span><span class="rcp">'+r+' / '+g+'</span></button>'}
+function rdUI(){rdInit();socUI();
+ var k=S.rd;$("strk").innerHTML='<div class="sk1">🔥 <b>'+streakNow()+'</b> '+esc(t("st_days"))+'</div><div class="sk2">'+esc(t("st_today"))+': '+todayN()+'<br>'+esc(t("st_best"))+': '+(k.streak.best||0)+'</div>';
+ $("rtabs").innerHTML=[["m","rs_m"],["c","rs_c"],["s","rs_s"]].map(function(x){return '<button class="tb'+(k.sec===x[0]?' on':'')+'" data-rs="'+x[0]+'">'+esc(t(x[1]))+'</button>'}).join("");
+ var m='<div class="mcs">'+[["u","mc_u"],["g","mc_g"],["v","mc_v"],["b","mc_b"]].map(function(x){return '<button class="chip'+(k.mc===x[0]?' on':'')+'" data-mc="'+x[0]+'">'+esc(t(x[1]))+'</button>'}).join("")+'</div>';
+ if(k.mc==="u"){m+='<button class="go addm" data-addm="1">'+esc(t("add_m"))+'</button>';if(!k.custom.length)m+='<div class="hint" style="margin:0 2px 8px">'+esc(t("no_my"))+'</div>';k.custom.forEach(function(c){m+=card(itemById(c.id))})}
+ else{m+='<div class="hint" style="margin:0 2px 10px">'+esc(t("mcd_"+k.mc))+'</div>';RSTD.forEach(function(x){if(x.type==="m"&&x.cat===k.mc)m+=card(x)})}
+ $("rMantra").innerHTML=m;
+ var c='';RSTD.forEach(function(x){if(x.type==="c")c+=card(x)});c+='<div class="hint" style="text-align:center;margin-top:12px">'+esc(t("more_c"))+'</div>';$("rChalisa").innerHTML=c;
+ var q='';RSTD.forEach(function(x){if(x.type==="s")q+=card(x)});q+='<div class="hint" style="text-align:center;margin-top:12px">'+esc(t("more_s"))+'</div>';$("rStotra").innerHTML=q;
+ $("rMantra").style.display=k.sec==="m"?"block":"none";$("rChalisa").style.display=k.sec==="c"?"block":"none";$("rStotra").style.display=k.sec==="s"?"block":"none";
+ if(rdCur)rdReaderUI()}
+function rdReaderUI(){var it=itemById(rdCur);if(!it)return;var st=getIt(it.id,it.goal),g=st.goal,r=st.reads;
+ $("rTT").textContent=it.ti;$("rPt").textContent=t("rd_of").replace("{a}",r).replace("{b}",g);$("rPb").style.width=Math.min(100,r/g*100)+"%";
+ $("rGl").textContent=t("rd_goal");$("rgv").textContent=g;
+ var h="";[1,7,11,21,108].forEach(function(x){h+='<button class="chip'+(g===x?' on':'')+'" data-goal="'+x+'">'+x+'</button>'});$("rGc").innerHTML=h;
+ $("rNew").style.display=r>=g?"block":"none";$("rEd").style.display=it.custom?"block":"none"}
+function openItem(id){var it=itemById(id);if(!it)return;rdCur=id;$("rHome").style.display="none";$("rEdit").style.display="none";$("rReader").style.display="block";
+ $("rTx").innerHTML=textHTML(it);$("rTo").textContent="";rdReaderUI();audInit(it);window.scrollTo(0,0)}
+function closeReader(){audStop();rdCur=null;$("rReader").style.display="none";$("rEdit").style.display="none";$("rHome").style.display="block";rdUI();window.scrollTo(0,0)}
+function rdSetGoal(v){var it=itemById(rdCur);if(!it)return;v=Math.max(1,Math.min(1008,Math.floor(v)));getIt(rdCur,it.goal).goal=v;save();rdReaderUI();rdUI()}
+function rdDone(){var it=itemById(rdCur);if(!it)return;var st=getIt(rdCur,it.goal),d=ymd(new Date()),k=S.rd.streak;st.reads++;
+ if(k.last!==d){k.days=(k.last===ydayStr())?(k.days||0)+1:1;k.last=d;k.best=Math.max(k.best||0,k.days)}
+ if(S.rd.today.d!==d)S.rd.today={d:d,n:0};S.rd.today.n++;save();
+ var msg=st.reads===st.goal?t("rd_goalok"):t("rd_ok");$("rTo").textContent=msg.replace("{a}",st.reads).replace("{b}",st.goal);
+ if(S.vib&&navigator.vibrate){try{navigator.vibrate([200,100,200])}catch(e){}}
+ if(S.snd){try{var fn=MS[S.snds.m];if(fn)fn()}catch(e){}}
+ rdReaderUI();rdUI();window.scrollTo({top:0,behavior:"smooth"})}
+function rdNew(){var it=itemById(rdCur);if(!it)return;getIt(rdCur,it.goal).reads=0;save();$("rTo").textContent="";rdReaderUI();rdUI()}
+function openEditor(id){var c=null;S.rd.custom.forEach(function(x){if(x.id===id)c=x});rdEid=c?c.id:null;rdDelArm=null;
+ $("mtT").value=c?c.title:"";$("mtX").value=c?c.text:"";$("mtD").style.display=c?"block":"none";$("mtD").textContent=t("ed_del");$("mtD").classList.remove("armed");
+ $("rHome").style.display="none";$("rReader").style.display="none";$("rEdit").style.display="block";window.scrollTo(0,0)}
+var rdEid=null,AUD=null,audOK={};
+function audStop(){if(AUD){try{AUD.pause()}catch(e){}AUD=null}$("rAu").style.display="none"}
+function audInit(it){audStop();if(!it.audio)return;var show=function(ok){if(ok&&rdCur===it.id){$("rAu").style.display="flex";$("rAb").textContent=t("aud_play");$("rAm").textContent=""}};
+ if(audOK[it.audio]!==undefined){show(audOK[it.audio]);return}
+ try{fetch(it.audio,{method:"HEAD"}).then(function(r){audOK[it.audio]=r.ok;show(r.ok)}).catch(function(){audOK[it.audio]=false})}catch(e){}}
+$("rAb").onclick=function(){var it=itemById(rdCur);if(!it||!it.audio)return;
+ if(!AUD){AUD=new Audio(it.audio);AUD.onended=function(){$("rAb").textContent=t("aud_play")};AUD.onerror=function(){$("rAm").textContent=t("aud_na");$("rAb").textContent=t("aud_play");AUD=null}}
+ if(AUD.paused){var p=AUD.play();$("rAb").textContent=t("aud_pause");if(p&&p.catch)p.catch(function(){})}else{AUD.pause();$("rAb").textContent=t("aud_play")}};
+function pageTo(i){if(i===pgIdx)return;pgScr[pgIdx]=window.scrollY;var from=pgIdx;pgIdx=i;$("pgC").style.display=i?"none":"block";$("pgR").style.display=i?"block":"none";
+ $("tbC").classList.toggle("on",!i);$("tbR").classList.toggle("on",!!i);var el=$(i?"pgR":"pgC");el.classList.remove("inl","inr");void el.offsetWidth;el.classList.add(i?"inl":"inr");window.scrollTo(0,pgScr[i]||0)}
+function socUI(){var h="";SOCIAL.forEach(function(x){h+='<a class="socb" href="'+esc(x.url)+'" target="_blank" rel="noopener" title="'+esc(x.name)+'">'+esc(x.icon||String(x.name).charAt(0))+'</a>'});
+ $("soc").innerHTML=h;$("mi_soc").style.display=SOCIAL.length?"block":"none";$("mi_help").style.display=HELP_URL?"block":"none"}
+function shareApp(){var u=location.href.split("#")[0],tx=t("sh_txt");
+ if(navigator.share){navigator.share({title:"Naam Counter",text:tx,url:u}).catch(function(){})}
+ else{var done=function(){var sp=$("shb").firstChild;sp.textContent=t("copied");setTimeout(texts,1800)};try{navigator.clipboard.writeText(tx+" "+u).then(done,function(){})}catch(e){}}}
+function rdMerge(r){if(!r||typeof r!=="object")return;rdInit();
+ (Array.isArray(r.custom)?r.custom:[]).forEach(function(c){if(c&&typeof c.id==="string"&&typeof c.title==="string"&&typeof c.text==="string"){var o={id:c.id.slice(0,40),title:c.title.slice(0,60),text:c.text.slice(0,5000)},k=-1;S.rd.custom.forEach(function(y,i){if(y.id===o.id)k=i});if(k>=0)S.rd.custom[k]=o;else S.rd.custom.push(o)}});
+ if(r.items&&typeof r.items==="object")Object.keys(r.items).forEach(function(id){var v=r.items[id];if(v&&+v.reads>=0&&+v.goal>=1)S.rd.items[id.slice(0,40)]={reads:Math.min(1e6,Math.floor(+v.reads)),goal:Math.min(1008,Math.floor(+v.goal))}});
+ if(r.streak&&typeof r.streak.last==="string"&&r.streak.last>(S.rd.streak.last||""))S.rd.streak={last:r.streak.last.slice(0,10),days:Math.max(0,Math.floor(+r.streak.days||0)),best:Math.max(S.rd.streak.best||0,Math.floor(+r.streak.best||0))}}
+$("tabs").addEventListener("click",function(e){var b=e.target.closest("[data-pg]");if(b)pageTo(+b.getAttribute("data-pg"))});
+$("pgR").addEventListener("click",function(e){var x;
+ if(x=e.target.closest("[data-rs]")){S.rd.sec=x.getAttribute("data-rs");save();rdUI();return}
+ if(x=e.target.closest("[data-mc]")){S.rd.mc=x.getAttribute("data-mc");save();rdUI();return}
+ if(x=e.target.closest("[data-open]")){openItem(x.getAttribute("data-open"));return}
+ if(e.target.closest("[data-addm]")){openEditor(null);return}
+ if(x=e.target.closest("[data-goal]")){rdSetGoal(+x.getAttribute("data-goal"));return}});
+$("rBack").onclick=closeReader;$("rTop").onclick=function(){window.scrollTo({top:0,behavior:"smooth"})};$("rDn").onclick=rdDone;$("rNew").onclick=rdNew;
+$("rgm").onclick=function(){var it=itemById(rdCur);if(it)rdSetGoal(getIt(rdCur,it.goal).goal-1)};$("rgp").onclick=function(){var it=itemById(rdCur);if(it)rdSetGoal(getIt(rdCur,it.goal).goal+1)};
+$("rEd").onclick=function(){openEditor(rdCur)};
+$("mtC").onclick=function(){rdEid&&itemById(rdEid)?openItem(rdEid):closeReader()};
+$("mtS").onclick=function(){var tx=$("mtX").value.trim().slice(0,5000),ti=$("mtT").value.trim().slice(0,60);if(!tx){$("mtX").focus();return}
+ if(!ti)ti=tx.split("\n")[0].slice(0,30);var id=rdEid;
+ if(id){S.rd.custom.forEach(function(c){if(c.id===id){c.title=ti;c.text=tx}})}else{id="u"+uid();S.rd.custom.unshift({id:id,title:ti,text:tx})}
+ save();rdEid=id;openItem(id)};
+$("mtD").onclick=function(){var b=$("mtD");if(!b.classList.contains("armed")){b.classList.add("armed");b.textContent=t("ed_conf");clearTimeout(rdDelArm);rdDelArm=setTimeout(function(){b.classList.remove("armed");b.textContent=t("ed_del")},3000);return}
+ S.rd.custom=S.rd.custom.filter(function(c){return c.id!==rdEid});delete S.rd.items[rdEid];save();rdEid=null;closeReader()};
+/* swipe between windows */
+var tx0=0,ty0=0,tt0=0,tOK=false;
+document.addEventListener("touchstart",function(e){var q=e.touches[0];tOK=e.touches.length===1&&!$("dr").classList.contains("on")&&!$("bye").classList.contains("on")&&!(e.target.closest&&e.target.closest(".sl,input,textarea,select"));tx0=q.clientX;ty0=q.clientY;tt0=Date.now()},{passive:true});
+document.addEventListener("touchend",function(e){if(!tOK)return;tOK=false;var q=e.changedTouches[0],dx=q.clientX-tx0,dy=q.clientY-ty0;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.8&&Date.now()-tt0<800){pageTo(dx<0?1:0)}},{passive:true});
+document.addEventListener("keydown",function(e){var a=document.activeElement.tagName;if(a==="INPUT"||a==="TEXTAREA")return;if(e.key==="ArrowRight")pageTo(1);else if(e.key==="ArrowLeft")pageTo(0)});
+
+$("sp_main").innerHTML=speedHTML();$("sp_menu").innerHTML=speedHTML();
+load();render();chkInst();wake();
+})();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
